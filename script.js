@@ -4,7 +4,7 @@ var clickCounter = 0;
 var price = 10;
 
 $(document).ready(function() {
-    const button = $("#start");
+    const button = $("#button");
     const score = $("#score");
 
     button.click(function() {
@@ -14,12 +14,12 @@ $(document).ready(function() {
         score.text(scoreNumber);
         $("#money").text(money);
         $("#moneyPerClick").text(moneyPerClick);
-
-        button.addClass('animate');
-
+        $(this).addClass('animate');
+        var button = $(this);
         setTimeout(function() {
-            button.removeClass('animate');
-        }, 1000);
+            button.removeClass('animate'); // remove the 'animate' class after 0.5s
+        }, 150);
+
     });
 
     $("#upgrade").click(function() {
