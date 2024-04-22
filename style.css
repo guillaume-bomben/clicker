@@ -2,6 +2,7 @@ body{
     width: 1000px;
     height: 550px;
     overflow: hidden;
+    resize: none;
 }
 
 #score {
@@ -43,14 +44,21 @@ body{
 }
 
 #button {
-    width: 200px;
-    height: 200px;
+    width: 88px;
+    height: 105px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+    border: 0;
+    padding: 0%;
     background-image: url('Images/Button.svg');
     background-repeat: no-repeat;
     background-color: transparent;
     border: none;
     transition: background-image 0.15s;
-
+    z-index: 2;
 }
 
 @keyframes button-press {
@@ -89,27 +97,33 @@ body{
 
   .cursor {
     position: absolute;
+    display: flex;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
   
-  @keyframes rotate {
+  @keyframes move-cursor {
     from {
-      transform: rotate(0deg);
+      top: 50%;
+      left: 50%;
     }
     to {
-      transform: rotate(360deg);
+      top: 50% + 40 * sin(360deg * (cursorCount / maxCursors));
+      left: 50% + 40 * cos(360deg * (cursorCount / maxCursors));
     }
   }
 
-
   #button_div svg {
-    position: absolute;
+    display: flex;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
+  }
+
+  #cursor_div{
+    display: flex;
   }
   
