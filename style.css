@@ -1,5 +1,39 @@
-#score,#money,#moneyPerClick{
-    font-size: 100px;
+body{
+    width: 1000px;
+    height: 550px;
+    overflow: hidden;
+}
+
+#score {
+    position: absolute;
+    top: 0%; /* adjust the value to position them as desired */
+    left: 50%; /* adjust the value to position them as desired */
+    transform: translate(-50%, -100%); /* center them horizontally and vertically */
+    font-size: 50px;
+    z-index: 1; /* make sure they're on top of the button */
+}
+
+#moneyPerClick {
+    top: 0%; /* adjust the value to position them as desired */
+    left: 50%; /* adjust the value to position them as desired */
+    position: absolute;
+    font-size: 50px;
+    transform: translate(-50%, -30%); /* center them horizontally and vertically */
+
+}
+#money {
+    top: 0%; /* adjust the value to position them as desired */
+    left: 50%; /* adjust the value to position them as desired */
+    position: absolute;
+    font-size: 50px;
+    transform: translate(-50%, 50%); /* center them horizontally and vertically */
+
+}
+
+#upgrade {
+    top: 55%; /* adjust the value to position them as desired */
+    left: 39%; /* adjust the value to position them as desired */
+    position: absolute;
 }
 
 #button {
@@ -10,6 +44,7 @@
     background-color: transparent;
     border: none;
     transition: background-image 0.15s;
+
 }
 
 @keyframes button-press {
@@ -36,3 +71,11 @@
 #button.animate {
     animation: button-press 0.15s; 
 }
+
+#button_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw; /* optional, to center horizontally */
+    height: 100vh; /* optional, to center vertically */
+  }
