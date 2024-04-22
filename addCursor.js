@@ -1,7 +1,9 @@
 let cursorCount = 0;
 let cursorCost = 100; 
 let maxCursors = 10;
-
+let centerX = 550;
+let centerY = 280;
+let radius = 150;
 
 $(document).ready(function(){
     function instantiateCursor() {
@@ -20,33 +22,30 @@ $(document).ready(function(){
         if (cursorCount >= maxCursors) {
             return;
         }
-        let radius = 150;
-        let centerX = 550;
-        let centerY = 280;
-        let angle = cursorCount / maxCursors * 2 * Math.PI; // Calculate the angle for each cursor
-        let cx = centerX + Math.cos(angle) * radius; // Calculate the x-coordinate
-        let cy = centerY + Math.sin(angle) * radius; // Calculate the y-coordinate
+        $('#cursor_div .cursor').remove();
 
-        // Create a new cursor element
-        let cursor = $('<img>', {
+        let angleBetweenCursors = 360 / (cursorCount + 1);
+
+        for (let i = 0; i <= cursorCount; i++) {
+            let angle = i * angleBetweenCursors;
+            let cx = centerX + Math.cos(angle * Math.PI / 180) * radius;
+            let cy = centerY + Math.sin(angle * Math.PI / 180) * radius;
+
+            let cursor = $('<img>', {
             src: 'Images/cursor1.svg',
             class: 'cursor'
-        });
+            });
 
-        // Add the cursor to the button_div
-        $('#cursor_div').append(cursor);
+            $('#cursor_div').append(cursor);
 
-        // Position the cursor along the circle
-        cursor.css({
+            cursor.css({
             position: 'absolute',
             top: `${cy}px`,
             left: `${cx}px`,
-        });
+            });
+        }
 
-        // Update the cursor count
         cursorCount++;
-        console
-
     }
     $('#add_cursor').on('click', instantiateCursor);
 });
