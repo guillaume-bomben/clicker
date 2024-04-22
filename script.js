@@ -7,25 +7,28 @@ $(document).ready(function() {
     const button = $("#start");
     const score = $("#score");
 
-
-    $("#start").click(function() {
+    button.click(function() {
         var scoreNumber = parseInt(score.text());
-        scoreNumber+=moneyPerClick;
-        money+=moneyPerClick;
+        scoreNumber += moneyPerClick;
+        money += moneyPerClick;
         score.text(scoreNumber);
         $("#money").text(money);
         $("#moneyPerClick").text(moneyPerClick);
 
+        button.addClass('animate');
+
+        setTimeout(function() {
+            button.removeClass('animate');
+        }, 1000);
     });
 
     $("#upgrade").click(function() {
-        if(money>=price){
-            money-=price;
-            price+=10;
-            moneyPerClick+=1;
+        if (money >= price) {
+            money -= price;
+            price += 10;
+            moneyPerClick += 1;
             $("#money").text(money);
             $("#moneyPerClick").text(moneyPerClick);
         }
     });
-        
 });

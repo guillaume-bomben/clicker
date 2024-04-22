@@ -1,18 +1,27 @@
-#button{
-    width: 200px;
-    height: 200px;
-}
+
 
 #score,#money,#moneyPerClick{
     font-size: 100px;
 }
 
-#start{
-    background-image: url('Images/Button.svg');
+@keyframes buttonAnimation {
+    0% { background-image: url('Images/Button.svg'); }
+    25% { background-image: url('Images/Button1.svg'); }
+    50% { background-image: url('Images/Button2.svg'); }
+    75% { background-image: url('Images/Button3.svg'); }
+    100% { background-image: url('Images/Button2.svg'); }
+}
+
+#start {
     width: 200px;
     height: 200px;
+    background-image: url('Images/Button.svg');
     background-repeat: no-repeat;
     background-size: 200px 200px;
     background-color: transparent;
-    border : none;
+    border: none;
+}
+
+#start.animate {
+    animation: buttonAnimation 0.5s linear  ;
 }
