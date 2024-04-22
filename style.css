@@ -1,0 +1,18 @@
+#button{
+    width: 200px;
+    height: 200px;
+}
+
+#score,#money,#moneyPerClick{
+    font-size: 100px;
+}
+
+#start{
+    background-image: url('Images/button.png');
+    width: 200px;
+    height: 200px;
+    background-repeat: no-repeat;
+    background-size: 200px 200px;
+    background-color: transparent;
+    border : none;
+}
