@@ -17,9 +17,9 @@ $(document).ready(function() {
     const bar = $("#bar");
     const levelDisplay = $("#level");
 
-    button.mousedown(function() { // Function to handle mouse down event on the button
+    button.mousedown(function() {               // Function to handle mouse down event on the button
         isMouseDown = true;
-        clearInterval(decreaseInterval); // Clear any ongoing decrease interval
+        clearInterval(decreaseInterval);           // Clear any ongoing decrease interval
         interval = setInterval(function() {
             clicksPerSecond++;
             if (isMouseDown) {
@@ -41,9 +41,9 @@ $(document).ready(function() {
         }, 150);
     });
 
-    button.mouseup(function() { // Function to handle mouse up event on the button
+    button.mouseup(function() {        // Function to handle mouse up event on the button
         isMouseDown = false;
-        clearInterval(interval); // Clear the interval for continuous increase
+        clearInterval(interval);      // Clear the interval for continuous increase
         startDecreaseInterval();
         increaseCounterLevel();
         clicksPerSecond = 0;
@@ -59,7 +59,7 @@ $(document).ready(function() {
         }
     });
 
-    function startDecreaseInterval() { // Function to start the decrease interval for counter level
+    function startDecreaseInterval() {          // Function to start the decrease interval for counter level
         decreaseInterval = setInterval(function() {
             if (counterLevel > 0) {
                 counterLevel -= 1;
@@ -74,7 +74,7 @@ $(document).ready(function() {
     function updateProgressBar() {
         bar.css('width', counterLevel + '%');
         if (counterLevel >= 100) {
-            spawnFunction(); // Call spawn function when counterLevel reaches 100
+            spawnFunction();          // Call spawn function when counterLevel reaches 100
             updateLevel();
         }
     }
@@ -95,7 +95,6 @@ $(document).ready(function() {
 
     function spawnFunction() {
         const smallButtons = [];
-        $(".small_button").remove();
         // Function to create and append small buttons
         for(let i = 0; i < 4; i++) {
             const randomX = Math.floor(Math.random() * ($(window).width() - 100));
@@ -103,16 +102,20 @@ $(document).ready(function() {
             let smallButton = $("<img>").addClass("small_button").attr("src", "Images/Small_button.svg").css({ top: randomY, left: randomX, position: "absolute", width: "100px", height: "100px" });
             $("body").append(smallButton);
             smallButtons.push(smallButton);
-            // Remove the small button after an interval
-            setTimeout(function() {
+            smallButton.click(function() {             // Add an event handler to remove the button on click
+                $(this).remove();
+                const index = smallButtons.indexOf($(this));  // Remove the button from the array
+                if (index !== -1) {
+                    smallButtons.splice(index, 1);
+                }
+            });
+            setTimeout(function() {                       // Remove the button automatically after a certain delay
                 smallButton.remove();
-                // Remove the button from the array
                 const index = smallButtons.indexOf(smallButton);
                 if (index !== -1) {
                     smallButtons.splice(index, 1);
                 }
-            }, i * 2000); // Each button is removed after an interval of 500ms
+            }, (i + 1) * 2000);                            // Each button is removed after an interval of 2 seconds
         }
     }
-});    
-
+});
