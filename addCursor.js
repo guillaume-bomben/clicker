@@ -39,13 +39,34 @@ $(document).ready(function(){
     }
 
     function animateCursors() {
-        // Define the animation
-
-      
-        // Apply the animation to the cursor elements
-        $('#cursor_div .cursor').css({
-          animation: `rotate-cursor 5s linear infinite`
-        });
-      }
+        let cursors = $('.cursor');
+        let angle = 0;
+        let speed = 0.01;
+    
+        setInterval(function() {
+            angle += speed;
+    
+            cursors.each(function(index) {
+                let cursor = $(this);
+                let angleBetweenCursors = 360 / cursorCount;
+                let cursorAngle = angleBetweenCursors * index + angle * 180 / Math.PI;
+    
+                let cx = centerX + Math.cos(cursorAngle * Math.PI / 180) * radius;
+                let cy = centerY + Math.sin(cursorAngle * Math.PI / 180) * radius;
+    
+                // Calculate angle towards the center
+                let angleToCenter = Math.atan2(centerY - cy, centerX - cx);
+                // Convert radians to degrees
+                let rotationAngle = angleToCenter * 180 / Math.PI;
+    
+                cursor.css({
+                    top: `${cy}px`,
+                    left: `${cx}px`,
+                    transform: `rotate(${rotationAngle + 90}deg)` // Apply rotation (+90 to adjust orientation)
+                });
+            });
+        }, 1000 / 60);
+    }
+    
     $('#add_cursor').on('click', instantiateCursor);
 });
