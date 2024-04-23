@@ -43,8 +43,9 @@ $(document).ready(function() {
         if (money >= OMEGAPRICE) {
             money -= OMEGAPRICE;
             totalSpend += OMEGAPRICE;
-            OMEGAPRICE += 1000;
-            moneyPerClick += 100;
+            OMEGAPRICE += OMEGAPRICE*5;
+            moneyPerClick += moneyPerClick*30;
+            price += price*20;
             $("#money").text(money + " $");
             $("#moneyPerClick").text(moneyPerClick + " $/click");
         }
