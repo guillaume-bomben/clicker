@@ -1,0 +1,88 @@
+body {
+    width: 1000px;
+    height: 550px;
+    overflow: hidden;
+}
+
+#score {
+    position: absolute;
+    top: 0%; 
+    left: 50%; 
+    transform: translate(-50%, -100%); 
+    font-size: 50px;
+    z-index: 1; 
+}
+
+#moneyPerClick {
+    top: 0%; 
+    left: 50%; 
+    position: absolute;
+    font-size: 50px;
+    transform: translate(-50%, -30%); 
+}
+
+#money {
+    top: 0%; 
+    left: 50%; 
+    position: absolute;
+    font-size: 50px;
+    transform: translate(-50%, 50%); 
+}
+
+#counterLevel {
+    top: 10%; /* Adjust as needed */
+    left: 50%; 
+    position: absolute;
+    font-size: 50px; /* Adjust as needed */
+    transform: translate(-50%, 0%); 
+}
+
+#upgrade {
+    top: 55%; 
+    left: 39%; 
+    position: absolute;
+}
+
+#button {
+    width: 200px;
+    height: 200px;
+    background-image: url('Images/Button.svg');
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border: none;
+    transition: background-image 0.15s;
+}
+
+@keyframes button-press {
+    0% {
+        background-image: url('Images/Button.svg');
+    }
+    20% {
+        background-image: url('Images/Button1.svg');
+    }
+    40% {
+        background-image: url('Images/Button2.svg');
+    }
+    60% {
+        background-image: url('Images/Button3.svg');
+    }
+    80% {
+        background-image: url('Images/Button2.svg');
+    }
+    100% {
+        background-image: url('Images/Button1.svg');
+    }
+}
+
+#button.animate {
+    animation: button-press 0.15s; 
+}
+
+#button_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw; /* optional, to center horizontally */
+    height: 100vh; /* optional, to center vertically */
+  }
+  
