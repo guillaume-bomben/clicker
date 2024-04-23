@@ -13,6 +13,8 @@ $(document).ready(function() {
    const button = $("#button");
    const score = $("#score");
     const counterDisplay = $("#counterLevel"); 
+    const spawn = $("#spawn"); 
+    const bar = $("#bar");
 
     button.mousedown(function() {              // Function to handle mouse down event on the button
         isMouseDown = true;
@@ -38,7 +40,6 @@ $(document).ready(function() {
         }, 150);
     });    
         
-
     button.mouseup(function() {                  // Function to handle mouse up event on the button
         isMouseDown = false;
         clearInterval(interval);            // Clear the interval for continuous increase
@@ -62,7 +63,7 @@ $(document).ready(function() {
         decreaseInterval = setInterval(function() {
             if (counterLevel > 0) {
                 counterLevel -= 1;
-                counterDisplay.text(counterLevel);
+                updateProgressBar();
             } else {
                 clearInterval(decreaseInterval);
                 introduceBonusButtons();
@@ -72,12 +73,33 @@ $(document).ready(function() {
             
     }
 
+    function updateProgressBar() {
+        bar.css('width', counterLevel + '%');
+    }
+
     function increaseCounterLevel() {         // Function to increase the counter level
-        if (counterLevel < 50) {
+        if (counterLevel < 100) {
             counterLevel += 2;
-            counterDisplay.text(counterLevel);
+            updateProgressBar();
         }
         
     }
+    
 
+});
+$("#spawn").click(function() {
+    $(".small_button").remove();
+    for (let i = 0; i < 4; i++) {
+        const randomX = Math.floor(Math.random() * ($(window).width() - 100));
+        const randomY = Math.floor(Math.random() * ($(window).height() - 100));
+        let smallButton = $("<img>").addClass("small_button").attr("src", "Images/Small_button.svg").css({ top: randomY, left: randomX, position: "absolute", width: "100px", height: "100px"});
+        $("body").append(smallButton);
+        smallButton.click(function() {
+            money += moneyPerClick*15;
+            totalMoney += moneyPerClick*15;
+            $("#money").text(money + " $");
+            $(this).remove();
+    
+        });
+    }
 });
