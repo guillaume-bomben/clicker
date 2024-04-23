@@ -38,6 +38,29 @@ $(document).ready(function(){
         animateCursors();
     }
 
+    function moveCursorToCenterAndBack(cursor) {
+        // Obtenez les coordonnées initiales du curseur
+        let initialPosition = cursor.position();
+        let initialLeft = initialPosition.left;
+        let initialTop = initialPosition.top;
+    
+        // Calculez les coordonnées du centre du cercle
+        let centerLeft = centerX;
+        let centerTop = centerY;
+    
+        // Animation pour déplacer le curseur vers le centre
+        cursor.animate({
+            left: centerLeft,
+            top: centerTop
+        }, 1000, function() {
+            // Animation pour ramener le curseur à sa position initiale après avoir atteint le centre
+            cursor.animate({
+                left: initialLeft,
+                top: initialTop
+            }, 1000);
+        });
+    }
+
     function animateCursors() {
         let cursors = $('.cursor');
         let angle = 0;
@@ -62,11 +85,15 @@ $(document).ready(function(){
                 cursor.css({
                     top: `${cy}px`,
                     left: `${cx}px`,
-                    transform: `rotate(${rotationAngle + 90}deg)` // Apply rotation (+90 to adjust orientation)
+                    transform: `rotate(${rotationAngle + 90}deg)`
                 });
+                moveCursorToCenterAndBack(cursor);
             });
         }, 1000 / 60);
     }
+
+
+    
     
     $('#add_cursor').on('click', instantiateCursor);
 });
