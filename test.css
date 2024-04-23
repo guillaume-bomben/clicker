@@ -60,7 +60,7 @@ body, html {
     margin-bottom: 10px;
   }
 
-#Big_button{
+  .Big_button{
     height: min(10.5vw, 15vh); 
     width: min(8.7vw, 12vh); 
     border: none;
@@ -71,11 +71,12 @@ body, html {
     background-image: url('Images/Button.svg');
     background-size: 100% 100%;
     padding: 0%;
+    transition: background-image 0.15s;
   }
 
   .cursor {
-    height: min(30vw, 40vh); 
-    width: min(30vw, 40vh);
+    height: min(40vw, 50vh); 
+    width: min(40vw, 50vh);
     display: grid;
     justify-content: center;
     align-items: center;

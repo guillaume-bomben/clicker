@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="test.css">
     <link rel="stylesheet" href="animations.css">
     <script src="test.js" defer></script>
+    <script src="script.js" defer></script>
+    <script src="addCursor.js" defer></script>
 </head>
 <body>
     <div class="wrapper">
@@ -15,11 +17,15 @@
             <div class="statistics_button"></div>
         </div>
         <div class="progress_bar"></div>
-        <div class="income"></div>
+        <div class="income">
+            <p id="score">0</p>
+            <p id="moneyPerClick">1</p>
+            <p id="money">0</p>
+        </div>
         <div class="playing_area">
             <div class="cursor">
                 <div class="button_">
-                    <button id="Big_button"></button>
+                    <button class="Big_button" id="Big_button_id"></button>
                 </div>
             </div>
         </div>
