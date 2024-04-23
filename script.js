@@ -66,7 +66,7 @@ $(document).ready(function() {
                 updateProgressBar();
             } else {
                 clearInterval(decreaseInterval);
-              //  introduceBonusButtons();
+
             }
         }, 100);
     }
@@ -93,17 +93,26 @@ $(document).ready(function() {
         }
     }
 
-    // Define spawn function
     function spawnFunction() {
+        const smallButtons = [];
         $(".small_button").remove();
-        for (let i = 0; i < 4; i++) {
+        // Function to create and append small buttons
+        for(let i = 0; i < 4; i++) {
             const randomX = Math.floor(Math.random() * ($(window).width() - 100));
             const randomY = Math.floor(Math.random() * ($(window).height() - 100));
             let smallButton = $("<img>").addClass("small_button").attr("src", "Images/Small_button.svg").css({ top: randomY, left: randomX, position: "absolute", width: "100px", height: "100px" });
             $("body").append(smallButton);
-            smallButton.click(function() {
-                $(this).remove(); // Remove the clicked small_button
-            });
+            smallButtons.push(smallButton);
+            // Remove the small button after an interval
+            setTimeout(function() {
+                smallButton.remove();
+                // Remove the button from the array
+                const index = smallButtons.indexOf(smallButton);
+                if (index !== -1) {
+                    smallButtons.splice(index, 1);
+                }
+            }, i * 2000); // Each button is removed after an interval of 500ms
         }
     }
-});
+});    
+
