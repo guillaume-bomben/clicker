@@ -31,10 +31,4 @@ $(document).ready(function() {
             $("#moneyPerClick").text(moneyPerClick);
         }
     });
-
-    var originalWidth = 1000;
-    var originalHeight = 550;
-
-    window.addEventListener('resize', function() {
-        this.window.resizeTo(originalWidth, originalHeight);});
 });
