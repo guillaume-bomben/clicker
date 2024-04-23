@@ -34,6 +34,11 @@ body{
     position: absolute;
 }
 
+#spawn {
+    top: 95%; /* adjust the value to position them as desired */
+    left: 0%; /* adjust the value to position them as desired */
+    position: absolute;
+}
 #stats {
     top: 5%; 
     left: 5%;
