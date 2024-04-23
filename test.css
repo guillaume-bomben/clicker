@@ -53,14 +53,24 @@ body, html {
   }
 
 #Big_button{
-    height: 10.5vw; 
-    width: 8.7vw; 
+    height: min(10.5vw, 15vh); 
+    width: min(8.7vw, 12vh); 
     border: none;
     background-repeat: no-repeat;
     justify-content: center;
     align-items: center;
     background-color: transparent;
     background-image: url('Images/Button.svg');
-    background-size: auto 100%;
+    background-size: 100% 100%;
+    padding: 0%;
+  }
 
+  .cursor {
+    height: min(30vw, 40vh); 
+    width: min(30vw, 40vh);
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent; 
+    border: 1px solid black;
   }
