@@ -1,23 +1,12 @@
 let cursorCount = 0;
 let cursorCost = 100; 
 let maxCursors = 10;
-let centerX = 550;
+let centerX = 555;
 let centerY = 280;
 let radius = 150;
 
 $(document).ready(function(){
-    function instantiateCursor() {
-        let circle = $('<svg><circle cx="50%" cy="50%" r="50" fill="none" stroke="black" stroke-width="2"></circle></svg>');
-        $('#cursor_div').append(circle);
-        let circleElement = circle.find('circle');
-        let path = circleElement.attr('d');
-        console.log(path);
-
-        $('#cursor_div svg circle').css({
-            'cx': '44.5%',
-            'cy': '47%',
-            'r': '15%'
-          });
+    function instantiateCursor() {      
         
         if (cursorCount >= maxCursors) {
             return;
@@ -46,6 +35,17 @@ $(document).ready(function(){
         }
 
         cursorCount++;
+        animateCursors();
     }
+
+    function animateCursors() {
+        // Define the animation
+
+      
+        // Apply the animation to the cursor elements
+        $('#cursor_div .cursor').css({
+          animation: `rotate-cursor 5s linear infinite`
+        });
+      }
     $('#add_cursor').on('click', instantiateCursor);
 });

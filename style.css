@@ -46,7 +46,7 @@ body{
 #button {
     width: 88px;
     height: 105px;
-    position: fixed;
+    /* position: fixed; */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -95,7 +95,7 @@ body{
   }
 
 
-  .cursor {
+.cursor {
     position: absolute;
     display: flex;
     top: 50%;
@@ -103,18 +103,16 @@ body{
     transform: translate(-50%, -50%);
   }
   
-  @keyframes move-cursor {
-    from {
-      top: 50%;
-      left: 50%;
+@keyframes rotate-cursor {
+    0% {
+      transform: translate(-50%, -50%) rotate(0deg);
     }
-    to {
-      top: 50% + 40 * sin(360deg * (cursorCount / maxCursors));
-      left: 50% + 40 * cos(360deg * (cursorCount / maxCursors));
+    100% {
+      transform: translate(-50%, -50%) rotate(360deg);
     }
   }
 
-  #button_div svg {
+#button_div svg {
     display: flex;
     top: 50%;
     left: 50%;
@@ -123,7 +121,7 @@ body{
     height: 100%;
   }
 
-  #cursor_div{
+#cursor_div{
     display: flex;
   }
   
