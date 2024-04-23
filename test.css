@@ -56,7 +56,11 @@ body, html {
     display: grid;
     grid-template-columns: 6fr;
     grid-row-gap: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
   }
+
+
 
 #Big_button{
     height: min(10.5vw, 15vh); 
@@ -103,12 +107,14 @@ body, html {
     background-image: url('Images/Upgrade_cursor_income.svg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
+
   }
 
   .cursor_speed{
     background-image: url('Images/Upgrade_cursor_speed.svg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
+
   }
 
   .upgrade_button{
