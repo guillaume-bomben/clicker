@@ -1,6 +1,8 @@
 $(document).ready(function(){
     $('.increase_income').on('click', function() {
         console.log('Increase income clicked');
+
+        
       });
 
       $('.add_cursor').on('click', function() {
