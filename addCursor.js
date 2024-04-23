@@ -39,28 +39,21 @@ $(document).ready(function(){
     }
 
     function moveCursorToCenterAndBack(cursor) {
-        // Obtenez les coordonnées initiales du curseur
         let initialPosition = cursor.position();
         let initialLeft = initialPosition.left;
         let initialTop = initialPosition.top;
     
-        // Calculez les coordonnées du centre du cercle
         let centerLeft = centerX;
         let centerTop = centerY;
     
-        // Animation pour déplacer le curseur vers le centre
         cursor.animate({
             left: centerLeft,
             top: centerTop
-        }, 1000, function() {
-            // Animation pour ramener le curseur à sa position initiale après avoir atteint le centre
-            cursor.animate({
-                left: initialLeft,
-                top: initialTop
-            }, 1000);
+        }, {
+            duration: 1000,
         });
     }
-
+    
     function animateCursors() {
         let cursors = $('.cursor');
         let angle = 0;
@@ -71,7 +64,7 @@ $(document).ready(function(){
     
             cursors.each(function(index) {
                 let cursor = $(this);
-                let angleBetweenCursors = 360 / cursorCount;
+                let angleBetweenCursors = 360 / cursors.length;
                 let cursorAngle = angleBetweenCursors * index + angle * 180 / Math.PI;
     
                 let cx = centerX + Math.cos(cursorAngle * Math.PI / 180) * radius;
@@ -87,13 +80,23 @@ $(document).ready(function(){
                     left: `${cx}px`,
                     transform: `rotate(${rotationAngle + 90}deg)`
                 });
-                moveCursorToCenterAndBack(cursor);
             });
         }, 1000 / 60);
+
+        setInterval(function() {
+            let delay = 0;
+            cursors.each(function(index) {
+                let cursor = $(this);
+                setTimeout(function() {
+                    moveCursorToCenterAndBack(cursor);
+                }, delay);
+                delay += 1000;
+                console.log(delay);
+            });
+        }, 10000); 
     }
-
-
     
-    
+    animateCursors();
+
     $('#add_cursor').on('click', instantiateCursor);
 });
