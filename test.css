@@ -53,6 +53,9 @@ body, html {
     background-image: url('Images/Upgrades.svg');
     background-repeat: no-repeat;
     background-size: auto auto;
+    display: grid;
+    grid-template-columns: 6fr;
+    grid-row-gap: 10px;
   }
 
 #Big_button{
@@ -76,4 +79,40 @@ body, html {
     align-items: center;
     background-color: transparent; 
     border: 1px solid black;
+  }
+
+  .increase_income{
+    background-image: url('Images/Upgrade_increase_income.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+
+  .add_cursor{
+    background-image: url('Images/Upgrade_add_cursor.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+
+  .merge_cursors{
+    background-image: url('Images/Upgrade_merge_cursors.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+
+  .cursor_income{
+    background-image: url('Images/Upgrade_cursor_income.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+
+  .cursor_speed{
+    background-image: url('Images/Upgrade_cursor_speed.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+
+  .upgrade_button{
+    background-image: url('Images/Upgrade_button.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
   }
