@@ -14,6 +14,7 @@ $(document).ready(function() {
         clickCounter++;
         totalMoney += moneyPerClick;
         show_money();
+        show_money_per_click();
         $(this).addClass('animate');
         $(this).one('animationend', function() {
             $(this).removeClass('animate');
@@ -33,6 +34,7 @@ $(document).ready(function() {
                 moneyPerClick += 1;
             }
             show_money();
+            show_money_per_click();
         }
         save();
     });
@@ -48,8 +50,8 @@ $(document).ready(function() {
             OMEGAPRICE += OMEGAPRICE*100;
             moneyPerClick += moneyPerClick*20;
             price += price*20;
-            $("#money").text(money + " $");
-            $("#moneyPerClick").text(moneyPerClick + " $/click");
+            show_money();
+            show_money_per_click();
         }
         else {
             alert("You poor XD");
@@ -78,16 +80,14 @@ async function spawn(){
             smallButton.click(function() {
                 money += moneyPerClick*15;
                 totalMoney += moneyPerClick*15;
-                // $("#money").text(money + " $");
                 $(this).remove();
                 save();
             });
         }
 }
 
-function show_money(){
+async function show_money(){
     let money_to_show = money;
-    let moneyPerClick_to_show = moneyPerClick;
     if (money_to_show < 1000) {
         $("#money").text(money_to_show.toFixed(1) + " $");
     }
@@ -107,5 +107,27 @@ function show_money(){
         money_to_show = (money_to_show / 1000000000000).toFixed(1) + "T";
         $("#money").text(money_to_show + " $");
     }
-    $("#moneyPerClick").text(moneyPerClick_to_show.toFixed(1) + " $/click");
+}
+
+async function show_money_per_click(){
+    let moneyPerClick_to_show = moneyPerClick;
+    if (moneyPerClick_to_show < 1000) {
+        $("#moneyPerClick").text(moneyPerClick_to_show.toFixed(1) + " $/click");
+    }
+    else if (moneyPerClick_to_show > 1000 && moneyPerClick_to_show < 1000000) {
+        moneyPerClick_to_show = (moneyPerClick_to_show / 1000).toFixed(1) + "k";
+        $("#moneyPerClick").text(moneyPerClick_to_show + " $/click");
+    }
+    else if (moneyPerClick_to_show > 1000000 && moneyPerClick_to_show < 1000000000) {
+        moneyPerClick_to_show = (moneyPerClick_to_show / 1000000).toFixed(1) + "M";
+        $("#moneyPerClick").text(moneyPerClick_to_show + " $/click");
+    }
+    else if (moneyPerClick_to_show > 1000000000 && moneyPerClick_to_show < 1000000000000) {
+        moneyPerClick_to_show = (moneyPerClick_to_show / 1000000000).toFixed(1) + "B";
+        $("#moneyPerClick").text(moneyPerClick_to_show + " $/click");
+    }
+    else if (moneyPerClick_to_show > 1000000000000){
+        moneyPerClick_to_show = (moneyPerClick_to_show / 1000000000000).toFixed(1) + "T";
+        $("#moneyPerClick").text(moneyPerClick_to_show + " $/click");
+    }
 }
