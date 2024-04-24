@@ -1,10 +1,10 @@
-var money = 0;
-var totalMoney = 0;
-var totalSpend = 0;
-var moneyPerClick = 1;
-var clickCounter = 0;
-var price = 10;
-var OMEGAPRICE = 1000;
+let money = 0;
+let totalMoney = 0;
+let totalSpend = 0;
+let moneyPerClick = 1;
+let clickCounter = 0;
+let price = 10;
+let OMEGAPRICE = 1000;
 
 $(document).ready(function() {
     const button = $(".Big_button");
@@ -13,8 +13,6 @@ $(document).ready(function() {
         money += moneyPerClick;
         clickCounter++;
         totalMoney += moneyPerClick;
-        // $("#money").text(money + " $");
-        // $("#moneyPerClick").text(moneyPerClick + " $/click");
         show_money();
         $(this).addClass('animate');
         $(this).one('animationend', function() {
@@ -90,9 +88,24 @@ async function spawn(){
 function show_money(){
     let money_to_show = money;
     let moneyPerClick_to_show = moneyPerClick;
-    if (money_to_show > 1000) {
-        money_to_show = (money_to_show / 1000) + "k";
+    if (money_to_show < 1000) {
+        $("#money").text(money_to_show.toFixed(1) + " $");
     }
-    $("#money").text(money_to_show.toFixed(1) + " $");
+    else if (money_to_show > 1000 && money_to_show < 1000000) {
+        money_to_show = (money_to_show / 1000).toFixed(1) + "k";
+        $("#money").text(money_to_show + " $");
+    }
+    else if (money_to_show > 1000000 && money_to_show < 1000000000) {
+        money_to_show = (money_to_show / 1000000).toFixed(1) + "M";
+        $("#money").text(money_to_show + " $");
+    }
+    else if (money_to_show > 1000000000 && money_to_show < 1000000000000) {
+        money_to_show = (money_to_show / 1000000000).toFixed(1) + "B";
+        $("#money").text(money_to_show + " $");
+    }
+    else if (money_to_show > 1000000000000){
+        money_to_show = (money_to_show / 1000000000000).toFixed(1) + "T";
+        $("#money").text(money_to_show + " $");
+    }
     $("#moneyPerClick").text(moneyPerClick_to_show.toFixed(1) + " $/click");
 }
