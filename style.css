@@ -31,7 +31,7 @@ body {
 
 #counterLevel {
     top: 10%; /* Adjust as needed */
-    left: 50%; 
+    right: 50%; 
     position: absolute;
     font-size: 50px; /* Adjust as needed */
     transform: translate(-50%, 0%); 
@@ -82,7 +82,37 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100vw; /* optional, to center horizontally */
-    height: 100vh; /* optional, to center vertically */
+    width: 100vw; 
+    height: 100vh; 
   }
-  
+#spawn{
+    top: 55%; 
+    left: 100px; 
+    position: absolute;
+}
+.progress-bar {
+    width: 200px;
+    height: 30px;
+    border: 1px solid #000;
+    overflow: hidden;
+}
+
+.bar {
+    top: 0%; 
+    left: 100px;
+    width: 100vh;
+    height: 100vh;
+    background-color: green;
+    transition: width 0.15s ease;
+    
+}
+.level {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    bottom: 10%;
+    transform: translate(-50%, 20%);
+    font-size: 20px;
+    color:blue;
+
+}
