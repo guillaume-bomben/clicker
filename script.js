@@ -70,22 +70,6 @@ async function save() {
     localStorage.setItem("OMEGAPRICE", OMEGAPRICE);
 };
 
-async function spawn(){
-    $(".small_button").remove();
-        for (let i = 0; i < 4; i++) {
-            const randomX = Math.floor(Math.random() * ($(window).width() - 100));
-            const randomY = Math.floor(Math.random() * ($(window).height() - 100));
-            let smallButton = $("<img>").addClass("small_button").attr("src", "Images/Small_button.svg").css({ top: randomY, left: randomX, position: "absolute", width: "100px", height: "100px"});
-            $("body").append(smallButton);
-            smallButton.click(function() {
-                money += moneyPerClick*15;
-                totalMoney += moneyPerClick*15;
-                $(this).remove();
-                save();
-            });
-        }
-}
-
 async function show_money(){
     let money_to_show = money;
     if (money_to_show < 1000) {
