@@ -9,6 +9,8 @@ let OMEGAPRICE = 1000;
 $(document).ready(function() {
     const button = $(".Big_button");
     save();
+    buttonVerification();
+
     button.click(function() {
         money += moneyPerClick;
         clickCounter++;
@@ -20,13 +22,14 @@ $(document).ready(function() {
             $(this).removeClass('animate');
         });
         save();
+        buttonVerification();
     });
 
     $(".increase_income").click(function() {
         if (money >= price) {
             money -= price;
             totalSpend += price;
-            price += 10;
+            price += price;
             if (price > 100) {
                 moneyPerClick = moneyPerClick * 1.2;
             }
@@ -37,6 +40,7 @@ $(document).ready(function() {
             show_money_per_click();
         }
         save();
+        buttonVerification();
     });
     
     $(".statistics_button").click(function() {
@@ -91,7 +95,7 @@ async function show_money(){
         money_to_show = (money_to_show / 1000000000000).toFixed(1) + "T";
         $("#money").text(money_to_show + " $");
     }
-}
+};
 
 async function show_money_per_click(){
     let moneyPerClick_to_show = moneyPerClick;
@@ -114,4 +118,28 @@ async function show_money_per_click(){
         moneyPerClick_to_show = (moneyPerClick_to_show / 1000000000000).toFixed(1) + "T";
         $("#moneyPerClick").text(moneyPerClick_to_show + " $/click");
     }
-}
+};
+
+async function load() {
+    money = parseFloat(localStorage.getItem("money"));
+    totalMoney = parseFloat(localStorage.getItem("totalMoney"));
+    totalSpend = parseFloat(localStorage.getItem("totalSpend"));
+    moneyPerClick = parseFloat(localStorage.getItem("moneyPerClick"));
+    clickCounter = parseFloat(localStorage.getItem("clickCounter"));
+    price = parseFloat(localStorage.getItem("price"));
+    OMEGAPRICE = parseFloat(localStorage.getItem("OMEGAPRICE"));
+    show_money();
+    show_money_per_click();
+};
+
+async function buttonVerification() {
+        let button = $(".increase_income");
+        if (money < price) {
+            button.addClass('disabled');
+            button.css('background-image', 'url("Images/Upgrade_increase_income_disable.svg")');
+        }
+        else {
+            button.removeClass('disabled');
+            button.css('background-image', 'url("Images/Upgrade_increase_income.svg")');
+        }
+};
