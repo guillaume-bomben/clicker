@@ -59,34 +59,52 @@ $(document).ready(function() {
         }
     });
 
-    function startDecreaseInterval() {          // Function to start the decrease interval for counter level
+    function startDecreaseInterval() {
+        clearInterval(decreaseInterval);
+        let decreaseValue = 100; // Start the countdown from 100
+        const countdownDuration = 8000; // Countdown duration in milliseconds (4 seconds)
+        const decreaseStep = 100 / (countdownDuration / 100); // Calculate the decrease step per millisecond
+    
         decreaseInterval = setInterval(function() {
-            if (counterLevel > 0) {
-                counterLevel -= 1;
+            decreaseValue -= decreaseStep;
+            if (decreaseValue >= 0) {
+                counterLevel = decreaseValue;
                 updateProgressBar();
             } else {
                 clearInterval(decreaseInterval);
-
+                counterLevel = 0; 
+                updateProgressBar();
+                button.attr('disabled', false);
+                // Additional logic can be added here if needed after the countdown completes
             }
-        }, 100);
+        }, 100); // Update every 100 milliseconds
     }
+    
 
     function updateProgressBar() {
         bar.css('width', counterLevel + '%');
         if (counterLevel >= 100) {
-            spawnFunction();          // Call spawn function when counterLevel reaches 100
+            button.attr('disabled', true);
+            startDecreaseInterval();
+            //counterLevel = 0;
+            spawnFunction();          
             updateLevel();
-        }
-    }
+    //else{
+        //increaseCounterLevel();
+  //  }
 
-    function increaseCounterLevel() { // Function to increase the counter level
-        if (counterLevel < 100) {
-            counterLevel += 2;
-            updateProgressBar();
-        }
     }
-    function updateLevel() {
-        if (counterLevel >= 100) {
+}
+
+function increaseCounterLevel() { // Function to increase the counter level
+    if (counterLevel < 100) {
+        counterLevel += 2 ;
+        updateProgressBar();
+        
+    }
+}
+function updateLevel() {
+    if (counterLevel >= 100) {
             level++;
             counterLevel = 0;
             levelDisplay.text("Level: " + level);
@@ -115,7 +133,7 @@ $(document).ready(function() {
                 if (index !== -1) {
                     smallButtons.splice(index, 1);
                 }
-            }, (i + 1) * 2000);                            // Each button is removed after an interval of 2 seconds
+            }, (i + 1) * 2000);                            
         }
     }
 });
