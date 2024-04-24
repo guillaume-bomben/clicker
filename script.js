@@ -34,7 +34,7 @@ $(document).ready(function() {
             money -= price_income;
             totalSpend += price_income;
             price_income += price_income;
-            if (price_income > 100) {
+            if (price_income > 5120) {
                 moneyPerClick = moneyPerClick * 1.2;
             }
             else {
@@ -53,7 +53,6 @@ $(document).ready(function() {
             totalSpend += price_add_cursor;
             price_add_cursor += price_add_cursor;
             show_money();
-            alert("You added new cursor!");
         }
         save();
         buttonVerification();
@@ -65,7 +64,6 @@ $(document).ready(function() {
             totalSpend += price_merge_cursor;
             price_merge_cursor += price_merge_cursor;
             show_money();
-            alert("You merged all your cursors into one big cursor!");
         }
         save();
         buttonVerification();
