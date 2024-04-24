@@ -3,7 +3,11 @@ let totalMoney = 0;
 let totalSpend = 0;
 let moneyPerClick = 1;
 let clickCounter = 0;
-let price = 10;
+let price_income = 10;
+let price_add_cursor = 10;
+let price_merge_cursor = 100;
+let price_cursor_income = 100;
+let price_cursor_speed = 1000;
 let OMEGAPRICE = 1000;
 
 $(document).ready(function() {
@@ -26,11 +30,11 @@ $(document).ready(function() {
     });
 
     $(".increase_income").click(function() {
-        if (money >= price) {
-            money -= price;
-            totalSpend += price;
-            price += price;
-            if (price > 100) {
+        if (money >= price_income) {
+            money -= price_income;
+            totalSpend += price_income;
+            price_income += price_income;
+            if (price_income > 100) {
                 moneyPerClick = moneyPerClick * 1.2;
             }
             else {
@@ -43,6 +47,55 @@ $(document).ready(function() {
         buttonVerification();
     });
     
+    $(".add_cursor").click(function() {
+        if (money >= price_add_cursor) {
+            money -= price_add_cursor;
+            totalSpend += price_add_cursor;
+            price_add_cursor += price_add_cursor;
+            show_money();
+            alert("You added new cursor!");
+        }
+        save();
+        buttonVerification();
+    });
+
+    $(".merge_cursors").click(function() {
+        if (money >= price_merge_cursor) {
+            money -= price_merge_cursor;
+            totalSpend += price_merge_cursor;
+            price_merge_cursor += price_merge_cursor;
+            show_money();
+            alert("You merged all your cursors into one big cursor!");
+        }
+        save();
+        buttonVerification();
+    });
+    
+    $(".cursor_income").click(function() {
+        if (money >= price_cursor_income) {
+            money -= price_cursor_income;
+            totalSpend += price_cursor_income;
+            price_cursor_income += price_cursor_income;
+            show_money();
+            alert("You increased your cursor income!");
+        }
+        save();
+        buttonVerification();
+    });
+
+    $(".cursor_speed").click(function() {
+        if (money >= price_cursor_speed) {
+            money -= price_cursor_speed;
+            totalSpend += price_cursor_speed;
+            price_cursor_speed += price_cursor_speed;
+            show_money();
+            alert("You increased your cursor speed!");
+        }
+        save();
+        buttonVerification();
+    });
+
+
     $(".statistics_button").click(function() {
         alert("Total money earned: " + totalMoney + "$\n" + "Total money spend: " + totalSpend + "$\n" + "Total clicks: " + clickCounter)
     });
@@ -53,7 +106,7 @@ $(document).ready(function() {
             totalSpend += OMEGAPRICE;
             OMEGAPRICE += OMEGAPRICE*100;
             moneyPerClick += moneyPerClick*20;
-            price += price*20;
+            price_income += price_income*20;
             show_money();
             show_money_per_click();
         }
@@ -70,7 +123,7 @@ async function save() {
     localStorage.setItem("totalSpend", totalSpend);
     localStorage.setItem("moneyPerClick", moneyPerClick);
     localStorage.setItem("clickCounter", clickCounter);
-    localStorage.setItem("price", price);
+    localStorage.setItem("price_income", price_income);
     localStorage.setItem("OMEGAPRICE", OMEGAPRICE);
 };
 
@@ -126,20 +179,89 @@ async function load() {
     totalSpend = parseFloat(localStorage.getItem("totalSpend"));
     moneyPerClick = parseFloat(localStorage.getItem("moneyPerClick"));
     clickCounter = parseFloat(localStorage.getItem("clickCounter"));
-    price = parseFloat(localStorage.getItem("price"));
+    price_income = parseFloat(localStorage.getItem("price_income"));
     OMEGAPRICE = parseFloat(localStorage.getItem("OMEGAPRICE"));
     show_money();
     show_money_per_click();
 };
 
 async function buttonVerification() {
-        let button = $(".increase_income");
-        if (money < price) {
-            button.addClass('disabled');
-            button.css('background-image', 'url("Images/Upgrade_increase_income_disable.svg")');
-        }
-        else {
-            button.removeClass('disabled');
-            button.css('background-image', 'url("Images/Upgrade_increase_income.svg")');
-        }
+    buttonIncomeVerification();
+    buttonUpgradeVerification();
+    buttonAddCursorVerification();
+    buttonMergeCursorVerification();
+    buttonCursorIncomeVerification();
+    buttonCursorSpeedVerification();
+}
+
+async function buttonIncomeVerification() {
+    const buttonIncome = $(".increase_income");
+    if (money < price_income) {
+        buttonIncome.addClass('disabled');
+        buttonIncome.css('background-image', 'url("Images/Upgrade_increase_income_disable.svg")');
+    }
+    else {
+        buttonIncome.removeClass('disabled');
+        buttonIncome.css('background-image', 'url("Images/Upgrade_increase_income.svg")');
+    }
 };
+
+async function buttonUpgradeVerification() {
+    const buttonUpgrade = $(".upgrade_button");
+    if (money < OMEGAPRICE) {
+        buttonUpgrade.addClass('disabled');
+        buttonUpgrade.css('background-image', 'url("Images/Upgrade_button_disable.svg")');
+    }
+    else {
+        buttonUpgrade.removeClass('disabled');
+        buttonUpgrade.css('background-image', 'url("Images/Upgrade_button.svg")');
+    }
+}
+
+async function buttonAddCursorVerification() {
+    const buttonAddCursor = $(".add_cursor");
+    if (money < price_add_cursor) {
+        buttonAddCursor.addClass('disabled');
+        buttonAddCursor.css('background-image', 'url("Images/Upgrade_add_cursor_disable.svg")');
+    }
+    else {
+        buttonAddCursor.removeClass('disabled');
+        buttonAddCursor.css('background-image', 'url("Images/Upgrade_add_cursor.svg")');
+    }
+}
+
+async function buttonMergeCursorVerification() {
+    const buttonMergeCursor = $(".merge_cursors");
+    if (money < price_merge_cursor) {
+        buttonMergeCursor.addClass('disabled');
+        buttonMergeCursor.css('background-image', 'url("Images/Upgrade_merge_cursors_disable.svg")');
+    }
+    else {
+        buttonMergeCursor.removeClass('disabled');
+        buttonMergeCursor.css('background-image', 'url("Images/Upgrade_merge_cursors.svg")');
+    }
+}
+
+async function buttonCursorIncomeVerification() {
+    const buttonCursorIncome = $(".cursor_income");
+    if (money < price_cursor_income) {
+        buttonCursorIncome.addClass('disabled');
+        buttonCursorIncome.css('background-image', 'url("Images/Upgrade_cursor_income_disable.svg")');
+    }
+    else {
+        buttonCursorIncome.removeClass('disabled');
+        buttonCursorIncome.css('background-image', 'url("Images/Upgrade_cursor_income.svg")');
+    }
+}
+
+async function buttonCursorSpeedVerification() {
+    const buttonCursorSpeed = $(".cursor_speed");
+    if (money < price_cursor_speed) {
+        buttonCursorSpeed.addClass('disabled');
+        buttonCursorSpeed.css('background-image', 'url("Images/Upgrade_cursor_speed_disable.svg")');
+    }
+    else {
+        buttonCursorSpeed.removeClass('disabled');
+        buttonCursorSpeed.css('background-image', 'url("Images/Upgrade_cursor_speed.svg")');
+    }
+}
