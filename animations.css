@@ -1,0 +1,102 @@
+.increase_income:active {
+    transform: scale(0.9);
+}
+
+.increase_income:active.animate {
+    animation: pulse 0.5s ease-in-out;
+}
+.add_cursor:active {
+    transform: scale(0.9);
+}
+
+.add_cursor:active.animate {
+    animation: pulse 0.5s ease-in-out;
+}
+
+.merge_cursors:active {
+    transform: scale(0.9);
+}
+
+.merge_cursors:active.animate {
+    animation: pulse 0.5s ease-in-out;
+}
+
+.cursor_income:active {
+    transform: scale(0.9);
+}
+
+.cursor_income:active.animate {
+    animation: pulse 0.5s ease-in-out;
+}
+
+.cursor_speed:active {
+    transform: scale(0.9);
+}
+
+.cursor_speed:active.animate {
+    animation: pulse 0.5s ease-in-out;
+}
+
+.upgrade_button:active {
+    transform: scale(0.9);
+}
+
+.upgrade_button:active.animate {
+    animation: pulse 0.5s ease-in-out;
+}
+
+.settings_button:active {
+    transform: scale(0.7);
+}
+
+.settings_button:active.animate {
+    animation: pulse 0.5s ease-in-out;
+}
+
+.statistics_button:active {
+    transform: scale(0.7);
+}
+
+.statistics_button:active.animate {
+    animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes button-press {
+    0% {
+        background-image: url('Images/Button.svg');
+    }
+    20% {
+        background-image: url('Images/Button1.svg');
+    }
+    40% {
+        background-image: url('Images/Button2.svg');
+    }
+    60% {
+        background-image: url('Images/Button3.svg');
+    }
+    80% {
+        background-image: url('Images/Button2.svg');
+    }
+    100% {
+        background-image: url('Images/Button1.svg');
+    }
+}
+
+.Big_button:active.animate {
+    animation: button-press 0.15s;
+}
+.animate {
+    animation: button-press 0.15s;
+}

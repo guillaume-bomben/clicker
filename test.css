@@ -1,0 +1,151 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 3fr 2fr;
+    grid-template-rows: 1fr 5fr;
+    height: 100vh;
+    grid-row-gap: 0px;
+    grid-column-gap: 10px; 
+    background-color: aqua;
+    margin: 0px;
+    padding: 0px;
+  }
+body, html {
+    margin: 0px;
+    padding: 0px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.settings, .progress_bar, .income {
+    grid-row: 1;
+    height: calc(1/6 * 100vh);
+}   
+.settings {
+    background-color: bisque;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.progress_bar {
+    background-color: blanchedalmond;
+}
+
+.income {
+    background-color: burlywood;
+    margin-bottom: 10px;
+}
+  
+.playing_area {
+    grid-column: 1 / 3;
+    grid-row: 2;
+    width: calc(2 / 3 * 100vw);
+    height: calc(5/6 * 100vh);
+    background-color: aliceblue;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+  }
+  
+.upgrades {
+    grid-column: 3;
+    grid-row: 2;
+    width: calc(1 / 3 * 100vw);
+    height: calc(5/6 * 100vh);
+    background-color: beige;
+    background-repeat: no-repeat;
+    background-size: auto auto;
+    display: grid;
+    grid-template-columns: 6fr;
+    grid-row-gap: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  .Big_button{
+    height: min(10.5vw, 15vh); 
+    width: min(8.7vw, 12vh); 
+    border: none;
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    background-image: url('Images/Button.svg');
+    background-size: 100% 100%;
+    padding: 0%;
+    transition: background-image 0.15s;
+  }
+
+  .cursor {
+    height: min(40vw, 50vh); 
+    width: min(40vw, 50vh);
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent; 
+    border: 1px solid black;
+  }
+
+  .increase_income{
+    background-image: url('Images/Upgrade_increase_income.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .add_cursor{
+    background-image: url('Images/Upgrade_add_cursor.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .merge_cursors{
+    background-image: url('Images/Upgrade_merge_cursors.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .cursor_income{
+    background-image: url('Images/Upgrade_cursor_income.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .cursor_speed{
+    background-image: url('Images/Upgrade_cursor_speed.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .upgrade_button{
+    background-image: url('Images/Upgrade_button.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .settings_button{
+    background-image: url('Images/Settings.svg');
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    background-position: center;
+    transition: transform 0.3s;
+  }
+
+  .statistics_button{
+    background-image: url('Images/Stats.svg');
+    background-size: 50% 50%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    background-position: center;
+    transition: transform 0.3s;
+  }
