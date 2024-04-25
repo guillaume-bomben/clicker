@@ -100,3 +100,16 @@
 .animate {
     animation: button-press 0.15s;
 }
+
+@keyframes small-button-press {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.small-button-press {
+    animation: small-button-press 0.15s;
+}
