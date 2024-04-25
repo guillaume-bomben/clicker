@@ -68,7 +68,7 @@ body, html {
     justify-content: center;
     align-items: center;
     background-color: transparent;
-    background-image: url('Images/Button.svg');
+    background-image: url('../assets/images/Button.svg');
     background-size: 100% 100%;
     padding: 0%;
     transition: background-image 0.15s;
@@ -85,7 +85,7 @@ body, html {
   }
 
   .increase_income{
-    background-image: url('Images/Upgrade_increase_income.svg');
+    background-image: url('../assets/images/Upgrade_increase_income.svg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -93,7 +93,7 @@ body, html {
   }
 
   .add_cursor{
-    background-image: url('Images/Upgrade_add_cursor.svg');
+    background-image: url('../assets/images/Upgrade_add_cursor.svg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -101,7 +101,7 @@ body, html {
   }
 
   .merge_cursors{
-    background-image: url('Images/Upgrade_merge_cursors.svg');
+    background-image: url('../assets/images/Upgrade_merge_cursors.svg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -109,7 +109,7 @@ body, html {
   }
 
   .cursor_income{
-    background-image: url('Images/Upgrade_cursor_income.svg');
+    background-image: url('../assets/images/Upgrade_cursor_income.svg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -117,7 +117,7 @@ body, html {
   }
 
   .cursor_speed{
-    background-image: url('Images/Upgrade_cursor_speed.svg');
+    background-image: url('../assets/images/Upgrade_cursor_speed.svg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -125,7 +125,7 @@ body, html {
   }
 
   .upgrade_button{
-    background-image: url('Images/Upgrade_button.svg');
+    background-image: url('../assets/images/Upgrade_button.svg');
     background-size: 100% 100%;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -133,7 +133,7 @@ body, html {
   }
 
   .settings_button{
-    background-image: url('Images/Settings.svg');
+    background-image: url('../assets/images/Settings.svg');
     background-size: 50% 50%;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -142,7 +142,7 @@ body, html {
   }
 
   .statistics_button{
-    background-image: url('Images/Stats.svg');
+    background-image: url('../assets/images/Stats.svg');
     background-size: 50% 50%;
     background-repeat: no-repeat;
     cursor: pointer;
