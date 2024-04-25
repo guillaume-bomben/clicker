@@ -4,23 +4,16 @@ $(document).ready(function() {
     let interval;
     let decreaseInterval;
     let isMouseDown = false;
-    let progressContainer;
-    let progressBar;
-    let bar;
-    let levelDisplay;
-    let button;
-    let smallButtons;
 
-    progressContainer = $(".progress_bar");
-    progressBar = $("<div>").addClass("progress-bar");
-    bar = $("<div>").addClass("bar").attr("id", "bar");
-    levelDisplay = $("<div>").addClass("level").attr("id", "level").text("Level 1");
+    let progressContainer = $(".progress_bar");
+    let progressBar = $("<div>").addClass("progress-bar");
+    let bar = $("<div>").addClass("bar").attr("id", "bar");
+    let levelDisplay = $("<div>").addClass("level").attr("id", "level").text("Level 1");
+    let button = $(".Big_button");
     
     progressBar.append(bar);
     progressBar.append(levelDisplay);
     progressContainer.append(progressBar);
-
-    button = $(".Big_button");
 
     button.mousedown(function() {
         isMouseDown = true;
@@ -40,27 +33,6 @@ $(document).ready(function() {
         increaseCounterLevel();
         updateProgressBar();
     });
-
-    function startDecreaseInterval() {
-        clearInterval(decreaseInterval);
-        const countdownDuration = 8000;
-        const decreaseStep = 100 / (countdownDuration / 100);
-        const countdownDurationLevelUp = 4000;
-        const decreaseStepLevelUp = 100 / (countdownDurationLevelUp / 100);
-        decreaseInterval = setInterval(function() {
-            if (!isMouseDown) {
-                counterLevel -= decreaseStep;
-                if (counterLevel >= 0) {
-                    updateProgressBar();
-                } else {
-                    clearInterval(decreaseInterval);
-                    counterLevel -= decreaseStepLevelUp ;
-                    updateProgressBar();
-                    button.attr('disabled', false);
-                }
-            }
-        }, 100);
-    }
     
     function updateProgressBar() {
         const percentage = counterLevel + '%';
@@ -69,9 +41,8 @@ $(document).ready(function() {
         bar.css('background-color', `hsl(${hue}, 100%, 50%)`); 
         if (counterLevel >= 100) {
           button.attr('disabled', true);
-          startDecreaseInterval();
+          decreaseLevelUp();
           spawnBonusButtons();
-          updateLevel();
         }
       }
 
@@ -85,34 +56,52 @@ $(document).ready(function() {
     function updateLevel() {
         if (counterLevel >= 100) {
             level++;
-            counterLevel = 0;
             levelDisplay.text("Level " + level);
-            decreaseLevelUp();
         }
     }
 
-    function decreaseLevelUp() {
-        button.attr('disabled', true);
+    function startDecreaseInterval() {
         clearInterval(decreaseInterval);
-        const countdownDurationLevelUp = 4000; // 4 seconds
-        const remainingProgress = 100 - counterLevel;
-        const decreaseStepLevelUp = remainingProgress / (countdownDurationLevelUp / 100);
+        const totalDuration = 8000;
+        const decreaseIntervalDuration = 100; 
+        let decreaseStep = 100 / (totalDuration / decreaseIntervalDuration);
         decreaseInterval = setInterval(function() {
-          if (!isMouseDown) {
-            counterLevel -= decreaseStepLevelUp;
-            if (counterLevel >= 0) {
-              updateProgressBar();
-            } else {
-              clearInterval(decreaseInterval);
-              counterLevel = 0;
-              updateProgressBar();
-              button.attr('disabled', false);
+            if (!isMouseDown) {
+                counterLevel -= decreaseStep;
+                if (counterLevel >= 0) {
+                    updateProgressBar();
+                } else {
+                    clearInterval(decreaseInterval);
+                    counterLevel = 0;
+                    updateProgressBar();
+                    button.attr('disabled', false);
+                }
             }
-          }
-        }, 40); // Decrease every 40ms (1000ms / 25fps)
-      }
-
-
+        }, decreaseIntervalDuration);
+    }
+    
+    function decreaseLevelUp() {
+        updateLevel();
+        button.attr('disabled', true);
+        const remainingTime = 4000; // 4 seconds
+        const decreaseStepLevelUp = (counterLevel / (remainingTime / 100));
+        (function() {
+            function decreaseLevelUpRecursive() {
+                if (!isMouseDown) {
+                    counterLevel -= decreaseStepLevelUp;
+                    if (counterLevel >= 0) {
+                        updateProgressBar();
+                        setTimeout(decreaseLevelUpRecursive, 100);
+                    } else {
+                        updateProgressBar();
+                        button.attr('disabled', false);
+                    }
+                }
+            }
+            decreaseLevelUpRecursive();
+        })();
+    }
+    
     function spawnBonusButtons() {
         const smallButtons = [];
         const playingArea = $('.playing_area');

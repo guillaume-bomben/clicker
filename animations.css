@@ -100,3 +100,29 @@
 .animate {
     animation: button-press 0.15s;
 }
+
+
+@keyframes small-button-press {
+    0% {
+        src: url('Images/Small_button.svg');
+    }
+    20% {
+        src: url('Images/Small_button1.svg');
+    }
+    40% {
+        src: url('Images/Small_button2.svg');
+    }
+    60% {
+        src: url('Images/Small_button3.svg');
+    }
+    80% {
+        src: url('Images/Small_button2.svg');
+    }
+    100% {
+        src: url('Images/Small_button1.svg');
+    }
+}
+
+.small-button-press {
+    animation: small-button-press 0.15s;
+}
