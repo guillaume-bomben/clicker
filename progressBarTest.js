@@ -83,7 +83,7 @@ $(document).ready(function() {
     function decreaseLevelUp() {
         updateLevel();
         button.attr('disabled', true);
-        const remainingTime = 4000; // 4 seconds
+        const remainingTime = 8000; // 4 seconds
         const decreaseStepLevelUp = (counterLevel / (remainingTime / 100));
         (function() {
             function decreaseLevelUpRecursive() {
@@ -107,7 +107,7 @@ $(document).ready(function() {
         const playingArea = $('.playing_area');
         const playingAreaWidth = playingArea.width();
         const playingAreaHeight = playingArea.height();
-        for(let i = 0; i < 4; i++) {
+        for (let i = 0; i < 4; i++) {
             const randomX = Math.floor(Math.random() * (playingAreaWidth - 37 - 200) + 100);
             const randomY = Math.floor(Math.random() * (playingAreaHeight - 45 - 200) + 100);
 
@@ -119,29 +119,33 @@ $(document).ready(function() {
                 randomY = playingAreaHeight - 145;
             }
 
-            let smallButton = $("<img>").addClass("small_button").attr("src", "Images/Small_button.svg").css({ 
-                top: randomY + 'px', 
-                left: randomX + 'px', 
-                position: "absolute", 
-                width: "37px", 
-                height: "45px" 
+            let smallButtonContainer = $("<div>").addClass("small-button-container").css({
+                top: randomY + 'px',
+                left: randomX + 'px',
+                position: "absolute",
+                width: "37px",
+                height: "45px"
             });
-            playingArea.append(smallButton);
-            smallButtons.push(smallButton);
+            let smallButton = $("<img>").addClass("small_button").attr("src", "Images/Small_button.svg").css({
+                width: "37px",
+                height: "45px"
+            });
+            smallButtonContainer.append(smallButton);
+            playingArea.append(smallButtonContainer);
+            smallButtons.push(smallButtonContainer);
             smallButton.click(function() {             
-                $(this).remove();
-                const index = smallButtons.indexOf($(this));  
+                $(this).addClass("small-button-press");
+                setTimeout(() => {
+                    $(this).remove();
+                }, 150);
+            });
+                        setTimeout(function() {
+                smallButtonContainer.remove();
+                const index = smallButtons.indexOf(smallButtonContainer);
                 if (index !== -1) {
                     smallButtons.splice(index, 1);
                 }
-            });
-            setTimeout(function() {                       
-                smallButton.remove();
-                const index = smallButtons.indexOf(smallButton);
-                if (index !== -1) {
-                    smallButtons.splice(index, 1); 
-                }
-            }, (i + 1) * 800); 
+            }, (i + 1) * 1200);
         }
     }
 });
