@@ -13,6 +13,7 @@ let centerX = cursorDivPosition.left + cursorDivWidth / 2;
 let centerY = cursorDivPosition.top + cursorDivHeight / 2;
 let radius = Math.min(cursorDivWidth, cursorDivHeight) / 2;
 
+let speedCursor = 300;
 export function instantiateCursor() {
     $('.cursor_object').remove();
     let angleBetweenCursors = 360 / cursorCount;
@@ -48,7 +49,7 @@ function moveCursorToCenterAndBack(cursor) {
         left: centerLeft,
         top: centerTop
     }, {
-        duration: 950,
+        duration: speedCursor,
     });
 }
 
@@ -88,10 +89,10 @@ function animateCursors() {
             setTimeout(function() {
                 moveCursorToCenterAndBack(cursor);
             }, delay);
-            delay += 1000;
+            delay += speedCursor;
         });
         updateScore("auto");
-    },10000);
+    },speedCursor * 10);
     
 }
 
