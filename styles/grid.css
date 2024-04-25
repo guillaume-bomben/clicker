@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "Merge W00 Bold";
+  src: url("https://db.onlinewebfonts.com/t/4164b679e1a0c55266914de874ffd38f.eot");
+  src: url("https://db.onlinewebfonts.com/t/4164b679e1a0c55266914de874ffd38f.eot?#iefix")format("embedded-opentype"),
+  url("https://db.onlinewebfonts.com/t/4164b679e1a0c55266914de874ffd38f.woff2")format("woff2"),
+  url("https://db.onlinewebfonts.com/t/4164b679e1a0c55266914de874ffd38f.woff")format("woff"),
+  url("https://db.onlinewebfonts.com/t/4164b679e1a0c55266914de874ffd38f.ttf")format("truetype"),
+  url("https://db.onlinewebfonts.com/t/4164b679e1a0c55266914de874ffd38f.svg#Merge W00 Bold")format("svg");
+}
+
 .wrapper {
   display: grid;
   grid-template-columns: 1fr 3fr 2fr;
@@ -15,6 +25,7 @@ body, html {
   padding: 0px;
   overflow-y: hidden;
   overflow-x: hidden;
+  font-family: "Merge W00 Bold";
 }
 
 .settings, .progress_bar, .income {
