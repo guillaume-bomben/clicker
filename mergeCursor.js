@@ -1,6 +1,5 @@
 import { instantiateCursor,cursorPerLV} from "./addCursor.js";
 
-let cursorCount = 0;
 $(document).ready(function(){
     $('.merge_cursors').click(function(){
         if ($('.lv1').length >= 3) {
