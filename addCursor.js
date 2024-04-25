@@ -1,6 +1,7 @@
 import { updateScore } from './script.js';
 
 let cursorCount = 0;
+export let cursorPerLV = [0,0,0,0,0];
 let cursorCost = 100; 
 let maxCursors = 10;
 let cursorDiv = $('.cursor');
@@ -12,95 +13,102 @@ let centerX = cursorDivPosition.left + cursorDivWidth / 2;
 let centerY = cursorDivPosition.top + cursorDivHeight / 2;
 let radius = Math.min(cursorDivWidth, cursorDivHeight) / 2;
 
-$(document).ready(function(){
-
-    function instantiateCursor() {      
-        if (cursorCount >= maxCursors) {
-            return;
-        }
-        $('.cursor_object').remove();
-        cursorCount++;
-        let angleBetweenCursors = 360 / cursorCount;
-        for (let i = 0; i < cursorCount; i++) {
+export function instantiateCursor() {
+    cursorCount = cursorPerLV[0] + cursorPerLV[1] + cursorPerLV[2] + cursorPerLV[3] + cursorPerLV[4];   
+    if (cursorCount >= maxCursors) {
+        return;
+    }
+    $('.cursor_object').remove();
+    let angleBetweenCursors = 360 / cursorCount;
+    for (let LV=0; LV<5; LV++) {
+        for (let i = 0; i < cursorPerLV[LV]; i++) {
+            console.log('cursor_object lv' + LV );
             let angle = i * angleBetweenCursors;
             let cx = centerX + Math.cos(angle * Math.PI / 180) * radius;
             let cy = centerY + Math.sin(angle * Math.PI / 180) * radius;
-    
+
+            let path = 'Images/Finger'+ (LV+1) +'.svg';
             let cursor = $('<img>', {
-            src: 'Images/finger1.svg',
-            class: 'cursor_object'
+            src: path,
+            class: 'cursor_object lv' + (LV+1) 
             });
-    
+
             $('.cursor').append(cursor);
-    
+
             cursor.css({
             position: 'absolute',
             top: `${cy}px`,
             left: `${cx}px`,
             });
         }
-        animateCursors();
     }
+    animateCursors();
+}
 
+function moveCursorToCenterAndBack(cursor) {
+    let centerLeft = centerX;
+    let centerTop = centerY;
 
-    function moveCursorToCenterAndBack(cursor) {
-        let centerLeft = centerX;
-        let centerTop = centerY;
+    cursor.animate({
+        left: centerLeft,
+        top: centerTop
+    }, {
+        duration: 950,
+    });
+}
+
+function animateCursors() {
+    let cursors = $('.cursor_object');
+    let angle = 0;
+    let speed = 0.01;
     
-        cursor.animate({
-            left: centerLeft,
-            top: centerTop
-        }, {
-            duration: 950,
-        });
-    }
-
-    function animateCursors() {
-        let cursors = $('.cursor_object');
-        let angle = 0;
-        let speed = 0.01;
+    setInterval(function() {
+        angle += speed;
         
-        setInterval(function() {
-            angle += speed;
+        cursors.each(function(index) {
+            let cursor = $(this);
+            let angleBetweenCursors = 360 / cursors.length;
+            let cursorAngle = angleBetweenCursors * index + angle * 180 / Math.PI;
             
-            cursors.each(function(index) {
-                let cursor = $(this);
-                let angleBetweenCursors = 360 / cursors.length;
-                let cursorAngle = angleBetweenCursors * index + angle * 180 / Math.PI;
-                
-                let cx = centerX + Math.cos(cursorAngle * Math.PI / 180) * radius;
-                let cy = centerY + Math.sin(cursorAngle * Math.PI / 180) * radius;
-                
-                // Calculate angle towards the center
-                let angleToCenter = Math.atan2(centerY - cy, centerX - cx);
-                // Convert radians to degrees
-                let rotationAngle = angleToCenter * 180 / Math.PI;
-                
-                cursor.css({
-                    top: `${cy}px`,
-                    left: `${cx}px`,
-                    transform: `rotate(${rotationAngle + 90}deg)`
-                });
+            let cx = centerX + Math.cos(cursorAngle * Math.PI / 180) * radius;
+            let cy = centerY + Math.sin(cursorAngle * Math.PI / 180) * radius;
+            
+            // Calculate angle towards the center
+            let angleToCenter = Math.atan2(centerY - cy, centerX - cx);
+            // Convert radians to degrees
+            let rotationAngle = angleToCenter * 180 / Math.PI;
+            
+            cursor.css({
+                top: `${cy}px`,
+                left: `${cx}px`,
+                transform: `rotate(${rotationAngle + 90}deg)`
             });
-        }, 1000 / 60);
+        });
+    }, 1000 / 60);
 
-        setInterval(function() {
-            let delay = 0;
-            cursors.each(function(index) {
-                let cursor = $(this);
-                setTimeout(function() {
-                    moveCursorToCenterAndBack(cursor);
-                }, delay);
-                delay += 1000;
-            });
-            updateScore("auto");
-        },10000);
-        
-    }
+    setInterval(function() {
+        let delay = 0;
+        cursors.each(function(index) {
+            let cursor = $(this);
+            setTimeout(function() {
+                moveCursorToCenterAndBack(cursor);
+            }, delay);
+            delay += 1000;
+        });
+        updateScore("auto");
+    },10000);
+    
+}
 
-    $('.add_cursor').on('click', instantiateCursor);
 
-    /*
+$(document).ready(function(){
+    $('.add_cursor').on('click', function() {
+        cursorPerLV[0] += 1;
+        instantiateCursor();
+    });
+    
+
+    
     $(window).resize(function() {
         let cursorDiv = $('.cursor');
         let cursorDivPosition = cursorDiv.position();
@@ -131,5 +139,5 @@ $(document).ready(function(){
             });
         });
     });
-    */
+
 });
