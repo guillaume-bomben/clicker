@@ -1,7 +1,9 @@
-import { updateScore } from './script.js';
+import { updateScore,moneyPerClick } from './script.js';
 
 let cursorCount = 0;
 export let cursorPerLV = [0,0,0,0,0];
+let autoClickMultiplicator = 0.2;
+let moneyPerSecond = 0;
 let cursorCost = 100; 
 let maxCursors = 10;
 let cursorDiv = $('.cursor');
@@ -17,6 +19,7 @@ let speedCursor = 300;
 export function instantiateCursor() {
     $('.cursor_object').remove();
     let angleBetweenCursors = 360 / cursorCount;
+    moneyPerSecond = 0;
     for (let LV=0; LV<5; LV++) {
         for (let i = 0; i < cursorPerLV[LV]; i++) {
             let angle = i * angleBetweenCursors;
@@ -36,8 +39,10 @@ export function instantiateCursor() {
             top: `${cy}px`,
             left: `${cx}px`,
             });
+            moneyPerSecond += moneyPerClick * autoClickMultiplicator * (LV+1);
         }
     }
+    $("#moneyPerClick").text(moneyPerSecond);
     animateCursors();
 }
 
@@ -100,11 +105,11 @@ function animateCursors() {
 $(document).ready(function(){
     $('.add_cursor').on('click', function() {
         cursorCount = cursorPerLV[0] + cursorPerLV[1] + cursorPerLV[2] + cursorPerLV[3] + cursorPerLV[4];  
-        console.log(cursorCount);
         if (cursorCount === maxCursors) {
             return;
         }
         cursorPerLV[0] += 1;
+        cursorCount += 1;
         instantiateCursor();
     });
     

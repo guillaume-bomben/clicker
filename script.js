@@ -1,5 +1,5 @@
 var money = 0;
-var moneyPerClick = 1;
+export var moneyPerClick = 1;
 var clickCounter = 0;
 var price = 10;
 const button = $(".Big_button");
@@ -22,7 +22,6 @@ export function updateScore(type) {
     }
     score.text(scoreNumber);
     $("#money").text(money);
-    $("#moneyPerClick").text(moneyPerClick);
 }
 
 
