@@ -201,11 +201,11 @@ async function buttonIncomeVerification() {
     const buttonIncome = $(".increase_income");
     if (money < price_income) {
         buttonIncome.addClass('disabled');
-        buttonIncome.css('background-image', 'url("Images/Upgrade_increase_income_disable.svg")');
+        buttonIncome.css('background-image', 'url("assets/images/Upgrade_increase_income_disable.svg")');
     }
     else {
         buttonIncome.removeClass('disabled');
-        buttonIncome.css('background-image', 'url("Images/Upgrade_increase_income.svg")');
+        buttonIncome.css('background-image', 'url("assets/images/Upgrade_increase_income.svg")');
     }
 };
 
@@ -213,11 +213,11 @@ async function buttonUpgradeVerification() {
     const buttonUpgrade = $(".upgrade_button");
     if (money < OMEGAPRICE) {
         buttonUpgrade.addClass('disabled');
-        buttonUpgrade.css('background-image', 'url("Images/Upgrade_button_disable.svg")');
+        buttonUpgrade.css('background-image', 'url("assets/images/Upgrade_button_disable.svg")');
     }
     else {
         buttonUpgrade.removeClass('disabled');
-        buttonUpgrade.css('background-image', 'url("Images/Upgrade_button.svg")');
+        buttonUpgrade.css('background-image', 'url("assets/images/Upgrade_button.svg")');
     }
 }
 
@@ -225,11 +225,11 @@ async function buttonAddCursorVerification() {
     const buttonAddCursor = $(".add_cursor");
     if (money < price_add_cursor) {
         buttonAddCursor.addClass('disabled');
-        buttonAddCursor.css('background-image', 'url("Images/Upgrade_add_cursor_disable.svg")');
+        buttonAddCursor.css('background-image', 'url("assets/images/Upgrade_add_cursor_disable.svg")');
     }
     else {
         buttonAddCursor.removeClass('disabled');
-        buttonAddCursor.css('background-image', 'url("Images/Upgrade_add_cursor.svg")');
+        buttonAddCursor.css('background-image', 'url("assets/images/Upgrade_add_cursor.svg")');
     }
 }
 
@@ -237,11 +237,11 @@ async function buttonMergeCursorVerification() {
     const buttonMergeCursor = $(".merge_cursors");
     if (money < price_merge_cursor) {
         buttonMergeCursor.addClass('disabled');
-        buttonMergeCursor.css('background-image', 'url("Images/Upgrade_merge_cursors_disable.svg")');
+        buttonMergeCursor.css('background-image', 'url("assets/images/Upgrade_merge_cursors_disable.svg")');
     }
     else {
         buttonMergeCursor.removeClass('disabled');
-        buttonMergeCursor.css('background-image', 'url("Images/Upgrade_merge_cursors.svg")');
+        buttonMergeCursor.css('background-image', 'url("assets/images/Upgrade_merge_cursors.svg")');
     }
 }
 
@@ -249,11 +249,11 @@ async function buttonCursorIncomeVerification() {
     const buttonCursorIncome = $(".cursor_income");
     if (money < price_cursor_income) {
         buttonCursorIncome.addClass('disabled');
-        buttonCursorIncome.css('background-image', 'url("Images/Upgrade_cursor_income_disable.svg")');
+        buttonCursorIncome.css('background-image', 'url("assets/images/Upgrade_cursor_income_disable.svg")');
     }
     else {
         buttonCursorIncome.removeClass('disabled');
-        buttonCursorIncome.css('background-image', 'url("Images/Upgrade_cursor_income.svg")');
+        buttonCursorIncome.css('background-image', 'url("assets/images/Upgrade_cursor_income.svg")');
     }
 }
 
@@ -261,10 +261,10 @@ async function buttonCursorSpeedVerification() {
     const buttonCursorSpeed = $(".cursor_speed");
     if (money < price_cursor_speed) {
         buttonCursorSpeed.addClass('disabled');
-        buttonCursorSpeed.css('background-image', 'url("Images/Upgrade_cursor_speed_disable.svg")');
+        buttonCursorSpeed.css('background-image', 'url("assets/images/Upgrade_cursor_speed_disable.svg")');
     }
     else {
         buttonCursorSpeed.removeClass('disabled');
-        buttonCursorSpeed.css('background-image', 'url("Images/Upgrade_cursor_speed.svg")');
+        buttonCursorSpeed.css('background-image', 'url("assets/images/Upgrade_cursor_speed.svg")');
     }
 }
