@@ -27,7 +27,7 @@ $(document).ready(function(){
             let cy = centerY + Math.sin(angle * Math.PI / 180) * radius;
     
             let cursor = $('<img>', {
-            src: 'Images/cursor1.svg',
+            src: 'Images/finger1.svg',
             class: 'cursor_object'
             });
     
