@@ -1,3 +1,5 @@
+import {instantiateCursor,moneyPerSecond,cursorPerLV,createCursor} from "./addCursor.js";
+
 let money = 0;
 let totalMoney = 0;
 let totalSpend = 0;
@@ -10,23 +12,39 @@ let price_cursor_income = 100;
 let price_cursor_speed = 1000;
 let OMEGAPRICE = 1000;
 
+const button = $(".Big_button");
+
+export function updateScore(type) {
+    if (type == "click") {
+        money += moneyPerClick;
+        clickCounter++;
+        totalMoney += moneyPerClick;
+        button.addClass('animate');
+        button.one('animationend', function() {
+            button.removeClass('animate');
+        });
+    }
+    else if (type == "auto"){
+        for (let lv=0; lv<5; lv++){
+            for (let i = 0; i < cursorPerLV[lv]; i++) {
+                money += moneyPerSecond;
+                totalMoney += moneyPerSecond;
+            }
+        }
+    }
+    show_money();
+    show_money_per_click();
+    show_money_per_second();
+    save();
+    buttonVerification();
+}
+
 $(document).ready(function() {
-    const button = $(".Big_button");
     save();
     buttonVerification();
 
     button.click(function() {
-        money += moneyPerClick;
-        clickCounter++;
-        totalMoney += moneyPerClick;
-        show_money();
-        show_money_per_click();
-        $(this).addClass('animate');
-        $(this).one('animationend', function() {
-            $(this).removeClass('animate');
-        });
-        save();
-        buttonVerification();
+        updateScore("click");
     });
 
     $(".increase_income").click(function() {
@@ -48,7 +66,7 @@ $(document).ready(function() {
     });
     
     $(".add_cursor").click(function() {
-        if (money >= price_add_cursor) {
+        if (money >= price_add_cursor && createCursor() !== false){
             money -= price_add_cursor;
             totalSpend += price_add_cursor;
             price_add_cursor += price_add_cursor*1.2;
@@ -59,12 +77,11 @@ $(document).ready(function() {
     });
 
     $(".merge_cursors").click(function() {
-        if (money >= price_merge_cursor) {
+        if (money >= price_merge_cursor && merge_cursors()){
             money -= price_merge_cursor;
             totalSpend += price_merge_cursor;
             price_merge_cursor += price_merge_cursor*0.2;
             show_money();
-            alert("You merged your cursors!");
         }
         save();
         buttonVerification();
@@ -115,6 +132,40 @@ $(document).ready(function() {
         save();
     });
 });
+
+function merge_cursors() {
+    if ($('.lv1').length >= 3) {
+        $('.lv1').slice(0,3).remove();
+        cursorPerLV[0] -= 3;
+        cursorPerLV[1] += 1;
+        instantiateCursor();
+        return true;
+    }
+    else if ($('.lv2').length >= 3) {
+        $('.lv2').slice(0,3).remove();
+        cursorPerLV[1] -= 3;
+        cursorPerLV[2] += 1;
+        instantiateCursor();
+        return true;
+    }
+    else if ($('.lv3').length >= 3) {
+        $('.lv3').slice(0,3).remove();
+        cursorPerLV[2] -= 3;
+        cursorPerLV[3] += 1;
+        instantiateCursor();
+        return true;
+    }
+    else if ($('.lv4').length >= 3) {
+        $('.lv4').slice(0,3).remove();
+        cursorPerLV[3] -= 3;
+        cursorPerLV[4] += 1;
+        instantiateCursor();
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 
 async function save() {
     localStorage.setItem("totalMoney", totalMoney);
@@ -175,6 +226,31 @@ async function show_money_per_click(){
         $("#moneyPerClick").text(moneyPerClick_to_show + " $/click");
     }
 };
+
+
+async function show_money_per_second(){
+    let moneyPerSecond_to_show = moneyPerSecond;
+    if (moneyPerSecond_to_show < 1000) {
+        $("#moneyPerSecond").text(moneyPerSecond_to_show.toFixed(1) + " $/s");
+    }
+    else if (moneyPerSecond_to_show > 1000 && moneyPerSecond_to_show < 1000000) {
+        moneyPerSecond_to_show = (moneyPerSecond_to_show / 1000).toFixed(1) + "k";
+        $("#moneyPerSecond").text(moneyPerSecond_to_show + " $/s");
+    }
+    else if (moneyPerSecond_to_show > 1000000 && moneyPerSecond_to_show < 1000000000) {
+        moneyPerSecond_to_show = (moneyPerSecond_to_show / 1000000).toFixed(1) + "M";
+        $("#moneyPerSecond").text(moneyPerSecond_to_show + " $/s");
+    }
+    else if (moneyPerSecond_to_show > 1000000000 && moneyPerSecond_to_show < 1000000000000) {
+        moneyPerSecond_to_show = (moneyPerSecond_to_show / 1000000000).toFixed(1) + "B";
+        $("#moneyPerSecond").text(moneyPerSecond_to_show + " $/s");
+    }
+    else if (moneyPerSecond_to_show > 1000000000000){
+        moneyPerSecond_to_show = (moneyPerSecond_to_show / 1000000000000).toFixed(1) + "T";
+        $("#moneyPerSecond").text(moneyPerSecond_to_show + " $/s");
+    }
+};
+
 
 async function load() {
     money = parseFloat(localStorage.getItem("money"));
