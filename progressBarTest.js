@@ -15,20 +15,20 @@ $(document).ready(function() {
     progressBar.append(levelDisplay);
     progressContainer.append(progressBar);
 
+    let mouseDownTimer;
+
     button.mousedown(function() {
         isMouseDown = true;
-        clearInterval(decreaseInterval);
-        interval = setInterval(function() {
+        mouseDownTimer = setTimeout(function() {
             if (isMouseDown) {
-                updateProgressBar();
-                increaseCounterLevel();
+                startDecreaseInterval();
             }
-        }, 1000);
+        }, 500); // Adjust the time period as needed (in ms)
     });
 
     button.mouseup(function() {
         isMouseDown = false;
-        clearInterval(interval);
+        clearInterval(decreaseInterval);
         startDecreaseInterval();
         increaseCounterLevel();
         updateProgressBar();
@@ -141,7 +141,7 @@ $(document).ready(function() {
                 if (index !== -1) {
                     smallButtons.splice(index, 1); 
                 }
-            }, (i + 1) * 2000); 
+            }, (i + 1) * 800); 
         }
     }
 });
