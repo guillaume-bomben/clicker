@@ -51,7 +51,7 @@ $(document).ready(function() {
         if (money >= price_add_cursor) {
             money -= price_add_cursor;
             totalSpend += price_add_cursor;
-            price_add_cursor += price_add_cursor;
+            price_add_cursor += price_add_cursor*1.2;
             show_money();
         }
         save();
@@ -62,8 +62,9 @@ $(document).ready(function() {
         if (money >= price_merge_cursor) {
             money -= price_merge_cursor;
             totalSpend += price_merge_cursor;
-            price_merge_cursor += price_merge_cursor;
+            price_merge_cursor += price_merge_cursor*0.2;
             show_money();
+            alert("You merged your cursors!");
         }
         save();
         buttonVerification();
@@ -73,7 +74,7 @@ $(document).ready(function() {
         if (money >= price_cursor_income) {
             money -= price_cursor_income;
             totalSpend += price_cursor_income;
-            price_cursor_income += price_cursor_income;
+            price_cursor_income += price_cursor_income*0.7;
             show_money();
             alert("You increased your cursor income!");
         }
@@ -85,7 +86,7 @@ $(document).ready(function() {
         if (money >= price_cursor_speed) {
             money -= price_cursor_speed;
             totalSpend += price_cursor_speed;
-            price_cursor_speed += price_cursor_speed;
+            price_cursor_speed += price_cursor_speed*0.8;
             show_money();
             alert("You increased your cursor speed!");
         }
@@ -104,7 +105,7 @@ $(document).ready(function() {
             totalSpend += OMEGAPRICE;
             OMEGAPRICE += OMEGAPRICE*100;
             moneyPerClick += moneyPerClick*20;
-            price_income += price_income*20;
+            // price_income += price_income*20;
             show_money();
             show_money_per_click();
         }
@@ -116,12 +117,16 @@ $(document).ready(function() {
 });
 
 async function save() {
-    localStorage.setItem("money", money);
     localStorage.setItem("totalMoney", totalMoney);
     localStorage.setItem("totalSpend", totalSpend);
-    localStorage.setItem("moneyPerClick", moneyPerClick);
     localStorage.setItem("clickCounter", clickCounter);
+    localStorage.setItem("money", money);
+    localStorage.setItem("moneyPerClick", moneyPerClick);
     localStorage.setItem("price_income", price_income);
+    localStorage.setItem("price_add_cursor", price_add_cursor);
+    localStorage.setItem("price_merge_cursor", price_merge_cursor);
+    localStorage.setItem("price_cursor_income", price_cursor_income);
+    localStorage.setItem("price_cursor_speed", price_cursor_speed);
     localStorage.setItem("OMEGAPRICE", OMEGAPRICE);
 };
 
