@@ -14,15 +14,10 @@ let centerY = cursorDivPosition.top + cursorDivHeight / 2;
 let radius = Math.min(cursorDivWidth, cursorDivHeight) / 2;
 
 export function instantiateCursor() {
-    cursorCount = cursorPerLV[0] + cursorPerLV[1] + cursorPerLV[2] + cursorPerLV[3] + cursorPerLV[4];   
-    if (cursorCount >= maxCursors) {
-        return;
-    }
     $('.cursor_object').remove();
     let angleBetweenCursors = 360 / cursorCount;
     for (let LV=0; LV<5; LV++) {
         for (let i = 0; i < cursorPerLV[LV]; i++) {
-            console.log('cursor_object lv' + LV );
             let angle = i * angleBetweenCursors;
             let cx = centerX + Math.cos(angle * Math.PI / 180) * radius;
             let cy = centerY + Math.sin(angle * Math.PI / 180) * radius;
@@ -103,6 +98,11 @@ function animateCursors() {
 
 $(document).ready(function(){
     $('.add_cursor').on('click', function() {
+        cursorCount = cursorPerLV[0] + cursorPerLV[1] + cursorPerLV[2] + cursorPerLV[3] + cursorPerLV[4];  
+        console.log(cursorCount);
+        if (cursorCount === maxCursors) {
+            return;
+        }
         cursorPerLV[0] += 1;
         instantiateCursor();
     });
