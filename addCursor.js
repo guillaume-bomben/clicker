@@ -57,10 +57,10 @@ $(document).ready(function(){
             top: centerTop
         }, {
             duration: 1000,
-            complete: function() {
+            // complete: function() {
 
-                $('.Big_button').trigger('click');
-                $('.Big_button').addClass('animate');}
+            //     // $('.Big_button').trigger('click');
+            //     // $('.Big_button').addClass('animate');}
         });
     }
     
