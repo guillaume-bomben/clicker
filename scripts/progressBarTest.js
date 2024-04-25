@@ -4,17 +4,23 @@ $(document).ready(function() {
     let interval;
     let decreaseInterval;
     let isMouseDown = false;
+    let progressContainer;
+    let progressBar;
+    let bar;
+    let levelDisplay;
+    let button;
+    let smallButtons;
 
-    const progressContainer = $(".progress_bar");
-    const progressBar = $("<div>").addClass("progress-bar");
-    const bar = $("<div>").addClass("bar").attr("id", "bar");
-    const levelDisplay = $("<div>").addClass("level").attr("id", "level").text("Level: 1");
+    progressContainer = $(".progress_bar");
+    progressBar = $("<div>").addClass("progress-bar");
+    bar = $("<div>").addClass("bar").attr("id", "bar");
+    levelDisplay = $("<div>").addClass("level").attr("id", "level").text("Level 1");
     
     progressBar.append(bar);
     progressBar.append(levelDisplay);
     progressContainer.append(progressBar);
 
-    const button = $(".Big_button");
+    button = $(".Big_button");
 
     button.mousedown(function() {
         isMouseDown = true;
@@ -25,9 +31,6 @@ $(document).ready(function() {
                 increaseCounterLevel();
             }
         }, 1000);
-
-        // $(this).addClass('animate');
-        // setTimeout(function() { button.removeClass('animate'); }, 150);
     });
 
     button.mouseup(function() {
@@ -42,6 +45,8 @@ $(document).ready(function() {
         clearInterval(decreaseInterval);
         const countdownDuration = 8000;
         const decreaseStep = 100 / (countdownDuration / 100);
+        const countdownDurationLevelUp = 4000;
+        const decreaseStepLevelUp = 100 / (countdownDurationLevelUp / 100);
         decreaseInterval = setInterval(function() {
             if (!isMouseDown) {
                 counterLevel -= decreaseStep;
@@ -49,7 +54,7 @@ $(document).ready(function() {
                     updateProgressBar();
                 } else {
                     clearInterval(decreaseInterval);
-                    counterLevel = 0;
+                    counterLevel -= decreaseStepLevelUp ;
                     updateProgressBar();
                     button.attr('disabled', false);
                 }
@@ -57,16 +62,18 @@ $(document).ready(function() {
         }, 100);
     }
     
-
     function updateProgressBar() {
-        bar.css('width', counterLevel + '%');
+        const percentage = counterLevel + '%';
+        bar.css('width', percentage);
+        const hue = counterLevel * 1.2; 
+        bar.css('background-color', `hsl(${hue}, 100%, 50%)`); 
         if (counterLevel >= 100) {
-            button.attr('disabled', true);
-            startDecreaseInterval();
-            spawnBonusButtons();
-            updateLevel();
+          button.attr('disabled', true);
+          startDecreaseInterval();
+          spawnBonusButtons();
+          updateLevel();
         }
-    }
+      }
 
     function increaseCounterLevel() {
         if (counterLevel < 100) {
@@ -79,9 +86,32 @@ $(document).ready(function() {
         if (counterLevel >= 100) {
             level++;
             counterLevel = 0;
-            levelDisplay.text("Level: " + level);
+            levelDisplay.text("Level " + level);
+            decreaseLevelUp();
         }
     }
+
+    function decreaseLevelUp() {
+        button.attr('disabled', true);
+        clearInterval(decreaseInterval);
+        const countdownDurationLevelUp = 4000; // 4 seconds
+        const remainingProgress = 100 - counterLevel;
+        const decreaseStepLevelUp = remainingProgress / (countdownDurationLevelUp / 100);
+        decreaseInterval = setInterval(function() {
+          if (!isMouseDown) {
+            counterLevel -= decreaseStepLevelUp;
+            if (counterLevel >= 0) {
+              updateProgressBar();
+            } else {
+              clearInterval(decreaseInterval);
+              counterLevel = 0;
+              updateProgressBar();
+              button.attr('disabled', false);
+            }
+          }
+        }, 40); // Decrease every 40ms (1000ms / 25fps)
+      }
+
 
     function spawnBonusButtons() {
         const smallButtons = [];
@@ -100,7 +130,7 @@ $(document).ready(function() {
                 randomY = playingAreaHeight - 145;
             }
 
-            let smallButton = $("<img>").addClass("small_button").attr("src", "Images/Small_button.svg").css({ 
+            let smallButton = $("<img>").addClass("small_button").attr("src", "../assets/images/Small_button.svg").css({ 
                 top: randomY + 'px', 
                 left: randomX + 'px', 
                 position: "absolute", 
