@@ -1,9 +1,9 @@
 import {instantiateCursor,moneyPerSecond,moneyPerCycle,cursorPerLV,createCursor} from "./addCursor.js";
 
-export let money = 0;
+let money = 0;
 let totalMoney = 0;
 let totalSpend = 0;
-export let moneyPerClick = 1;
+let moneyPerClick = 1;
 let clickCounter = 0;
 let price_income = 10;
 let price_add_cursor = 10;
@@ -11,6 +11,20 @@ let price_merge_cursor = 100;
 let price_cursor_income = 100;
 let price_cursor_speed = 1000;
 let OMEGAPRICE = 1000;
+
+let level = 1;
+let counterLevel = 0;
+let decreaseInterval;
+let isMouseDown = false;
+let progressContainer = $(".progress_bar");
+let progressBar = $("<div>").addClass("progress-bar");
+let bar = $("<div>").addClass("bar").attr("id", "bar");
+let levelDisplay = $("<div>").addClass("level").attr("id", "level").text("Level 1");
+progressBar.append(bar);
+progressBar.append(levelDisplay);
+progressContainer.append(progressBar);
+let mouseDownTimer;
+let smallButtons = [];
 
 const button = $(".Big_button");
 
@@ -36,37 +50,31 @@ export function updateScore(type) {
     buttonVerification();
 }
 
-export function show_money(){
-    let money_to_show = money;
-    if (money_to_show < 1000) {
-        $("#money").text(money_to_show.toFixed(1) + " $");
-    }
-    else if (money_to_show > 1000 && money_to_show < 1000000) {
-        money_to_show = (money_to_show / 1000).toFixed(1) + "k";
-        $("#money").text(money_to_show + " $");
-    }
-    else if (money_to_show > 1000000 && money_to_show < 1000000000) {
-        money_to_show = (money_to_show / 1000000).toFixed(1) + "M";
-        $("#money").text(money_to_show + " $");
-    }
-    else if (money_to_show > 1000000000 && money_to_show < 1000000000000) {
-        money_to_show = (money_to_show / 1000000000).toFixed(1) + "B";
-        $("#money").text(money_to_show + " $");
-    }
-    else if (money_to_show > 1000000000000){
-        money_to_show = (money_to_show / 1000000000000).toFixed(1) + "T";
-        $("#money").text(money_to_show + " $");
-    }
-};
-
 $(document).ready(function() {
     save();
     buttonVerification();
 
+    button.mousedown(function() {
+        isMouseDown = true;
+        mouseDownTimer = setTimeout(function() {
+            if (isMouseDown) {
+                startDecreaseInterval();
+            }
+        }, 500); // Adjust the time period as needed (in ms)
+    });
+
+    button.mouseup(function() {
+        isMouseDown = false;
+        clearInterval(decreaseInterval);
+        startDecreaseInterval();
+        increaseCounterLevel();
+        updateProgressBar();
+    });
+
     button.click(function() {
         updateScore("click");
     });
-
+    
     $(".increase_income").click(function() {
         if (money >= price_income) {
             money -= price_income;
@@ -135,7 +143,6 @@ $(document).ready(function() {
         buttonVerification();
     });
 
-
     $(".statistics_button").click(function() {
         alert("Total money earned: " + totalMoney + "$\n" + "Total money spend: " + totalSpend + "$\n" + "Total clicks: " + clickCounter)
     });
@@ -155,6 +162,7 @@ $(document).ready(function() {
         }
         save();
     });
+
 });
 
 function merge_cursors() {
@@ -205,6 +213,28 @@ async function save() {
     localStorage.setItem("OMEGAPRICE", OMEGAPRICE);
 };
 
+async function show_money(){
+    let money_to_show = money;
+    if (money_to_show < 1000) {
+        $("#money").text(money_to_show.toFixed(1) + " $");
+    }
+    else if (money_to_show > 1000 && money_to_show < 1000000) {
+        money_to_show = (money_to_show / 1000).toFixed(1) + "k";
+        $("#money").text(money_to_show + " $");
+    }
+    else if (money_to_show > 1000000 && money_to_show < 1000000000) {
+        money_to_show = (money_to_show / 1000000).toFixed(1) + "M";
+        $("#money").text(money_to_show + " $");
+    }
+    else if (money_to_show > 1000000000 && money_to_show < 1000000000000) {
+        money_to_show = (money_to_show / 1000000000).toFixed(1) + "B";
+        $("#money").text(money_to_show + " $");
+    }
+    else if (money_to_show > 1000000000000){
+        money_to_show = (money_to_show / 1000000000000).toFixed(1) + "T";
+        $("#money").text(money_to_show + " $");
+    }
+};
 
 async function show_money_per_click(){
     let moneyPerClick_to_show = moneyPerClick;
@@ -229,7 +259,6 @@ async function show_money_per_click(){
     }
 };
 
-
 async function show_money_per_second(){
     let moneyPerSecond_to_show = moneyPerSecond;
     if (moneyPerSecond_to_show < 1000) {
@@ -253,7 +282,6 @@ async function show_money_per_second(){
     }
 };
 
-
 async function load() {
     money = parseFloat(localStorage.getItem("money"));
     totalMoney = parseFloat(localStorage.getItem("totalMoney"));
@@ -273,7 +301,7 @@ async function buttonVerification() {
     buttonMergeCursorVerification();
     buttonCursorIncomeVerification();
     buttonCursorSpeedVerification();
-}
+};
 
 async function buttonIncomeVerification() {
     const buttonIncome = $(".increase_income");
@@ -297,7 +325,7 @@ async function buttonUpgradeVerification() {
         buttonUpgrade.removeClass('disabled');
         buttonUpgrade.css('background-image', 'url("assets/images/Upgrade_button.svg")');
     }
-}
+};
 
 async function buttonAddCursorVerification() {
     const buttonAddCursor = $(".add_cursor");
@@ -309,7 +337,7 @@ async function buttonAddCursorVerification() {
         buttonAddCursor.removeClass('disabled');
         buttonAddCursor.css('background-image', 'url("assets/images/Upgrade_add_cursor.svg")');
     }
-}
+};
 
 async function buttonMergeCursorVerification() {
     const buttonMergeCursor = $(".merge_cursors");
@@ -321,7 +349,7 @@ async function buttonMergeCursorVerification() {
         buttonMergeCursor.removeClass('disabled');
         buttonMergeCursor.css('background-image', 'url("assets/images/Upgrade_merge_cursors.svg")');
     }
-}
+};
 
 async function buttonCursorIncomeVerification() {
     const buttonCursorIncome = $(".cursor_income");
@@ -333,7 +361,7 @@ async function buttonCursorIncomeVerification() {
         buttonCursorIncome.removeClass('disabled');
         buttonCursorIncome.css('background-image', 'url("assets/images/Upgrade_cursor_income.svg")');
     }
-}
+};
 
 async function buttonCursorSpeedVerification() {
     const buttonCursorSpeed = $(".cursor_speed");
@@ -345,4 +373,119 @@ async function buttonCursorSpeedVerification() {
         buttonCursorSpeed.removeClass('disabled');
         buttonCursorSpeed.css('background-image', 'url("assets/images/Upgrade_cursor_speed.svg")');
     }
-}
+};
+
+function updateProgressBar() {
+    const percentage = counterLevel + '%';
+    bar.css('width', percentage);
+    const hue = counterLevel * 1.2; 
+    bar.css('background-color', `hsl(${hue}, 100%, 50%)`); 
+    if (counterLevel >= 100) {
+      button.attr('disabled', true);
+      decreaseLevelUp();
+      spawnBonusButtons();
+    }
+};
+
+function increaseCounterLevel() {
+    if (counterLevel < 100) {
+        counterLevel += 2;
+        updateProgressBar();
+    }
+};
+
+function updateLevel() {
+    if (counterLevel >= 100) {
+        level++;
+        levelDisplay.text("Level " + level);
+    }
+};
+
+function startDecreaseInterval() {
+    clearInterval(decreaseInterval);
+    const totalDuration = 8000;
+    const decreaseIntervalDuration = 100; 
+    let decreaseStep = 100 / (totalDuration / decreaseIntervalDuration);
+    decreaseInterval = setInterval(function() {
+        if (!isMouseDown) {
+            counterLevel -= decreaseStep;
+            if (counterLevel >= 0) {
+                updateProgressBar();
+            } else {
+                clearInterval(decreaseInterval);
+                counterLevel = 0;
+                updateProgressBar();
+                button.attr('disabled', false);
+            }
+        }
+    }, decreaseIntervalDuration);
+};
+
+function decreaseLevelUp() {
+    updateLevel();
+    button.attr('disabled', true);
+    const remainingTime = 8000; // 4 seconds
+    const decreaseStepLevelUp = (counterLevel / (remainingTime / 100));
+    (function() {
+        function decreaseLevelUpRecursive() {
+            if (!isMouseDown) {
+                counterLevel -= decreaseStepLevelUp;
+                if (counterLevel >= 0) {
+                    updateProgressBar();
+                    setTimeout(decreaseLevelUpRecursive, 100);
+                } else {
+                    updateProgressBar();
+                    button.attr('disabled', false);
+                }
+            }
+        }
+        decreaseLevelUpRecursive();
+    })();
+};
+
+function spawnBonusButtons() {
+    const playingArea = $('.playing_area');
+    const playingAreaWidth = playingArea.width();
+    const playingAreaHeight = playingArea.height();
+    for (let i = 0; i < 4; i++){
+        const randomX = Math.floor(Math.random() * (playingAreaWidth - 37 - 200) + 100);
+        const randomY = Math.floor(Math.random() * (playingAreaHeight - 45 - 200) + 100);
+
+        if (randomX + 37 > playingAreaWidth - 100) {
+            randomX = playingAreaWidth - 137;
+        }
+        if (randomY + 45 > playingAreaHeight - 100) {
+            randomY = playingAreaHeight - 145;
+        }
+        let smallButton = $("<img>").addClass("small_button").attr("src", "assets/images/Small_button.svg").css({
+            top: randomY + 'px',
+            left: randomX + 'px',
+            position: "absolute",
+            width: "37px",
+            height: "45px"
+        });
+        playingArea.append(smallButton);
+
+        smallButton.click(function () {
+            console.log(money, moneyPerClick);
+            money += moneyPerClick * 10;
+            console.log(money);
+            $(this).addClass("small-button-press");
+            setTimeout(function () {
+                $(this).removeClass("small-button-press");
+            }.bind(this), 150);
+            $(this).remove();
+            const index = smallButtons.indexOf($(this));
+            if (index !== -1) {
+                smallButtons.splice(index, 1);
+            }
+        });
+        setTimeout(function () {
+            smallButton.remove();
+            const index = smallButtons.indexOf(smallButton);
+            if (index !== -1) {
+                smallButtons.splice(index, 1);
+            }
+        }, 6000);
+    }
+};
