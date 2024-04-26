@@ -6,17 +6,24 @@ $(document).ready(function() {
     let isMouseDown = false;
     let smallButtonCount = 0; // Variable to keep track of the number of small buttons spawned
 
+    let button = $(".Big_button");
 
     let progressContainer = $(".progress_bar");
-    let progressBar = $("<div>").addClass("progress-bar");
+    let progressBar = $("<div>").addClass("progress-bar-ui");
+    let backgroundBarWrapper = $("<div>").addClass("background-bar-wrapper");
+    let backgroundBar = $("<div>").addClass("backgroundBar").attr("id", "backgroundBar");
+    let barWrapper = $("<div>").addClass("bar-wrapper");
     let bar = $("<div>").addClass("bar").attr("id", "bar");
     let levelDisplay = $("<div>").addClass("level").attr("id", "level").text("Level 1");
-    let button = $(".Big_button");
     
-    progressBar.append(bar);
+    backgroundBarWrapper.append(backgroundBar);
+    barWrapper.append(bar);
+    
+    progressBar.append(backgroundBarWrapper);
+    progressBar.append(barWrapper);
     progressBar.append(levelDisplay);
+    
     progressContainer.append(progressBar);
-
     let mouseDownTimer;
 
     button.mousedown(function() {

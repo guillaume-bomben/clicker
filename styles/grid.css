@@ -13,10 +13,22 @@ text, p{
   -webkit-text-stroke: 1.5px rgb(16, 16, 95);
 }
 
-#money, #moneyPerClick, #moneyPerSecond {
+#money {
+  font-size: 3.5vw;
+  color: #fff;
+  -webkit-text-stroke: 0.2vw rgb(16, 16, 95);
+}
+ #moneyPerClick, #moneyPerSecond {
+  font-size: 2vw;
+  color: #fff;
+  -webkit-text-stroke: 0.1vw rgb(16, 16, 95);
+}
+
+#level{
   font-size: 3vw;
   color: #fff;
-  -webkit-text-stroke: 1.5px rgb(16, 16, 95);
+  -webkit-text-stroke: 0.1vw rgb(16, 16, 95);
+
 }
 
 .wrapper {
@@ -58,13 +70,35 @@ body, html {
   position: relative;
 }
 
-.progress-bar {
+.progress-bar-ui {
   width: 90%;
   height: 30%;
   border: 1px solid #000;
   border-radius: 20px;
   overflow: hidden;
   position: relative;
+}
+
+.background-bar-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bar-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.backgroundBar {
+  width: 100%;
+  height: 100%;
+  background-color: #caddf6;
+  transition: width 0.15s ease;
+  z-index: -1; /* move the backgroundBar behind the bar */
 }
 
 .bar {
@@ -113,118 +147,117 @@ body, html {
   margin-bottom: 10px;
 }
 
-  .Big_button{
-    height: min(10.5vw, 15vh); 
-    width: min(8.7vw, 12vh); 
-    border: none;
-    background-repeat: no-repeat;
-    justify-content: center;
-    align-items: center;
-    background-color: transparent;
-    background-image: url('../assets/images/Button.svg');
-    background-size: 100% 100%;
-    padding: 0%;
-    transition: background-image 0.15s;
-  }
+.Big_button{
+  height: min(10.5vw, 15vh); 
+  width: min(8.7vw, 12vh); 
+  border: none;
+  background-repeat: no-repeat;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  background-image: url('../assets/images/Button.svg');
+  background-size: 100% 100%;
+  padding: 0%;
+  transition: background-image 0.15s;
+}
 
-  .cursor {
-    height: min(40vw, 50vh); 
-    width: min(40vw, 50vh);
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    background-color: transparent; 
-    border: 1px solid black;
-  }
+.cursor {
+  height: min(40vw, 50vh); 
+  width: min(40vw, 50vh);
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent; 
+  border: 1px solid black;
+}
 
-  .increase_income{
-    background-image: url('../assets/images/Upgrade_increase_income.svg');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
+.increase_income{
+  background-image: url('../assets/images/Upgrade_increase_income.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
 
-  .add_cursor{
-    background-image: url('../assets/images/Upgrade_add_cursor.svg');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
+.add_cursor{
+  background-image: url('../assets/images/Upgrade_add_cursor.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
 
-  .merge_cursors{
-    background-image: url('../assets/images/Upgrade_merge_cursors.svg');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
+.merge_cursors{
+  background-image: url('../assets/images/Upgrade_merge_cursors.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
 
-  .cursor_income{
-    background-image: url('../assets/images/Upgrade_cursor_income.svg');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
+.cursor_income{
+  background-image: url('../assets/images/Upgrade_cursor_income.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
 
-  .cursor_speed{
-    background-image: url('../assets/images/Upgrade_cursor_speed.svg');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
+.cursor_speed{
+  background-image: url('../assets/images/Upgrade_cursor_speed.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
 
-  .upgrade_button{
-    background-image: url('../assets/images/Upgrade_button.svg');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
+.upgrade_button{
+  background-image: url('../assets/images/Upgrade_button.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
 
-  .settings_button{
-    background-image: url('../assets/images/Settings.svg');
-    background-size: 50% 50%;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    background-position: center;
-    transition: transform 0.3s;
-  }
+.settings_button{
+  background-image: url('../assets/images/Settings.svg');
+  background-size: 50% 50%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  background-position: center;
+  transition: transform 0.3s;
+}
 
-  .statistics_button{
-    background-image: url('../assets/images/Stats.svg');
-    background-size: 50% 50%;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    background-position: center;
-    transition: transform 0.3s;
-  }
+.statistics_button{
+  background-image: url('../assets/images/Stats.svg');
+  background-size: 50% 50%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  background-position: center;
+  transition: transform 0.3s;
+}
 
-  .ui-dialog {
-    background-color: #fff;
-    border: 3px solid #0d0a43;
-    padding: 10px;
-    width: 300px; /* adjust the width as needed */
-    border-radius: 20px;
-  }
+.ui-dialog {
+  background-color: #fff;
+  border: 3px solid #0d0a43;
+  padding: 10px;
+  width: 300px; /* adjust the width as needed */
+  border-radius: 20px;
+}
 
-  .ui-dialog-titlebar-close {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    background-color: #666;
-    color: #fff;
-    border: none;
-    padding: 5px;
-    font-size: 16px;
-    cursor: pointer;
-  }
+.ui-dialog-titlebar-close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: #666;
+  color: #fff;
+  border: none;
+  padding: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
 
-  .ui-dialog-titlebar-close::before {
-    content: '×';
-    font-weight: bold;
-  }
-  
+.ui-dialog-titlebar-close::before {
+  content: '×';
+  font-weight: bold;
+}
