@@ -5,7 +5,7 @@ $(document).ready(function() {
     let decreaseInterval;
     let isMouseDown = false;
     let smallButtonCount = 0; // Variable to keep track of the number of small buttons spawned
-
+    let levelUpSound = new Audio('assets/sounds/levelUp.mp3');
     let button = $(".Big_button");
 
     let progressContainer = $(".progress_bar");
@@ -65,6 +65,7 @@ $(document).ready(function() {
     function updateLevel() {
         if (counterLevel >= 100) {
             level++;
+            levelUpSound.play();
             levelDisplay.text("Level " + level);
         }
     }

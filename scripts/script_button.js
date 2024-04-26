@@ -11,6 +11,7 @@ let price_merge_cursor = 100;
 let price_cursor_income = 100;
 let price_cursor_speed = 1000;
 let OMEGAPRICE = 1000;
+let buttonClickSound = new Audio('assets/sounds/click.mp3');
 
 const button = $(".Big_button");
 
@@ -20,6 +21,8 @@ export function updateScore(type) {
         clickCounter++;
         totalMoney += moneyPerClick;
         button.addClass('animate');
+        buttonClickSound.playbackRate = 2;
+        buttonClickSound.play();
         button.one('animationend', function() {
             button.removeClass('animate');
         });
