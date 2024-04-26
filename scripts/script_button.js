@@ -117,7 +117,11 @@ $(document).ready(function() {
 
 
     $(".statistics_button").click(function() {
-        alert("Total money earned: " + totalMoney + "$\n" + "Total money spend: " + totalSpend + "$\n" + "Total clicks: " + clickCounter)
+        var message = "Total money earned: " + totalMoney + "$<br>" + "Total money spend: " + totalSpend + "$<br>" + "Total clicks: " + clickCounter;
+        $("#dialog").html(message).dialog({
+            modal: true,
+            title: "Statistics"
+        });
     });
 
     $(".upgrade_button").click(function() {

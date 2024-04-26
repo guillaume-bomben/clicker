@@ -191,3 +191,11 @@ body, html {
     background-position: center;
     transition: transform 0.3s;
   }
+
+  .ui-dialog {
+    background-color: #fff;
+    border: 3px solid #0d0a43;
+    padding: 10px;
+    width: 300px; /* adjust the width as needed */
+    border-radius: 20px;
+  }
