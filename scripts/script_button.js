@@ -473,9 +473,8 @@ function spawnBonusButtons() {
         playingArea.append(smallButton);
 
         smallButton.click(function () {
-            console.log(money, moneyPerClick);
             money += moneyPerClick * 10;
-            console.log(money);
+            show_money();
             $(this).addClass("small-button-press");
             setTimeout(function () {
                 $(this).removeClass("small-button-press");
@@ -492,7 +491,7 @@ function spawnBonusButtons() {
             if (index !== -1) {
                 smallButtons.splice(index, 1);
             }
-        }, 6000);
+        }, 4000);
     }
 };
 
