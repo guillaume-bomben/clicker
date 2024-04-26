@@ -4,6 +4,7 @@ let cursorCount = 0;
 export let cursorPerLV = [0,0,0,0,0];
 let moneyPerCursor = [150,500,2000,10000,50000];
 export let moneyPerSecond = 0;
+export let moneyPerCycle = 0;
 let maxCursors = 10;
 let cursorDiv = $('.cursor');
 let cursorDivPosition = cursorDiv.position();
@@ -18,6 +19,7 @@ let speedCursor = 300;
 export function instantiateCursor() {
     $('.cursor_object').remove();
     let angleBetweenCursors = 360 / cursorCount;
+    moneyPerCycle = 0;
     moneyPerSecond = 0;
     for (let LV=0; LV<5; LV++) {
         for (let i = 0; i < cursorPerLV[LV]; i++) {
@@ -38,9 +40,10 @@ export function instantiateCursor() {
             top: `${cy}px`,
             left: `${cx}px`,
             });
-            moneyPerSecond += moneyPerCursor[LV];
+            moneyPerCycle += moneyPerCursor[LV];
         }
     }
+    moneyPerSecond = moneyPerCycle / (speedCursor * 0.01)
     animateCursors();
 }
 

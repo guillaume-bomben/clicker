@@ -1,4 +1,4 @@
-import {instantiateCursor,moneyPerSecond,cursorPerLV,createCursor} from "./addCursor.js";
+import {instantiateCursor,moneyPerSecond,moneyPerCycle,cursorPerLV,createCursor} from "./addCursor.js";
 
 let money = 0;
 let totalMoney = 0;
@@ -27,8 +27,8 @@ export function updateScore(type) {
     else if (type == "auto"){
         for (let lv=0; lv<5; lv++){
             for (let i = 0; i < cursorPerLV[lv]; i++) {
-                money += moneyPerSecond;
-                totalMoney += moneyPerSecond;
+                money += moneyPerCycle;
+                totalMoney += moneyPerCycle;
             }
         }
     }
@@ -71,6 +71,7 @@ $(document).ready(function() {
             totalSpend += price_add_cursor;
             price_add_cursor += price_add_cursor*1.2;
             show_money();
+            show_money_per_second();
         }
         save();
         buttonVerification();
@@ -82,6 +83,7 @@ $(document).ready(function() {
             totalSpend += price_merge_cursor;
             price_merge_cursor += price_merge_cursor*0.2;
             show_money();
+            show_money_per_second();
         }
         save();
         buttonVerification();
@@ -93,6 +95,7 @@ $(document).ready(function() {
             totalSpend += price_cursor_income;
             price_cursor_income += price_cursor_income*0.7;
             show_money();
+            show_money_per_second();
             alert("You increased your cursor income!");
         }
         save();
@@ -105,6 +108,7 @@ $(document).ready(function() {
             totalSpend += price_cursor_speed;
             price_cursor_speed += price_cursor_speed*0.8;
             show_money();
+            show_money_per_second();
             alert("You increased your cursor speed!");
         }
         save();
