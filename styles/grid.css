@@ -8,6 +8,17 @@
   url("https://db.onlinewebfonts.com/t/4164b679e1a0c55266914de874ffd38f.svg#Merge W00 Bold")format("svg");
 }
 
+text, p{
+  color: #fff;
+  -webkit-text-stroke: 1.5px rgb(16, 16, 95);
+}
+
+#money, #moneyPerClick, #moneyPerSecond {
+  font-size: 3vw;
+  color: #fff;
+  -webkit-text-stroke: 1.5px rgb(16, 16, 95);
+}
+
 .wrapper {
   display: grid;
   grid-template-columns: 1fr 3fr 2fr;
@@ -199,3 +210,21 @@ body, html {
     width: 300px; /* adjust the width as needed */
     border-radius: 20px;
   }
+
+  .ui-dialog-titlebar-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: #666;
+    color: #fff;
+    border: none;
+    padding: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .ui-dialog-titlebar-close::before {
+    content: '×';
+    font-weight: bold;
+  }
+  
