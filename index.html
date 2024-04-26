@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Best clicker game</title>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous" defer></script>
+    <link rel="stylesheet" href="styles/grid.css">
+    <link rel="stylesheet" href="styles/animations.css">
+
+    <script src="scripts/test.js" defer></script>
+    <script type="module" src="scripts/script_button.js"></script>
+    <script type="module" src="scripts/addCursor.js"></script>
+    <script type="module" src="scripts/progressBarTest.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="settings">
+            <div class="settings_button"></div>
+            <div class="statistics_button"></div>
+        </div>
+        <div class="progress_bar"></div>
+        <div class="income">
+            <p id="money">0 $</p>
+            <p id="moneyPerClick">1 $/click</p>
+            <p id="moneyPerSecond">0 $/second</p>
+        </div>
+        <div class="playing_area">
+            <div class="cursor">
+                <div class="button_">
+                    <button class="Big_button" id="Big_button_id"></button>
+                </div>
+            </div>
+        </div>
+        <div class="upgrades">
+            <span></span>
+            <div class="increase_income upgrade_element">
+                <span class="upgrade_text" id="price_income">10 $</span>
+            </div>
+            <div class="add_cursor upgrade_element">
+                <span class="upgrade_text" id="price_add_cursor">10 $</span>
+            </div>
+            <div class="merge_cursors upgrade_element">
+                <span class="upgrade_text" id="price_merge_cursor">10 $</span>
+            </div>
+            <div class="cursor_income upgrade_element">
+                <span class="upgrade_text" id="price_cursor_income">10 $</span>
+            </div>
+            <div class="cursor_speed upgrade_element">
+                <span class="upgrade_text" id="price_cursor_speed">10 $</span>
+            </div>
+            <div class="upgrade_button upgrade_element">
+                <span class="upgrade_text" id="price_upgrade">10 $</span>
+            </div>
+            <span></span>
+        </div> 
+    </div>
+</body>
+</html>
