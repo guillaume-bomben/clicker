@@ -25,12 +25,9 @@ export function updateScore(type) {
         });
     }
     else if (type == "auto"){
-        for (let lv=0; lv<5; lv++){
-            for (let i = 0; i < cursorPerLV[lv]; i++) {
-                money += moneyPerCycle;
-                totalMoney += moneyPerCycle;
-            }
-        }
+        let nbCursors = cursorPerLV[0] + cursorPerLV[1] + cursorPerLV[2] + cursorPerLV[3] + cursorPerLV[4];
+        money += moneyPerCycle / nbCursors;
+        totalMoney += moneyPerCycle / nbCursors;
     }
     show_money();
     show_money_per_click();

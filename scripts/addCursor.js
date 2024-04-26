@@ -57,7 +57,7 @@ export function instantiateCursor() {
             left: centerLeft,
             top: centerTop
         }, {
-            duration: speedCursor,
+            duration: speedCursor *0.95,
         });
     }
 
@@ -92,7 +92,6 @@ export function instantiateCursor() {
         }, 1000 / 60);
     
         setInterval(function() {
-            updateScore("auto");
             let delay = 0;
             cursors.each(function(index) {
                 let cursor = $(this);
@@ -101,8 +100,14 @@ export function instantiateCursor() {
                 }, delay);
                 delay += speedCursor;
             });
+            console.log('move cursor')
         },speedCursor * 10);
-        
+
+        setInterval(function() {
+            updateScore("auto");
+            console.log('update score')
+            console.log(moneyPerCycle)
+        }, speedCursor * 10);
     }
 
 
