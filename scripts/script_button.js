@@ -25,6 +25,9 @@ progressBar.append(levelDisplay);
 progressContainer.append(progressBar);
 let mouseDownTimer;
 let smallButtons = [];
+let levelUpSound = new Audio('assets/sounds/levelUp.mp3');
+let buttonClickSound = new Audio('assets/sounds/click.mp3');
+let shopSound = new Audio('assets/sounds/shop.mp3');
 
 const button = $(".Big_button");
 
@@ -34,6 +37,8 @@ export function updateScore(type) {
         clickCounter++;
         totalMoney += moneyPerClick;
         button.addClass('animate');
+        buttonClickSound.playbackRate = 2;
+        buttonClickSound.play();
         button.one('animationend', function() {
             button.removeClass('animate');
         });
@@ -89,6 +94,7 @@ $(document).ready(function() {
             }
             show_money();
             show_money_per_click();
+            shopSound.play();
         }
         save();
         buttonVerification();
@@ -102,6 +108,7 @@ $(document).ready(function() {
             price_add_cursor += price_add_cursor*1.2;
             show_money();
             show_money_per_second();
+            shopSound.play();
         }
         save();
         buttonVerification();
@@ -115,6 +122,7 @@ $(document).ready(function() {
             price_merge_cursor += price_merge_cursor*0.2;
             show_money();
             show_money_per_second();
+            shopSound.play();
         }
         save();
         buttonVerification();
@@ -128,7 +136,7 @@ $(document).ready(function() {
             price_cursor_income += price_cursor_income*0.7;
             show_money();
             show_money_per_second();
-            alert("You increased your cursor income!");
+            shopSound.play();
         }
         save();
         buttonVerification();
@@ -142,7 +150,7 @@ $(document).ready(function() {
             price_cursor_speed += price_cursor_speed*0.8;
             show_money();
             show_money_per_second();
-            alert("You increased your cursor speed!");
+            shopSound.play();
         }
         save();
         buttonVerification();
@@ -150,7 +158,11 @@ $(document).ready(function() {
     });
 
     $(".statistics_button").click(function() {
-        alert("Total money earned: " + totalMoney + "$\n" + "Total money spend: " + totalSpend + "$\n" + "Total clicks: " + clickCounter)
+        var message = "Total money earned: " + totalMoney + "$<br>" + "Total money spend: " + totalSpend + "$<br>" + "Total clicks: " + clickCounter;
+        $("#dialog").html(message).dialog({
+            modal: true,
+            title: "Statistics"
+        });
     });
 
     $(".upgrade_button").click(function() {
@@ -162,11 +174,9 @@ $(document).ready(function() {
             show_money();
             show_money_per_click();
         }
-        else {
-            alert("You poor XD");
-        }
         save();
         showPriceUpgrade();
+        shopSound.play();
     });
 
 });
@@ -403,6 +413,7 @@ function increaseCounterLevel() {
 function updateLevel() {
     if (counterLevel >= 100) {
         level++;
+        levelUpSound.play();
         levelDisplay.text("Level " + level);
     }
 };
