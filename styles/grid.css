@@ -191,3 +191,20 @@ body, html {
     background-position: center;
     transition: transform 0.3s;
   }
+
+  .upgrade_element {
+    position: relative;
+}
+
+.upgrade_text {
+    position: absolute;
+    top: 50%;
+    left: 68%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: black; /* couleur du texte */
+    font-size: 24px; /* taille de la police */
+    font-weight: bold; /* poids de la police */
+    text-shadow: 1px 1px 1px black; /* ombre du texte */
+    pointer-events: none; /* évite que le texte soit cliquable */
+}

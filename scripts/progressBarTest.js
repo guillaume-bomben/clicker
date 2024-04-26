@@ -1,3 +1,6 @@
+import { money, moneyPerClick, show_money} from './script_button.js';
+
+
 $(document).ready(function() {
     let level = 1;
     let counterLevel = 0;
@@ -110,18 +113,16 @@ $(document).ready(function() {
         const playingArea = $('.playing_area');
         const playingAreaWidth = playingArea.width();
         const playingAreaHeight = playingArea.height();
-        if (smallButtonCount < 4) {
+        for (let i = 0; i < 4; i++){
             const randomX = Math.floor(Math.random() * (playingAreaWidth - 37 - 200) + 100);
             const randomY = Math.floor(Math.random() * (playingAreaHeight - 45 - 200) + 100);
 
             if (randomX + 37 > playingAreaWidth - 100) {
                 randomX = playingAreaWidth - 137;
             }
-
             if (randomY + 45 > playingAreaHeight - 100) {
                 randomY = playingAreaHeight - 145;
             }
-
             let smallButton = $("<img>").addClass("small_button").attr("src", "assets/images/Small_button.svg").css({
                 top: randomY + 'px',
                 left: randomX + 'px',
@@ -133,6 +134,9 @@ $(document).ready(function() {
             smallButtonCount++; // Increment the count of small buttons spawned
 
             smallButton.click(function () {
+                console.log(money, moneyPerClick);
+                money += moneyPerClick * 20;
+                console.log(money);
                 $(this).addClass("small-button-press");
                 setTimeout(function () {
                     $(this).removeClass("small-button-press");
@@ -151,9 +155,7 @@ $(document).ready(function() {
                     smallButtons.splice(index, 1);
                     smallButtonCount--; // Decrement the count of small buttons spawned
                 }
-            }, 2000);
+            }, 6000);
         }
     }
-
-
 });

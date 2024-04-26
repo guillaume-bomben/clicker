@@ -1,9 +1,9 @@
 import {instantiateCursor,moneyPerSecond,moneyPerCycle,cursorPerLV,createCursor} from "./addCursor.js";
 
-let money = 0;
+export let money = 0;
 let totalMoney = 0;
 let totalSpend = 0;
-let moneyPerClick = 1;
+export let moneyPerClick = 1;
 let clickCounter = 0;
 let price_income = 10;
 let price_add_cursor = 10;
@@ -36,9 +36,33 @@ export function updateScore(type) {
     buttonVerification();
 }
 
+export function show_money(){
+    let money_to_show = money;
+    if (money_to_show < 1000) {
+        $("#money").text(money_to_show.toFixed(1) + " $");
+    }
+    else if (money_to_show > 1000 && money_to_show < 1000000) {
+        money_to_show = (money_to_show / 1000).toFixed(1) + "k";
+        $("#money").text(money_to_show + " $");
+    }
+    else if (money_to_show > 1000000 && money_to_show < 1000000000) {
+        money_to_show = (money_to_show / 1000000).toFixed(1) + "M";
+        $("#money").text(money_to_show + " $");
+    }
+    else if (money_to_show > 1000000000 && money_to_show < 1000000000000) {
+        money_to_show = (money_to_show / 1000000000).toFixed(1) + "B";
+        $("#money").text(money_to_show + " $");
+    }
+    else if (money_to_show > 1000000000000){
+        money_to_show = (money_to_show / 1000000000000).toFixed(1) + "T";
+        $("#money").text(money_to_show + " $");
+    }
+};
+
 $(document).ready(function() {
     save();
     buttonVerification();
+    showPriceUpgrade();
 
     button.click(function() {
         updateScore("click");
@@ -60,6 +84,7 @@ $(document).ready(function() {
         }
         save();
         buttonVerification();
+        showPriceUpgrade();
     });
     
     $(".add_cursor").click(function() {
@@ -72,6 +97,7 @@ $(document).ready(function() {
         }
         save();
         buttonVerification();
+        showPriceUpgrade();
     });
 
     $(".merge_cursors").click(function() {
@@ -84,6 +110,7 @@ $(document).ready(function() {
         }
         save();
         buttonVerification();
+        showPriceUpgrade();
     });
     
     $(".cursor_income").click(function() {
@@ -97,6 +124,7 @@ $(document).ready(function() {
         }
         save();
         buttonVerification();
+        showPriceUpgrade();
     });
 
     $(".cursor_speed").click(function() {
@@ -110,6 +138,7 @@ $(document).ready(function() {
         }
         save();
         buttonVerification();
+        showPriceUpgrade();
     });
 
 
@@ -131,6 +160,7 @@ $(document).ready(function() {
             alert("You poor XD");
         }
         save();
+        showPriceUpgrade();
     });
 });
 
@@ -182,28 +212,6 @@ async function save() {
     localStorage.setItem("OMEGAPRICE", OMEGAPRICE);
 };
 
-async function show_money(){
-    let money_to_show = money;
-    if (money_to_show < 1000) {
-        $("#money").text(money_to_show.toFixed(1) + " $");
-    }
-    else if (money_to_show > 1000 && money_to_show < 1000000) {
-        money_to_show = (money_to_show / 1000).toFixed(1) + "k";
-        $("#money").text(money_to_show + " $");
-    }
-    else if (money_to_show > 1000000 && money_to_show < 1000000000) {
-        money_to_show = (money_to_show / 1000000).toFixed(1) + "M";
-        $("#money").text(money_to_show + " $");
-    }
-    else if (money_to_show > 1000000000 && money_to_show < 1000000000000) {
-        money_to_show = (money_to_show / 1000000000).toFixed(1) + "B";
-        $("#money").text(money_to_show + " $");
-    }
-    else if (money_to_show > 1000000000000){
-        money_to_show = (money_to_show / 1000000000000).toFixed(1) + "T";
-        $("#money").text(money_to_show + " $");
-    }
-};
 
 async function show_money_per_click(){
     let moneyPerClick_to_show = moneyPerClick;
@@ -343,5 +351,152 @@ async function buttonCursorSpeedVerification() {
     else {
         buttonCursorSpeed.removeClass('disabled');
         buttonCursorSpeed.css('background-image', 'url("assets/images/Upgrade_cursor_speed.svg")');
+    }
+}
+
+function showPriceUpgrade(){
+    formatPriceIncome();
+    formatPriceAddCursor();
+    formatPriceMergeCursor();
+    formatPriceCursorIncome();
+    formatPriceCursorSpeed();
+    formatPriceUpgrade();
+}
+
+function formatPriceIncome(){
+    let price_income_to_show = price_income;
+    if (price_income_to_show < 1000) {
+        $("#price_income").text(price_income_to_show.toFixed(0) + " $");
+    }
+    else if (price_income_to_show > 1000 && price_income_to_show < 1000000) {
+        price_income_to_show = (price_income_to_show / 1000).toFixed(0) + "k";
+        $("#price_income").text(price_income_to_show + " $");
+    }
+    else if (price_income_to_show > 1000000 && price_income_to_show < 1000000000) {
+        price_income_to_show = (price_income_to_show / 1000000).toFixed(0) + "M";
+        $("#price_income").text(price_income_to_show + " $");
+    }
+    else if (price_income_to_show > 1000000000 && price_income_to_show < 1000000000000) {
+        price_income_to_show = (price_income_to_show / 1000000000).toFixed(0) + "B";
+        $("#price_income").text(price_income_to_show + " $");
+    }
+    else if (price_income_to_show > 1000000000000){
+        price_income_to_show = (price_income_to_show / 1000000000000).toFixed(0) + "T";
+        $("#price_income").text(price_income_to_show + " $");
+    }
+}
+
+function formatPriceAddCursor(){
+    let price_add_cursor_to_show = price_add_cursor;
+    if (price_add_cursor_to_show < 1000) {
+        $("#price_add_cursor").text(price_add_cursor_to_show.toFixed(0) + " $");
+    }
+    else if (price_add_cursor_to_show > 1000 && price_add_cursor_to_show < 1000000) {
+        price_add_cursor_to_show = (price_add_cursor_to_show / 1000).toFixed(0) + "k";
+        $("#price_add_cursor").text(price_add_cursor_to_show + " $");
+    }
+    else if (price_add_cursor_to_show > 1000000 && price_add_cursor_to_show < 1000000000) {
+        price_add_cursor_to_show = (price_add_cursor_to_show / 1000000).toFixed(0) + "M";
+        $("#price_add_cursor").text(price_add_cursor_to_show + " $");
+    }
+    else if (price_add_cursor_to_show > 1000000000 && price_add_cursor_to_show < 1000000000000) {
+        price_add_cursor_to_show = (price_add_cursor_to_show / 1000000000).toFixed(0) + "B";
+        $("#price_add_cursor").text(price_add_cursor_to_show + " $");
+    }
+    else if (price_add_cursor_to_show > 1000000000000){
+        price_add_cursor_to_show = (price_add_cursor_to_show / 1000000000000).toFixed(0) + "T";
+        $("#price_add_cursor").text(price_add_cursor_to_show + " $");
+    }
+}
+
+function formatPriceMergeCursor(){
+    let price_merge_cursor_to_show = price_merge_cursor;
+    if (price_merge_cursor_to_show < 1000) {
+        $("#price_merge_cursor").text(price_merge_cursor_to_show.toFixed(0) + " $");
+    }
+    else if (price_merge_cursor_to_show > 1000 && price_merge_cursor_to_show < 1000000) {
+        price_merge_cursor_to_show = (price_merge_cursor_to_show / 1000).toFixed(0) + "k";
+        $("#price_merge_cursor").text(price_merge_cursor_to_show + " $");
+    }
+    else if (price_merge_cursor_to_show > 1000000 && price_merge_cursor_to_show < 1000000000) {
+        price_merge_cursor_to_show = (price_merge_cursor_to_show / 1000000).toFixed(0) + "M";
+        $("#price_merge_cursor").text(price_merge_cursor_to_show + " $");
+    }
+    else if (price_merge_cursor_to_show > 1000000000 && price_merge_cursor_to_show < 1000000000000) {
+        price_merge_cursor_to_show = (price_merge_cursor_to_show / 1000000000).toFixed(0) + "B";
+        $("#price_merge_cursor").text(price_merge_cursor_to_show + " $");
+    }
+    else if (price_merge_cursor_to_show > 1000000000000){
+        price_merge_cursor_to_show = (price_merge_cursor_to_show / 1000000000000).toFixed(0) + "T";
+        $("#price_merge_cursor").text(price_merge_cursor_to_show + " $");
+    }
+}
+
+function formatPriceCursorIncome(){
+    let price_cursor_income_to_show = price_cursor_income;
+    if (price_cursor_income_to_show < 1000) {
+        $("#price_cursor_income").text(price_cursor_income_to_show.toFixed(0) + " $");
+    }
+    else if (price_cursor_income_to_show > 1000 && price_cursor_income_to_show < 1000000) {
+        price_cursor_income_to_show = (price_cursor_income_to_show / 1000).toFixed(0) + "k";
+        $("#price_cursor_income").text(price_cursor_income_to_show + " $");
+    }
+    else if (price_cursor_income_to_show > 1000000 && price_cursor_income_to_show < 1000000000) {
+        price_cursor_income_to_show = (price_cursor_income_to_show / 1000000).toFixed(0) + "M";
+        $("#price_cursor_income").text(price_cursor_income_to_show + " $");
+    }
+    else if (price_cursor_income_to_show > 1000000000 && price_cursor_income_to_show < 1000000000000) {
+        price_cursor_income_to_show = (price_cursor_income_to_show / 1000000000).toFixed(0) + "B";
+        $("#price_cursor_income").text(price_cursor_income_to_show + " $");
+    }
+    else if (price_cursor_income_to_show > 1000000000000){
+        price_cursor_income_to_show = (price_cursor_income_to_show / 1000000000000).toFixed(0) + "T";
+        $("#price_cursor_income").text(price_cursor_income_to_show + " $");
+    }
+}
+
+function formatPriceCursorSpeed(){
+    let price_cursor_speed_to_show = price_cursor_speed;
+    if (price_cursor_speed_to_show < 1000) {
+        $("#price_cursor_speed").text(price_cursor_speed_to_show.toFixed(0) + " $");
+    }
+    else if (price_cursor_speed_to_show > 1000 && price_cursor_speed_to_show < 1000000) {
+        price_cursor_speed_to_show = (price_cursor_speed_to_show / 1000).toFixed(0) + "k";
+        $("#price_cursor_speed").text(price_cursor_speed_to_show + " $");
+    }
+    else if (price_cursor_speed_to_show > 1000000 && price_cursor_speed_to_show < 1000000000) {
+        price_cursor_speed_to_show = (price_cursor_speed_to_show / 1000000).toFixed(0) + "M";
+        $("#price_cursor_speed").text(price_cursor_speed_to_show + " $");
+    }
+    else if (price_cursor_speed_to_show > 1000000000 && price_cursor_speed_to_show < 1000000000000) {
+        price_cursor_speed_to_show = (price_cursor_speed_to_show / 1000000000).toFixed(0) + "B";
+        $("#price_cursor_speed").text(price_cursor_speed_to_show + " $");
+    }
+    else if (price_cursor_speed_to_show > 1000000000000){
+        price_cursor_speed_to_show = (price_cursor_speed_to_show / 1000000000000).toFixed(0) + "T";
+        $("#price_cursor_speed").text(price_cursor_speed_to_show + " $");
+    }
+}
+
+function formatPriceUpgrade(){
+    let OMEGAPRICE_to_show = OMEGAPRICE;
+    if (OMEGAPRICE_to_show < 1000) {
+        $("#price_upgrade").text(OMEGAPRICE_to_show.toFixed(0) + " $");
+    }
+    else if (OMEGAPRICE_to_show > 1000 && OMEGAPRICE_to_show < 1000000) {
+        OMEGAPRICE_to_show = (OMEGAPRICE_to_show / 1000).toFixed(0) + "k";
+        $("#price_upgrade").text(OMEGAPRICE_to_show + " $");
+    }
+    else if (OMEGAPRICE_to_show > 1000000 && OMEGAPRICE_to_show < 1000000000) {
+        OMEGAPRICE_to_show = (OMEGAPRICE_to_show / 1000000).toFixed(0) + "M";
+        $("#price_upgrade").text(OMEGAPRICE_to_show + " $");
+    }
+    else if (OMEGAPRICE_to_show > 1000000000 && OMEGAPRICE_to_show < 1000000000000) {
+        OMEGAPRICE_to_show = (OMEGAPRICE_to_show / 1000000000).toFixed(0) + "B";
+        $("#price_upgrade").text(OMEGAPRICE_to_show + " $");
+    }
+    else if (OMEGAPRICE_to_show > 1000000000000){
+        OMEGAPRICE_to_show = (OMEGAPRICE_to_show / 1000000000000).toFixed(0) + "T";
+        $("#price_upgrade").text(OMEGAPRICE_to_show + " $");
     }
 }
