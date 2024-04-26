@@ -17,20 +17,35 @@ let counterLevel = 0;
 let decreaseInterval;
 let isMouseDown = false;
 let progressContainer = $(".progress_bar");
-let progressBar = $("<div>").addClass("progress-bar");
+let progressBar = $("<div>").addClass("progress-bar-ui");
+let backgroundBarWrapper = $("<div>").addClass("background-bar-wrapper");
+let backgroundBar = $("<div>").addClass("backgroundBar").attr("id", "backgroundBar");
+let barWrapper = $("<div>").addClass("bar-wrapper");
 let bar = $("<div>").addClass("bar").attr("id", "bar");
 let levelDisplay = $("<div>").addClass("level").attr("id", "level").text("Level 1");
-progressBar.append(bar);
+
+let levelUpSound = new Audio ('assets/sounds/levelUp.mp3');
+let shopSound = new Audio ('assets/sounds/shop.mp3');
+let buttonClickSound = new Audio ('assets/sounds/click.mp3');
+buttonClickSound.playbackRate = 2;
+
+backgroundBarWrapper.append(backgroundBar);
+barWrapper.append(bar);
+progressBar.append(backgroundBarWrapper);
+progressBar.append(barWrapper);
 progressBar.append(levelDisplay);
 progressContainer.append(progressBar);
 let mouseDownTimer;
 let smallButtons = [];
+
+
 
 const button = $(".Big_button");
 
 export function updateScore(type) {
     if (type == "click") {
         money += moneyPerClick;
+        buttonClickSound.play();
         clickCounter++;
         totalMoney += moneyPerClick;
         button.addClass('animate');
@@ -78,6 +93,7 @@ $(document).ready(function() {
     
     $(".increase_income").click(function() {
         if (money >= price_income) {
+            shopSound.play();
             money -= price_income;
             totalSpend += price_income;
             price_income += price_income;
@@ -97,6 +113,7 @@ $(document).ready(function() {
     
     $(".add_cursor").click(function() {
         if (money >= price_add_cursor && createCursor() !== false){
+            shopSound.play();
             money -= price_add_cursor;
             totalSpend += price_add_cursor;
             price_add_cursor += price_add_cursor*1.2;
@@ -110,6 +127,7 @@ $(document).ready(function() {
 
     $(".merge_cursors").click(function() {
         if (money >= price_merge_cursor && merge_cursors()){
+            shopSound.play();
             money -= price_merge_cursor;
             totalSpend += price_merge_cursor;
             price_merge_cursor += price_merge_cursor*0.2;
@@ -123,12 +141,12 @@ $(document).ready(function() {
     
     $(".cursor_income").click(function() {
         if (money >= price_cursor_income) {
+            shopSound.play();
             money -= price_cursor_income;
             totalSpend += price_cursor_income;
             price_cursor_income += price_cursor_income*0.7;
             show_money();
             show_money_per_second();
-            alert("You increased your cursor income!");
         }
         save();
         buttonVerification();
@@ -137,12 +155,12 @@ $(document).ready(function() {
 
     $(".cursor_speed").click(function() {
         if (money >= price_cursor_speed) {
+            shopSound.play();
             money -= price_cursor_speed;
             totalSpend += price_cursor_speed;
             price_cursor_speed += price_cursor_speed*0.8;
             show_money();
             show_money_per_second();
-            alert("You increased your cursor speed!");
         }
         save();
         buttonVerification();
@@ -150,20 +168,22 @@ $(document).ready(function() {
     });
 
     $(".statistics_button").click(function() {
-        alert("Total money earned: " + totalMoney + "$\n" + "Total money spend: " + totalSpend + "$\n" + "Total clicks: " + clickCounter)
+        var message = "Total money earned: " + totalMoney + "$<br>" + "Total money spend: " + totalSpend + "$<br>" + "Total clicks: " + clickCounter;
+        $("#dialog").html(message).dialog({
+            modal: true,
+            title: "Statistics"
+        });
     });
 
     $(".upgrade_button").click(function() {
         if (money >= OMEGAPRICE) {
+            shopSound.play();
             money -= OMEGAPRICE;
             totalSpend += OMEGAPRICE;
             OMEGAPRICE += OMEGAPRICE*100;
             moneyPerClick += moneyPerClick*20;
             show_money();
             show_money_per_click();
-        }
-        else {
-            alert("You poor XD");
         }
         save();
         showPriceUpgrade();
@@ -402,6 +422,7 @@ function increaseCounterLevel() {
 
 function updateLevel() {
     if (counterLevel >= 100) {
+        levelUpSound.play();
         level++;
         levelDisplay.text("Level " + level);
     }

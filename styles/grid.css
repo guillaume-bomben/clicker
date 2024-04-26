@@ -8,6 +8,24 @@
   url("https://db.onlinewebfonts.com/t/4164b679e1a0c55266914de874ffd38f.svg#Merge W00 Bold")format("svg");
 }
 
+#money {
+  font-size: 3.5vw;
+  color: #fff;
+  -webkit-text-stroke: 0.2vw rgb(16, 16, 95);
+}
+ #moneyPerClick, #moneyPerSecond {
+  font-size: 2vw;
+  color: #fff;
+  -webkit-text-stroke: 0.1vw rgb(16, 16, 95);
+}
+
+#level{
+  font-size: 3vw;
+  color: #fff;
+  -webkit-text-stroke: 0.1vw rgb(16, 16, 95);
+
+}
+
 .wrapper {
   display: grid;
   grid-template-columns: 1fr 3fr 2fr;
@@ -47,13 +65,35 @@ body, html {
   position: relative;
 }
 
-.progress-bar {
+.progress-bar-ui {
   width: 90%;
   height: 30%;
   border: 1px solid #000;
   border-radius: 20px;
   overflow: hidden;
   position: relative;
+}
+
+.background-bar-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bar-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.backgroundBar {
+  width: 100%;
+  height: 100%;
+  background-color: #caddf6;
+  transition: width 0.15s ease;
+  z-index: -1; /* move the backgroundBar behind the bar */
 }
 
 .bar {
@@ -202,9 +242,33 @@ body, html {
     left: 68%;
     transform: translate(-50%, -50%);
     text-align: center;
-    color: black; /* couleur du texte */
-    font-size: 24px; /* taille de la police */
-    font-weight: bold; /* poids de la police */
-    text-shadow: 1px 1px 1px black; /* ombre du texte */
-    pointer-events: none; /* évite que le texte soit cliquable */
+    font-size: 2.4vw;
+    pointer-events: none;
+    color: #fff;
+    -webkit-text-stroke: 0.1vw rgb(16, 16, 95); 
+}
+
+.ui-dialog {
+  background-color: #fff;
+  border: 3px solid #0d0a43;
+  padding: 10px;
+  width: 300px; 
+  border-radius: 20px;
+}
+
+.ui-dialog-titlebar-close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: #666;
+  color: #fff;
+  border: none;
+  padding: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.ui-dialog-titlebar-close::before {
+  content: '×';
+  font-weight: bold;
 }

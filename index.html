@@ -3,7 +3,8 @@
 <head>
     <title>Best clicker game</title>
     <meta charset="UTF-8">
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous" defer></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <link rel="stylesheet" href="styles/grid.css">
     <link rel="stylesheet" href="styles/animations.css">
 
@@ -14,15 +15,16 @@
 </head>
 <body>
     <div class="wrapper">
+        <div id="dialog"></div>
         <div class="settings">
             <div class="settings_button"></div>
             <div class="statistics_button"></div>
         </div>
         <div class="progress_bar"></div>
         <div class="income">
-            <p id="money">0 $</p>
-            <p id="moneyPerClick">1 $/click</p>
-            <p id="moneyPerSecond">0 $/second</p>
+            <div id="money">0 $</div>
+            <div id="moneyPerClick">1 $/click</div>
+            <div id="moneyPerSecond">0 $/second</div>
         </div>
         <div class="playing_area">
             <div class="cursor">
