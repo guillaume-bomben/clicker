@@ -1,9 +1,9 @@
 import {instantiateCursor,moneyPerSecond,moneyPerCycle,cursorPerLV,createCursor} from "./addCursor.js";
 
-let money = 0;
+export let money = 0;
 let totalMoney = 0;
 let totalSpend = 0;
-let moneyPerClick = 1;
+export let moneyPerClick = 1;
 let clickCounter = 0;
 let price_income = 10;
 let price_add_cursor = 10;
@@ -35,6 +35,29 @@ export function updateScore(type) {
     save();
     buttonVerification();
 }
+
+export function show_money(){
+    let money_to_show = money;
+    if (money_to_show < 1000) {
+        $("#money").text(money_to_show.toFixed(1) + " $");
+    }
+    else if (money_to_show > 1000 && money_to_show < 1000000) {
+        money_to_show = (money_to_show / 1000).toFixed(1) + "k";
+        $("#money").text(money_to_show + " $");
+    }
+    else if (money_to_show > 1000000 && money_to_show < 1000000000) {
+        money_to_show = (money_to_show / 1000000).toFixed(1) + "M";
+        $("#money").text(money_to_show + " $");
+    }
+    else if (money_to_show > 1000000000 && money_to_show < 1000000000000) {
+        money_to_show = (money_to_show / 1000000000).toFixed(1) + "B";
+        $("#money").text(money_to_show + " $");
+    }
+    else if (money_to_show > 1000000000000){
+        money_to_show = (money_to_show / 1000000000000).toFixed(1) + "T";
+        $("#money").text(money_to_show + " $");
+    }
+};
 
 $(document).ready(function() {
     save();
@@ -182,28 +205,6 @@ async function save() {
     localStorage.setItem("OMEGAPRICE", OMEGAPRICE);
 };
 
-async function show_money(){
-    let money_to_show = money;
-    if (money_to_show < 1000) {
-        $("#money").text(money_to_show.toFixed(1) + " $");
-    }
-    else if (money_to_show > 1000 && money_to_show < 1000000) {
-        money_to_show = (money_to_show / 1000).toFixed(1) + "k";
-        $("#money").text(money_to_show + " $");
-    }
-    else if (money_to_show > 1000000 && money_to_show < 1000000000) {
-        money_to_show = (money_to_show / 1000000).toFixed(1) + "M";
-        $("#money").text(money_to_show + " $");
-    }
-    else if (money_to_show > 1000000000 && money_to_show < 1000000000000) {
-        money_to_show = (money_to_show / 1000000000).toFixed(1) + "B";
-        $("#money").text(money_to_show + " $");
-    }
-    else if (money_to_show > 1000000000000){
-        money_to_show = (money_to_show / 1000000000000).toFixed(1) + "T";
-        $("#money").text(money_to_show + " $");
-    }
-};
 
 async function show_money_per_click(){
     let moneyPerClick_to_show = moneyPerClick;
