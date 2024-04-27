@@ -243,7 +243,7 @@ body, html {
     left: 24.5vw;
     transform: translate(-50%, -50%);
     text-align: center;
-    font-size: 2vw;
+    font-size: 1.8vw;
     pointer-events: none;
     color: #fff;
     -webkit-text-stroke: 0.1vw rgb(16, 16, 95); 
