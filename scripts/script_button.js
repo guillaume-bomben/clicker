@@ -38,20 +38,34 @@ progressContainer.append(progressBar);
 let mouseDownTimer;
 let smallButtons = [];
 
-
-
 const button = $(".Big_button");
 
-export function updateScore(type) {
+export async function updateScore(type) {
     if (type == "click") {
         money += moneyPerClick;
         buttonClickSound.play();
         clickCounter++;
         totalMoney += moneyPerClick;
-        button.addClass('animate');
-        button.one('animationend', function() {
-            button.removeClass('animate');
-        });
+        if (level<2){
+            button.addClass('animate-Big-Button1');
+            button.one('animationend', function() {
+                button.removeClass('animate-Big-Button1');
+            });
+        }
+        else if (level>=2 && level<3){
+            button.css('background-image', 'url(../assets/images/Button_yellow.svg)');
+            button.addClass('animate-Big-Button2');
+            button.one('animationend', function() {
+                button.removeClass('animate-Big-Button2');
+            });
+        }
+        else if (level>=3){
+            button.css('background-image', 'url(../assets/images/Button_white.svg)');
+            button.addClass('animate-Big-Button3');
+            button.one('animationend', function() {
+                button.removeClass('animate-Big-Button3');
+            });
+        }
     }
     else if (type == "auto"){
         let nbCursors = cursorPerLV[0] + cursorPerLV[1] + cursorPerLV[2] + cursorPerLV[3] + cursorPerLV[4];

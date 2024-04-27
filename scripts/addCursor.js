@@ -16,7 +16,7 @@ let centerY = cursorDivPosition.top + cursorDivHeight / 2;
 let radius = Math.min(cursorDivWidth, cursorDivHeight) / 2;
 
 let speedCursor = 300;
-export function instantiateCursor() {
+export async function instantiateCursor() {
     $('.cursor_object').remove();
     let angleBetweenCursors = 360 / cursorCount;
     moneyPerCycle = 0;
@@ -49,7 +49,7 @@ export function instantiateCursor() {
 
 
 
-    function moveCursorToCenterAndBack(cursor) {
+    async function moveCursorToCenterAndBack(cursor) {
         let centerLeft = centerX;
         let centerTop = centerY;
     
@@ -62,7 +62,7 @@ export function instantiateCursor() {
     }
 
 
-    function animateCursors() {
+    async function animateCursors() {
         let cursors = $('.cursor_object');
         let angle = 0;
         let speed = 0.01;
@@ -120,38 +120,3 @@ export function createCursor() {
         cursorCount += 1;
         instantiateCursor();
 }
-
-/*
-$(document).ready(function(){
-    $(window).resize(function() {
-        let cursorDiv = $('.cursor');
-        let cursorDivPosition = cursorDiv.position();
-        let cursorDivWidth = cursorDiv.width();
-        let cursorDivHeight = cursorDiv.height();
-    
-        let centerX = cursorDivPosition.left + cursorDivWidth / 2;
-        let centerY = cursorDivPosition.top + cursorDivHeight / 2;
-        let radius = Math.min(cursorDivWidth, cursorDivHeight) / 2;
-    
-        let cursors = $('.cursor_object');
-    
-        cursors.each(function(index) {
-            let cursor = $(this);
-            let angleBetweenCursors = 360 / (cursorCount + 1);
-            let cursorAngle = angleBetweenCursors * index;
-    
-            let cx = centerX + Math.cos(cursorAngle * Math.PI / 180) * radius;
-            let cy = centerY + Math.sin(cursorAngle * Math.PI / 180) * radius;
-    
-            // Ensure the cursor stays within the cursor div
-            let left = Math.min(Math.max(cx, cursorDivPosition.left), cursorDivPosition.left + cursorDivWidth - 20);
-            let top = Math.min(Math.max(cy, cursorDivPosition.top), cursorDivPosition.top + cursorDivHeight - 20);
-    
-            cursor.css({
-                top: `${top}px`,
-                left: `${left}px`,
-            });
-        });
-    });
-});
-*/
