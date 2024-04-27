@@ -12,11 +12,15 @@
   font-size: 3.5vw;
   color: #fff;
   -webkit-text-stroke: 0.2vw rgb(16, 16, 95);
+  margin-left: 17vW;
+  margin-top: 5vh;
 }
  #moneyPerClick, #moneyPerSecond {
   font-size: 2vw;
   color: #fff;
   -webkit-text-stroke: 0.1vw rgb(16, 16, 95);
+  margin-left: 17vW;
+
 }
 
 #level{
@@ -161,7 +165,6 @@ body, html {
     justify-content: center;
     align-items: center;
     background-color: transparent; 
-    border: 1px solid black;
   }
 
   .increase_income{
@@ -236,11 +239,11 @@ body, html {
 
 .upgrade_text {
     position: absolute;
-    top: 50%;
-    left: 68%;
+    top: 5vh; /* changed from 50% to 50vh */
+    left: 24.5vw;
     transform: translate(-50%, -50%);
     text-align: center;
-    font-size: 2.4vw;
+    font-size: 2vw;
     pointer-events: none;
     color: #fff;
     -webkit-text-stroke: 0.1vw rgb(16, 16, 95); 
