@@ -182,12 +182,36 @@ $(document).ready(function() {
     });
 
     $(".statistics_button").click(function() {
-        var message = "Total money earned: " + totalMoney + "$<br>" + "Total money spend: " + totalSpend + "$<br>" + "Total clicks: " + clickCounter;
+        let totalMoneyFormatted = formatMoney(totalMoney);
+        let totalSpendFormatted = formatMoney(totalSpend);
+        
+        var message = "Total money earned: " + totalMoneyFormatted + "<br>" + "Total money spend: " + totalSpendFormatted + "<br>" + "Total clicks: " + clickCounter;
         $("#dialog").html(message).dialog({
             modal: true,
             title: "Statistics"
         });
     });
+    
+    function formatMoney(money) {
+        let suffix = "";
+        let divisor = 1;
+    
+        if (money >= 1000000000000) {
+            suffix = "T";
+            divisor = 1000000000000;
+        } else if (money >= 1000000000) {
+            suffix = "B";
+            divisor = 1000000000;
+        } else if (money >= 1000000) {
+            suffix = "M";
+            divisor = 1000000;
+        } else if (money >= 1000) {
+            suffix = "k";
+            divisor = 1000;
+        }
+    
+        return (money / divisor).toFixed(1) + suffix;
+    }
 
     $(".upgrade_button").click(function() {
         if (money >= OMEGAPRICE) {
