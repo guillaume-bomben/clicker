@@ -1,7 +1,7 @@
 let cursorCount = 0;
 let cursorCost = 100; 
 let maxCursors = 10;
-let cursorDiv = $('.cursor');
+let cursorDiv = $('.cursor_area');
 let cursorDivPosition = cursorDiv.position();
 let cursorDivWidth = cursorDiv.width();
 let cursorDivHeight = cursorDiv.height();
@@ -30,7 +30,7 @@ $(document).ready(function(){
             class: 'cursor_object'
             });
 
-            $('.cursor').append(cursor);
+            $('.cursor_area').append(cursor);
 
             cursor.css({
             position: 'absolute',
@@ -111,7 +111,7 @@ $(document).ready(function(){
     $('.add_cursor').on('click', instantiateCursor);
 
     $(window).resize(function() {
-        let cursorDiv = $('.cursor');
+        let cursorDiv = $('.cursor_area');
         let cursorDivPosition = cursorDiv.position();
         let cursorDivWidth = cursorDiv.width();
         let cursorDivHeight = cursorDiv.height();
