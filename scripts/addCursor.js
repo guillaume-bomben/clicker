@@ -16,6 +16,16 @@ let centerY = cursorDivPosition.top + cursorDivHeight / 2;
 let radius = Math.min(cursorDivWidth, cursorDivHeight) / 2;
 
 let speedCursor = 300;
+
+export function getMoneyPerSecond(){
+    return moneyPerSecond;
+}
+
+export function setMoneyPerSecond(value){
+    console.log("Money per second set to:", moneyPerSecond);
+    moneyPerSecond = value;
+}
+
 export async function instantiateCursor() {
     $('.cursor_object').remove();
     let angleBetweenCursors = 360 / cursorCount;
@@ -46,50 +56,47 @@ export async function instantiateCursor() {
     moneyPerSecond = moneyPerCycle / (speedCursor * 0.01)
     animateCursors();
 }
+async function moveCursorToCenterAndBack(cursor) {
+    let centerLeft = centerX;
+    let centerTop = centerY;
+
+    cursor.animate({
+        left: centerLeft,
+        top: centerTop
+    }, {
+        duration: speedCursor *0.95,
+    });
+}
 
 
-
-    async function moveCursorToCenterAndBack(cursor) {
-        let centerLeft = centerX;
-        let centerTop = centerY;
+async function animateCursors() {
+    let cursors = $('.cursor_object');
+    let angle = 0;
+    let speed = 0.01;
     
-        cursor.animate({
-            left: centerLeft,
-            top: centerTop
-        }, {
-            duration: speedCursor *0.95,
-        });
-    }
-
-
-    async function animateCursors() {
-        let cursors = $('.cursor_object');
-        let angle = 0;
-        let speed = 0.01;
+    setInterval(function() {
+        angle += speed;
         
-        setInterval(function() {
-            angle += speed;
+        cursors.each(function(index) {
+            let cursor = $(this);
+            let angleBetweenCursors = 360 / cursors.length;
+            let cursorAngle = angleBetweenCursors * index + angle * 180 / Math.PI;
             
-            cursors.each(function(index) {
-                let cursor = $(this);
-                let angleBetweenCursors = 360 / cursors.length;
-                let cursorAngle = angleBetweenCursors * index + angle * 180 / Math.PI;
-                
-                let cx = centerX + Math.cos(cursorAngle * Math.PI / 180) * radius;
-                let cy = centerY + Math.sin(cursorAngle * Math.PI / 180) * radius;
-                
-                // Calculate angle towards the center
-                let angleToCenter = Math.atan2(centerY - cy, centerX - cx);
-                // Convert radians to degrees
-                let rotationAngle = angleToCenter * 180 / Math.PI;
-                
-                cursor.css({
-                    top: `${cy}px`,
-                    left: `${cx}px`,
-                    transform: `rotate(${rotationAngle + 90}deg)`
-                });
+            let cx = centerX + Math.cos(cursorAngle * Math.PI / 180) * radius;
+            let cy = centerY + Math.sin(cursorAngle * Math.PI / 180) * radius;
+            
+            // Calculate angle towards the center
+            let angleToCenter = Math.atan2(centerY - cy, centerX - cx);
+            // Convert radians to degrees
+            let rotationAngle = angleToCenter * 180 / Math.PI;
+            
+            cursor.css({
+                top: `${cy}px`,
+                left: `${cx}px`,
+                transform: `rotate(${rotationAngle + 90}deg)`
             });
-        }, 1000 / 60);
+        });
+    }, 1000 / 60);
     
         setInterval(function() {
             let delay = 0;
@@ -100,16 +107,12 @@ export async function instantiateCursor() {
                 }, delay);
                 delay += speedCursor;
             });
-            console.log('move cursor')
         },speedCursor * 10);
 
         setInterval(function() {
             updateScore("auto");
-            console.log('update score')
-            console.log(moneyPerCycle)
         }, speedCursor * 10);
     }
-
 
 export function createCursor() {
     cursorCount = cursorPerLV[0] + cursorPerLV[1] + cursorPerLV[2] + cursorPerLV[3] + cursorPerLV[4];  
