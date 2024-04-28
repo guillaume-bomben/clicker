@@ -1,4 +1,5 @@
-import {instantiateCursor,moneyPerSecond,moneyPerCycle,cursorPerLV,createCursor} from "./addCursor.js";
+import {instantiateCursor,moneyPerCycle,cursorPerLV,createCursor} from "./addCursor.js";
+import { getMoneyPerSecond, setMoneyPerSecond } from "./addCursor.js";
 
 let money = 0;
 let totalMoney = 0;
@@ -45,10 +46,11 @@ let smallButtons = [];
 
 const button = $(".Big_button");
 
+let currentMoneyPerSecond = getMoneyPerSecond();
+
 
 export async function updateScore(type) {
     if (type == "click") {
-        console.log('clicking')
         money += moneyPerClick;
         buttonClickSound.play();
         clickCounter++;
@@ -74,7 +76,6 @@ export async function updateScore(type) {
                 button.removeClass('animate-Big-Button3');
             });
         }
-        console.log(level);
     }
     else if (type == "auto"){
         let nbCursors = cursorPerLV[0] + cursorPerLV[1] + cursorPerLV[2] + cursorPerLV[3] + cursorPerLV[4];
@@ -113,7 +114,6 @@ async function checkMusicEnabled() {
     }
   }
 
-  
   $(document).mousedown(function() {
     checkMusicEnabled();
     checkSfxEnabled();
@@ -121,7 +121,6 @@ async function checkMusicEnabled() {
   });
 
 $(document).ready(function() {
-
     save();
     buttonVerification();
     showPriceUpgrade();
@@ -201,6 +200,8 @@ $(document).ready(function() {
             money -= price_cursor_income;
             totalSpend += price_cursor_income;
             price_cursor_income += price_cursor_income*0.7;
+            currentMoneyPerSecond = getMoneyPerSecond();
+            setMoneyPerSecond(currentMoneyPerSecond*1.1);
             show_money();
             show_money_per_second();
         }
@@ -234,9 +235,6 @@ $(document).ready(function() {
             title: "Statistics"
         });
     });
-
-    
-    // Initialize the checkboxes based on the localStorage values
     
     $(".settings_button").click(function() {
         shopSound.play();
@@ -394,7 +392,7 @@ async function show_money_per_click(){
 };
 
 async function show_money_per_second(){
-    let moneyPerSecond_to_show = moneyPerSecond;
+    let moneyPerSecond_to_show = getMoneyPerSecond();
     if (moneyPerSecond_to_show < 1000) {
         $("#moneyPerSecond").text(moneyPerSecond_to_show.toFixed(1) + " $/s");
     }

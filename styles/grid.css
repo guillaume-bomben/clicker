@@ -145,101 +145,101 @@ body, html {
   margin-bottom: 10px;
 }
 
-  .Big_button{
-    height: min(10.5vw, 15vh); 
-    width: min(8.7vw, 12vh); 
-    border: none;
-    background-repeat: no-repeat;
-    justify-content: center;
-    align-items: center;
-    background-color: transparent;
-    background-image: url('../assets/images/Button.svg');
-    background-size: 100% 100%;
-    padding: 0%;
-    transition: background-image 0.15s;
-  }
+.Big_button{
+  height: min(10.5vw, 15vh); 
+  width: min(8.7vw, 12vh); 
+  border: none;
+  background-repeat: no-repeat;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  background-image: url('../assets/images/Button.svg');
+  background-size: 100% 100%;
+  padding: 0%;
+  transition: background-image 0.15s;
+}
 
-  .cursor {
-    height: min(40vw, 50vh); 
-    width: min(40vw, 50vh);
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    background-color: transparent; 
-  }
+.cursor {
+  height: min(40vw, 50vh); 
+  width: min(40vw, 50vh);
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent; 
+}
 
-  .increase_income{
-    background-image: url('../assets/images/Upgrade_increase_income.svg');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
+.increase_income{
+  background-image: url('../assets/images/Upgrade_increase_income.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
 
-  .add_cursor{
-    background-image: url('../assets/images/Upgrade_add_cursor.svg');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
+.add_cursor{
+  background-image: url('../assets/images/Upgrade_add_cursor.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
 
-  .merge_cursors{
-    background-image: url('../assets/images/Upgrade_merge_cursors.svg');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
+.merge_cursors{
+  background-image: url('../assets/images/Upgrade_merge_cursors.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
 
-  .cursor_income{
-    background-image: url('../assets/images/Upgrade_cursor_income.svg');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
+.cursor_income{
+  background-image: url('../assets/images/Upgrade_cursor_income.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
 
-  .cursor_speed{
-    background-image: url('../assets/images/Upgrade_cursor_speed.svg');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
+.cursor_speed{
+  background-image: url('../assets/images/Upgrade_cursor_speed.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
 
-  .settings_button{
-    background-image: url('../assets/images/Settings.svg');
-    background-size: 50% 50%;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    background-position: center;
-    transition: transform 0.3s;
-  }
+.settings_button{
+  background-image: url('../assets/images/Settings.svg');
+  background-size: 50% 50%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  background-position: center;
+  transition: transform 0.3s;
+}
 
-  .statistics_button{
-    background-image: url('../assets/images/Stats.svg');
-    background-size: 50% 50%;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    background-position: center;
-    transition: transform 0.3s;
-  }
+.statistics_button{
+  background-image: url('../assets/images/Stats.svg');
+  background-size: 50% 50%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  background-position: center;
+  transition: transform 0.3s;
+}
 
-  .upgrade_element {
-    position: relative;
+.upgrade_element {
+  position: relative;
 }
 
 .upgrade_text {
-    position: absolute;
-    top: 5.6vh; /* changed from 50% to 50vh */
-    left: 25.5vw;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    font-size: 2vw;
-    pointer-events: none;
-    color: #fff;
-    -webkit-text-stroke: 0.1vw rgb(16, 16, 95); 
+  position: absolute;
+  top: 5.6vh; /* changed from 50% to 50vh */
+  left: 25.5vw;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 2vw;
+  pointer-events: none;
+  color: #fff;
+  -webkit-text-stroke: 0.1vw rgb(16, 16, 95); 
 }
 
 .ui-dialog {
