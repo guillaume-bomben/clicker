@@ -33,6 +33,7 @@ backgroundSound.volume = 0.5;
 backgroundSound.loop = true;
 buttonClickSound.playbackRate = 2;
 let musicEnabledByUser = false;
+let sfxEnabledByUser = false
 
 backgroundBarWrapper.append(backgroundBar);
 barWrapper.append(bar);
@@ -97,9 +98,26 @@ async function checkMusicEnabled() {
       backgroundSound.pause();
     }
   }
+
+  async function checkSfxEnabled() {
+    const sfxEnabled = await localStorage.getItem("sfxnabled");
+    if (sfxEnabled === "true" || sfxEnabledByUser) {
+      if (!buttonClickSound && !shopSound && levelUpSound) {
+        buttonClickSound.volume = 1;
+        shopSound.volume = 1;
+        levelUpSound.volume = 1;
+      }
+    } else {
+      buttonClickSound.volume = 0;
+      shopSound.volume = 0;
+      levelUpSound.volume = 0;
+    }
+  }
+
   
   $(document).mousedown(function() {
     checkMusicEnabled();
+    checkSfxEnabled();
     save();
   });
 
@@ -207,6 +225,7 @@ $(document).ready(function() {
     });
 
     $(".statistics_button").click(function() {
+        shopSound.play();
         let totalMoneyFormatted = formatMoney(totalMoney);
         let totalSpendFormatted = formatMoney(totalSpend);
         
@@ -221,6 +240,7 @@ $(document).ready(function() {
     // Initialize the checkboxes based on the localStorage values
     
     $(".settings_button").click(function() {
+        shopSound.play();
         var message = '<div><input type="checkbox" id="checkbox1" ' + (localStorage.getItem("musicEnabled") === "true" ? 'checked' : '') + '> <label for="checkbox1">Music</label></div>' +
                       '<div><input type="checkbox" id="checkbox2" ' + (localStorage.getItem("sfxEnabled") === "true" ? 'checked' : '') + '> <label for="checkbox2">SFX</label></div>';
         $("#dialog").html(message).dialog({
@@ -239,6 +259,21 @@ $(document).ready(function() {
           // Update musicEnabledByUser based on user interaction
           musicEnabledByUser = $(this).is(":checked");
         });
+        $("#checkbox2").change(function() {
+            if ($(this).is(":checked")) {
+              buttonClickSound.volume = 1;
+              shopSound.volume = 1;
+              levelUpSound.volume = 1;
+            } else {
+              buttonClickSound.volume = 0;
+              shopSound.volume =0;
+              levelUpSound.volume =0;
+            }
+            // Save the state of the music checkbox immediately
+            localStorage.setItem("sfxEnabled", $(this).is(":checked") ? "true" : "false");
+            // Update musicEnabledByUser based on user interaction
+            sfxEnabledByUser = $(this).is(":checked");
+          });
       });
     
     function formatMoney(money) {
