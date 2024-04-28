@@ -41,7 +41,6 @@ progressContainer.append(progressBar);
 let mouseDownTimer;
 let smallButtons = [];
 let levelUpSound = new Audio('assets/sounds/levelUp.mp3');
-let buttonClickSound = new Audio('assets/sounds/click.mp3');
 let shopSound = new Audio('assets/sounds/shop.mp3');
 
 const button = $(".Big_button");
@@ -62,7 +61,7 @@ export async function updateScore(type) {
                 button.removeClass('animate-Big-Button1');
             });
         }
-        else if (level>=2 && level<3){
+        else if (level>=6 && level<10){
             wrapper.css('background-image', 'url(../assets/images/background.svg)')
             button.css('background-image', 'url(../assets/images/Button_yellow.svg)');
             button.addClass('animate-Big-Button2');
@@ -70,8 +69,9 @@ export async function updateScore(type) {
                 button.removeClass('animate-Big-Button2');
             });
         }
-        else if (level>=3){
+        else if (level>=10){
             button.css('background-image', 'url(../assets/images/Button_white.svg)');
+            wrapper.css('background-image', 'url(../assets/images/background2.svg)')
             button.addClass('animate-Big-Button3');
             button.one('animationend', function() {
                 button.removeClass('animate-Big-Button3');
