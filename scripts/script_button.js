@@ -23,10 +23,14 @@ let backgroundBar = $("<div>").addClass("backgroundBar").attr("id", "backgroundB
 let barWrapper = $("<div>").addClass("bar-wrapper");
 let bar = $("<div>").addClass("bar").attr("id", "bar");
 let levelDisplay = $("<div>").addClass("level").attr("id", "level").text("Level 1");
+let wrapper = $('.wrapper');
 
 let levelUpSound = new Audio ('assets/sounds/levelUp.mp3');
 let shopSound = new Audio ('assets/sounds/shop.mp3');
 let buttonClickSound = new Audio ('assets/sounds/click.mp3');
+let backgroundSound = new Audio ('assets/sounds/background.mp3');
+backgroundSound.volume = 0.5;
+backgroundSound.loop = true;
 buttonClickSound.playbackRate = 2;
 
 backgroundBarWrapper.append(backgroundBar);
@@ -40,8 +44,10 @@ let smallButtons = [];
 
 const button = $(".Big_button");
 
+
 export async function updateScore(type) {
     if (type == "click") {
+        console.log('clicking')
         money += moneyPerClick;
         buttonClickSound.play();
         clickCounter++;
@@ -53,6 +59,7 @@ export async function updateScore(type) {
             });
         }
         else if (level>=2 && level<3){
+            wrapper.css('background-image', 'url(../assets/images/background.svg)')
             button.css('background-image', 'url(../assets/images/Button_yellow.svg)');
             button.addClass('animate-Big-Button2');
             button.one('animationend', function() {
@@ -66,6 +73,7 @@ export async function updateScore(type) {
                 button.removeClass('animate-Big-Button3');
             });
         }
+        console.log(level);
     }
     else if (type == "auto"){
         let nbCursors = cursorPerLV[0] + cursorPerLV[1] + cursorPerLV[2] + cursorPerLV[3] + cursorPerLV[4];
@@ -103,6 +111,7 @@ $(document).ready(function() {
 
     button.click(function() {
         updateScore("click");
+        backgroundSound.play();
     });
     
     $(".increase_income").click(function() {

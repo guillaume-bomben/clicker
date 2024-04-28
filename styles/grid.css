@@ -39,10 +39,11 @@
   grid-column-gap: 10px; 
   margin: 0px;
   padding: 0px;
-  background-image: url(../assets/images/background.svg);
+  background-image: url(../assets/images/background1.svg);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+
 }
 
 body, html {
