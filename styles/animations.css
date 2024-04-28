@@ -73,7 +73,7 @@
     }
 }
 
-@keyframes button-press {
+@keyframes button1-press {
     0% {
         background-image: url('../assets/images/Button.svg');
     }
@@ -94,11 +94,67 @@
     }
 }
 
-.Big_button:active.animate {
-    animation: button-press 0.15s;
+.Big_button:active.animate-Big-Button1 {
+    animation: button1-press 0.15s;
 }
-.animate {
-    animation: button-press 0.15s;
+.animate-Big-Button1 {
+    animation: button1-press 0.15s;
+}
+
+@keyframes button2-press {
+    0% {
+        background-image: url('../assets/images/Button_yellow.svg');
+    }
+    20% {
+        background-image: url('../assets/images/Button_yellow1.svg');
+    }
+    40% {
+        background-image: url('../assets/images/Button_yellow2.svg');
+    }
+    60% {
+        background-image: url('../assets/images/Button_yellow3.svg');
+    }
+    80% {
+        background-image: url('../assets/images/Button_yellow2.svg');
+    }
+    100% {
+        background-image: url('../assets/images/Button_yellow1.svg');
+    }
+}
+
+.Big_button:active.animate-Big-Button2 {
+    animation: button2-press 0.15s;
+}
+.animate-Big-Button2 {
+    animation: button2-press 0.15s;
+}
+
+@keyframes button3-press {
+    0% {
+        background-image: url('../assets/images/Button_white.svg');
+    }
+    20% {
+        background-image: url('../assets/images/Button_white1.svg');
+    }
+    40% {
+        background-image: url('../assets/images/Button_white2.svg');
+    }
+    60% {
+        background-image: url('../assets/images/Button_white3.svg');
+    }
+    80% {
+        background-image: url('../assets/images/Button_white2.svg');
+    }
+    100% {
+        background-image: url('../assets/images/Button_white1.svg');
+    }
+}
+
+.Big_button:active.animate-Big-Button3 {
+    animation: button3-press 0.15s;
+}
+.animate-Big-Button3 {
+    animation: button3-press 0.15s;
 }
 
 @keyframes small-button-press {

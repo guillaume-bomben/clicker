@@ -1,26 +1,43 @@
-import {instantiateCursor,moneyPerSecond,moneyPerCycle,cursorPerLV,createCursor} from "./addCursor.js";
+import { getMoneyPerSecond, setMoneyPerSecond, getSpeedCursor, setSpeedCursor, instantiateCursor,moneyPerCycle,cursorPerLV,createCursor } from "./addCursor.js";
 
 let money = 0;
 let totalMoney = 0;
 let totalSpend = 0;
 let moneyPerClick = 1;
 let clickCounter = 0;
-let price_income = 10;
-let price_add_cursor = 10;
-let price_merge_cursor = 100;
-let price_cursor_income = 100;
-let price_cursor_speed = 1000;
-let OMEGAPRICE = 1000;
+let price_income = 150;
+let price_add_cursor = 300;
+let price_merge_cursor = 1200;
+let price_cursor_income = 750;
+let price_cursor_speed = 600;
 
 let level = 1;
 let counterLevel = 0;
 let decreaseInterval;
 let isMouseDown = false;
 let progressContainer = $(".progress_bar");
-let progressBar = $("<div>").addClass("progress-bar");
+let progressBar = $("<div>").addClass("progress-bar-ui");
+let backgroundBarWrapper = $("<div>").addClass("background-bar-wrapper");
+let backgroundBar = $("<div>").addClass("backgroundBar").attr("id", "backgroundBar");
+let barWrapper = $("<div>").addClass("bar-wrapper");
 let bar = $("<div>").addClass("bar").attr("id", "bar");
 let levelDisplay = $("<div>").addClass("level").attr("id", "level").text("Level 1");
-progressBar.append(bar);
+let wrapper = $('.wrapper');
+
+let levelUpSound = new Audio ('assets/sounds/levelUp.mp3');
+let shopSound = new Audio ('assets/sounds/shop.mp3');
+let buttonClickSound = new Audio ('assets/sounds/click.mp3');
+let backgroundSound = new Audio ('assets/sounds/background.mp3');
+backgroundSound.volume = 0.5;
+backgroundSound.loop = true;
+buttonClickSound.playbackRate = 2;
+let musicEnabledByUser = false;
+let sfxEnabledByUser = false
+
+backgroundBarWrapper.append(backgroundBar);
+barWrapper.append(bar);
+progressBar.append(backgroundBarWrapper);
+progressBar.append(barWrapper);
 progressBar.append(levelDisplay);
 progressContainer.append(progressBar);
 let mouseDownTimer;
@@ -31,17 +48,37 @@ let shopSound = new Audio('assets/sounds/shop.mp3');
 
 const button = $(".Big_button");
 
-export function updateScore(type) {
+let currentMoneyPerSecond = getMoneyPerSecond();
+let currentSpeedCursor = getSpeedCursor();
+
+
+export async function updateScore(type) {
     if (type == "click") {
         money += moneyPerClick;
+        buttonClickSound.play();
         clickCounter++;
         totalMoney += moneyPerClick;
-        button.addClass('animate');
-        buttonClickSound.playbackRate = 2;
-        buttonClickSound.play();
-        button.one('animationend', function() {
-            button.removeClass('animate');
-        });
+        if (level<2){
+            button.addClass('animate-Big-Button1');
+            button.one('animationend', function() {
+                button.removeClass('animate-Big-Button1');
+            });
+        }
+        else if (level>=2 && level<3){
+            wrapper.css('background-image', 'url(../assets/images/background.svg)')
+            button.css('background-image', 'url(../assets/images/Button_yellow.svg)');
+            button.addClass('animate-Big-Button2');
+            button.one('animationend', function() {
+                button.removeClass('animate-Big-Button2');
+            });
+        }
+        else if (level>=3){
+            button.css('background-image', 'url(../assets/images/Button_white.svg)');
+            button.addClass('animate-Big-Button3');
+            button.one('animationend', function() {
+                button.removeClass('animate-Big-Button3');
+            });
+        }
     }
     else if (type == "auto"){
         let nbCursors = cursorPerLV[0] + cursorPerLV[1] + cursorPerLV[2] + cursorPerLV[3] + cursorPerLV[4];
@@ -54,6 +91,37 @@ export function updateScore(type) {
     save();
     buttonVerification();
 }
+async function checkMusicEnabled() {
+    const musicEnabled = await localStorage.getItem("musicEnabled");
+    if (musicEnabled === "true" || musicEnabledByUser) {
+      if (!backgroundSound.playing) {
+        backgroundSound.play();
+      }
+    } else {
+      backgroundSound.pause();
+    }
+  }
+
+  async function checkSfxEnabled() {
+    const sfxEnabled = await localStorage.getItem("sfxnabled");
+    if (sfxEnabled === "true" || sfxEnabledByUser) {
+      if (!buttonClickSound && !shopSound && levelUpSound) {
+        buttonClickSound.volume = 1;
+        shopSound.volume = 1;
+        levelUpSound.volume = 1;
+      }
+    } else {
+      buttonClickSound.volume = 0;
+      shopSound.volume = 0;
+      levelUpSound.volume = 0;
+    }
+  }
+
+  $(document).mousedown(function() {
+    checkMusicEnabled();
+    checkSfxEnabled();
+    save();
+  });
 
 $(document).ready(function() {
     save();
@@ -83,10 +151,11 @@ $(document).ready(function() {
     
     $(".increase_income").click(function() {
         if (money >= price_income) {
+            shopSound.play();
             money -= price_income;
             totalSpend += price_income;
             price_income += price_income;
-            if (price_income > 5120) {
+            if (price_income > 150) {
                 moneyPerClick = moneyPerClick * 1.2;
             }
             else {
@@ -103,6 +172,7 @@ $(document).ready(function() {
     
     $(".add_cursor").click(function() {
         if (money >= price_add_cursor && createCursor() !== false){
+            shopSound.play();
             money -= price_add_cursor;
             totalSpend += price_add_cursor;
             price_add_cursor += price_add_cursor*1.2;
@@ -117,6 +187,7 @@ $(document).ready(function() {
 
     $(".merge_cursors").click(function() {
         if (money >= price_merge_cursor && merge_cursors()){
+            shopSound.play();
             money -= price_merge_cursor;
             totalSpend += price_merge_cursor;
             price_merge_cursor += price_merge_cursor*0.2;
@@ -131,12 +202,14 @@ $(document).ready(function() {
     
     $(".cursor_income").click(function() {
         if (money >= price_cursor_income) {
+            shopSound.play();
             money -= price_cursor_income;
             totalSpend += price_cursor_income;
             price_cursor_income += price_cursor_income*0.7;
+            currentMoneyPerSecond = getMoneyPerSecond();
+            setMoneyPerSecond(currentMoneyPerSecond*1.1);
             show_money();
             show_money_per_second();
-            shopSound.play();
         }
         save();
         buttonVerification();
@@ -145,12 +218,17 @@ $(document).ready(function() {
 
     $(".cursor_speed").click(function() {
         if (money >= price_cursor_speed) {
+            shopSound.play();
             money -= price_cursor_speed;
             totalSpend += price_cursor_speed;
             price_cursor_speed += price_cursor_speed*0.8;
+            currentSpeedCursor = getSpeedCursor();
+            console.log(currentSpeedCursor);
+            setSpeedCursor(currentSpeedCursor*0.99);
+            let newSpeed = getSpeedCursor();
+            console.log(newSpeed);
             show_money();
             show_money_per_second();
-            shopSound.play();
         }
         save();
         buttonVerification();
@@ -158,26 +236,74 @@ $(document).ready(function() {
     });
 
     $(".statistics_button").click(function() {
-        var message = "Total money earned: " + totalMoney + "$<br>" + "Total money spend: " + totalSpend + "$<br>" + "Total clicks: " + clickCounter;
+        shopSound.play();
+        let totalMoneyFormatted = formatMoney(totalMoney);
+        let totalSpendFormatted = formatMoney(totalSpend);
+        
+        var message = "Total money earned: " + totalMoneyFormatted + "<br>" + "Total money spend: " + totalSpendFormatted + "<br>" + "Total clicks: " + clickCounter;
         $("#dialog").html(message).dialog({
             modal: true,
             title: "Statistics"
         });
     });
-
-    $(".upgrade_button").click(function() {
-        if (money >= OMEGAPRICE) {
-            money -= OMEGAPRICE;
-            totalSpend += OMEGAPRICE;
-            OMEGAPRICE += OMEGAPRICE*100;
-            moneyPerClick += moneyPerClick*20;
-            show_money();
-            show_money_per_click();
-        }
-        save();
-        showPriceUpgrade();
+    
+    $(".settings_button").click(function() {
         shopSound.play();
-    });
+        var message = '<div><input type="checkbox" id="checkbox1" ' + (localStorage.getItem("musicEnabled") === "true" ? 'checked' : '') + '> <label for="checkbox1">Music</label></div>' +
+                      '<div><input type="checkbox" id="checkbox2" ' + (localStorage.getItem("sfxEnabled") === "true" ? 'checked' : '') + '> <label for="checkbox2">SFX</label></div>';
+        $("#dialog").html(message).dialog({
+          modal: true,
+          title: "Settings"
+
+        });
+        $("#checkbox1").change(function() {
+          if ($(this).is(":checked")) {
+            backgroundSound.play();
+          } else {
+            backgroundSound.pause();
+          }
+          // Save the state of the music checkbox immediately
+          localStorage.setItem("musicEnabled", $(this).is(":checked") ? "true" : "false");
+          // Update musicEnabledByUser based on user interaction
+          musicEnabledByUser = $(this).is(":checked");
+        });
+        $("#checkbox2").change(function() {
+            if ($(this).is(":checked")) {
+              buttonClickSound.volume = 1;
+              shopSound.volume = 1;
+              levelUpSound.volume = 1;
+            } else {
+              buttonClickSound.volume = 0;
+              shopSound.volume =0;
+              levelUpSound.volume =0;
+            }
+            // Save the state of the music checkbox immediately
+            localStorage.setItem("sfxEnabled", $(this).is(":checked") ? "true" : "false");
+            // Update musicEnabledByUser based on user interaction
+            sfxEnabledByUser = $(this).is(":checked");
+          });
+      });
+    
+    function formatMoney(money) {
+        let suffix = "";
+        let divisor = 1;
+    
+        if (money >= 1000000000000) {
+            suffix = "T";
+            divisor = 1000000000000;
+        } else if (money >= 1000000000) {
+            suffix = "B";
+            divisor = 1000000000;
+        } else if (money >= 1000000) {
+            suffix = "M";
+            divisor = 1000000;
+        } else if (money >= 1000) {
+            suffix = "k";
+            divisor = 1000;
+        }
+    
+        return (money / divisor).toFixed(1) + suffix;
+    }
 
 });
 
@@ -226,7 +352,8 @@ async function save() {
     localStorage.setItem("price_merge_cursor", price_merge_cursor);
     localStorage.setItem("price_cursor_income", price_cursor_income);
     localStorage.setItem("price_cursor_speed", price_cursor_speed);
-    localStorage.setItem("OMEGAPRICE", OMEGAPRICE);
+    localStorage.setItem("musicEnabled", $("#checkbox1").is(":checked") ? "true" : "false");
+    localStorage.setItem("sfxEnabled", $("#checkbox2").is(":checked") ? "true" : "false");
 };
 
 async function show_money(){
@@ -276,7 +403,7 @@ async function show_money_per_click(){
 };
 
 async function show_money_per_second(){
-    let moneyPerSecond_to_show = moneyPerSecond;
+    let moneyPerSecond_to_show = getMoneyPerSecond();
     if (moneyPerSecond_to_show < 1000) {
         $("#moneyPerSecond").text(moneyPerSecond_to_show.toFixed(1) + " $/s");
     }
@@ -305,14 +432,12 @@ async function load() {
     moneyPerClick = parseFloat(localStorage.getItem("moneyPerClick"));
     clickCounter = parseFloat(localStorage.getItem("clickCounter"));
     price_income = parseFloat(localStorage.getItem("price_income"));
-    OMEGAPRICE = parseFloat(localStorage.getItem("OMEGAPRICE"));
     show_money();
     show_money_per_click();
 };
 
 async function buttonVerification() {
     buttonIncomeVerification();
-    buttonUpgradeVerification();
     buttonAddCursorVerification();
     buttonMergeCursorVerification();
     buttonCursorIncomeVerification();
@@ -324,22 +449,14 @@ async function buttonIncomeVerification() {
     if (money < price_income) {
         buttonIncome.addClass('disabled');
         buttonIncome.css('background-image', 'url("assets/images/Upgrade_increase_income_disable.svg")');
+        $("#price_income").css('color', "grey");
+
     }
     else {
         buttonIncome.removeClass('disabled');
         buttonIncome.css('background-image', 'url("assets/images/Upgrade_increase_income.svg")');
-    }
-};
+        $("#price_income").css('color', "white");
 
-async function buttonUpgradeVerification() {
-    const buttonUpgrade = $(".upgrade_button");
-    if (money < OMEGAPRICE) {
-        buttonUpgrade.addClass('disabled');
-        buttonUpgrade.css('background-image', 'url("assets/images/Upgrade_button_disable.svg")');
-    }
-    else {
-        buttonUpgrade.removeClass('disabled');
-        buttonUpgrade.css('background-image', 'url("assets/images/Upgrade_button.svg")');
     }
 };
 
@@ -348,10 +465,14 @@ async function buttonAddCursorVerification() {
     if (money < price_add_cursor) {
         buttonAddCursor.addClass('disabled');
         buttonAddCursor.css('background-image', 'url("assets/images/Upgrade_add_cursor_disable.svg")');
+        $("#price_add_cursor").css('color', "grey");
+
     }
     else {
         buttonAddCursor.removeClass('disabled');
         buttonAddCursor.css('background-image', 'url("assets/images/Upgrade_add_cursor.svg")');
+        $("#price_add_cursor").css('color', "white");
+
     }
 };
 
@@ -360,10 +481,13 @@ async function buttonMergeCursorVerification() {
     if (money < price_merge_cursor) {
         buttonMergeCursor.addClass('disabled');
         buttonMergeCursor.css('background-image', 'url("assets/images/Upgrade_merge_cursors_disable.svg")');
+        $("#price_merge_cursor").css('color', "grey");
+
     }
     else {
         buttonMergeCursor.removeClass('disabled');
         buttonMergeCursor.css('background-image', 'url("assets/images/Upgrade_merge_cursors.svg")');
+        $("#price_merge_cursor").css('color', "white");
     }
 };
 
@@ -372,10 +496,13 @@ async function buttonCursorIncomeVerification() {
     if (money < price_cursor_income) {
         buttonCursorIncome.addClass('disabled');
         buttonCursorIncome.css('background-image', 'url("assets/images/Upgrade_cursor_income_disable.svg")');
+        $("#price_cursor_income").css('color', "grey");
     }
     else {
         buttonCursorIncome.removeClass('disabled');
         buttonCursorIncome.css('background-image', 'url("assets/images/Upgrade_cursor_income.svg")');
+        $("#price_cursor_income").css('color', "white");
+
     }
 };
 
@@ -384,10 +511,12 @@ async function buttonCursorSpeedVerification() {
     if (money < price_cursor_speed) {
         buttonCursorSpeed.addClass('disabled');
         buttonCursorSpeed.css('background-image', 'url("assets/images/Upgrade_cursor_speed_disable.svg")');
+        $("#price_cursor_speed").css('color', "grey");
     }
     else {
         buttonCursorSpeed.removeClass('disabled');
         buttonCursorSpeed.css('background-image', 'url("assets/images/Upgrade_cursor_speed.svg")');
+        $("#price_cursor_speed").css('color', "white");
     }
 };
 
@@ -412,6 +541,7 @@ function increaseCounterLevel() {
 
 function updateLevel() {
     if (counterLevel >= 100) {
+        levelUpSound.play();
         level++;
         levelUpSound.play();
         levelDisplay.text("Level " + level);
@@ -512,143 +642,119 @@ function showPriceUpgrade(){
     formatPriceMergeCursor();
     formatPriceCursorIncome();
     formatPriceCursorSpeed();
-    formatPriceUpgrade();
 };
 
 function formatPriceIncome(){
     let price_income_to_show = price_income;
     if (price_income_to_show < 1000) {
-        $("#price_income").text(price_income_to_show.toFixed(0) + " $");
+        $("#price_income").text(price_income_to_show.toFixed(0) + "$");
     }
     else if (price_income_to_show > 1000 && price_income_to_show < 1000000) {
-        price_income_to_show = (price_income_to_show / 1000).toFixed(0) + "k";
-        $("#price_income").text(price_income_to_show + " $");
+        price_income_to_show = (price_income_to_show / 1000).toFixed(1) + "k";
+        $("#price_income").text(price_income_to_show + "$");
     }
     else if (price_income_to_show > 1000000 && price_income_to_show < 1000000000) {
-        price_income_to_show = (price_income_to_show / 1000000).toFixed(0) + "M";
-        $("#price_income").text(price_income_to_show + " $");
+        price_income_to_show = (price_income_to_show / 1000000).toFixed(1) + "M";
+        $("#price_income").text(price_income_to_show + "$");
     }
     else if (price_income_to_show > 1000000000 && price_income_to_show < 1000000000000) {
-        price_income_to_show = (price_income_to_show / 1000000000).toFixed(0) + "B";
-        $("#price_income").text(price_income_to_show + " $");
+        price_income_to_show = (price_income_to_show / 1000000000).toFixed(1) + "B";
+        $("#price_income").text(price_income_to_show + "$");
     }
     else if (price_income_to_show > 1000000000000){
-        price_income_to_show = (price_income_to_show / 1000000000000).toFixed(0) + "T";
-        $("#price_income").text(price_income_to_show + " $");
+        price_income_to_show = (price_income_to_show / 1000000000000).toFixed(1) + "T";
+        $("#price_income").text(price_income_to_show + "$");
     }
 };
 
 function formatPriceAddCursor(){
     let price_add_cursor_to_show = price_add_cursor;
     if (price_add_cursor_to_show < 1000) {
-        $("#price_add_cursor").text(price_add_cursor_to_show.toFixed(0) + " $");
+        $("#price_add_cursor").text(price_add_cursor_to_show.toFixed(0) + "$");
     }
     else if (price_add_cursor_to_show > 1000 && price_add_cursor_to_show < 1000000) {
-        price_add_cursor_to_show = (price_add_cursor_to_show / 1000).toFixed(0) + "k";
-        $("#price_add_cursor").text(price_add_cursor_to_show + " $");
+        price_add_cursor_to_show = (price_add_cursor_to_show / 1000).toFixed(1) + "k";
+        $("#price_add_cursor").text(price_add_cursor_to_show + "$");
     }
     else if (price_add_cursor_to_show > 1000000 && price_add_cursor_to_show < 1000000000) {
-        price_add_cursor_to_show = (price_add_cursor_to_show / 1000000).toFixed(0) + "M";
-        $("#price_add_cursor").text(price_add_cursor_to_show + " $");
+        price_add_cursor_to_show = (price_add_cursor_to_show / 1000000).toFixed(1) + "M";
+        $("#price_add_cursor").text(price_add_cursor_to_show + "$");
     }
     else if (price_add_cursor_to_show > 1000000000 && price_add_cursor_to_show < 1000000000000) {
-        price_add_cursor_to_show = (price_add_cursor_to_show / 1000000000).toFixed(0) + "B";
-        $("#price_add_cursor").text(price_add_cursor_to_show + " $");
+        price_add_cursor_to_show = (price_add_cursor_to_show / 1000000000).toFixed(1) + "B";
+        $("#price_add_cursor").text(price_add_cursor_to_show + "$");
     }
     else if (price_add_cursor_to_show > 1000000000000){
-        price_add_cursor_to_show = (price_add_cursor_to_show / 1000000000000).toFixed(0) + "T";
-        $("#price_add_cursor").text(price_add_cursor_to_show + " $");
+        price_add_cursor_to_show = (price_add_cursor_to_show / 1000000000000).toFixed(1) + "T";
+        $("#price_add_cursor").text(price_add_cursor_to_show + "$");
     }
 };
 
 function formatPriceMergeCursor(){
     let price_merge_cursor_to_show = price_merge_cursor;
     if (price_merge_cursor_to_show < 1000) {
-        $("#price_merge_cursor").text(price_merge_cursor_to_show.toFixed(0) + " $");
+        $("#price_merge_cursor").text(price_merge_cursor_to_show.toFixed(0) + "$");
     }
     else if (price_merge_cursor_to_show > 1000 && price_merge_cursor_to_show < 1000000) {
-        price_merge_cursor_to_show = (price_merge_cursor_to_show / 1000).toFixed(0) + "k";
-        $("#price_merge_cursor").text(price_merge_cursor_to_show + " $");
+        price_merge_cursor_to_show = (price_merge_cursor_to_show / 1000).toFixed(1) + "k";
+        $("#price_merge_cursor").text(price_merge_cursor_to_show + "$");
     }
     else if (price_merge_cursor_to_show > 1000000 && price_merge_cursor_to_show < 1000000000) {
-        price_merge_cursor_to_show = (price_merge_cursor_to_show / 1000000).toFixed(0) + "M";
-        $("#price_merge_cursor").text(price_merge_cursor_to_show + " $");
+        price_merge_cursor_to_show = (price_merge_cursor_to_show / 1000000).toFixed(1) + "M";
+        $("#price_merge_cursor").text(price_merge_cursor_to_show + "$");
     }
     else if (price_merge_cursor_to_show > 1000000000 && price_merge_cursor_to_show < 1000000000000) {
-        price_merge_cursor_to_show = (price_merge_cursor_to_show / 1000000000).toFixed(0) + "B";
-        $("#price_merge_cursor").text(price_merge_cursor_to_show + " $");
+        price_merge_cursor_to_show = (price_merge_cursor_to_show / 1000000000).toFixed(1) + "B";
+        $("#price_merge_cursor").text(price_merge_cursor_to_show + "$");
     }
     else if (price_merge_cursor_to_show > 1000000000000){
-        price_merge_cursor_to_show = (price_merge_cursor_to_show / 1000000000000).toFixed(0) + "T";
-        $("#price_merge_cursor").text(price_merge_cursor_to_show + " $");
+        price_merge_cursor_to_show = (price_merge_cursor_to_show / 1000000000000).toFixed(1) + "T";
+        $("#price_merge_cursor").text(price_merge_cursor_to_show + "$");
     }
 };
 
 function formatPriceCursorIncome(){
     let price_cursor_income_to_show = price_cursor_income;
     if (price_cursor_income_to_show < 1000) {
-        $("#price_cursor_income").text(price_cursor_income_to_show.toFixed(0) + " $");
+        $("#price_cursor_income").text(price_cursor_income_to_show.toFixed(0) + "$");
     }
     else if (price_cursor_income_to_show > 1000 && price_cursor_income_to_show < 1000000) {
-        price_cursor_income_to_show = (price_cursor_income_to_show / 1000).toFixed(0) + "k";
-        $("#price_cursor_income").text(price_cursor_income_to_show + " $");
+        price_cursor_income_to_show = (price_cursor_income_to_show / 1000).toFixed(1) + "k";
+        $("#price_cursor_income").text(price_cursor_income_to_show + "$");
     }
     else if (price_cursor_income_to_show > 1000000 && price_cursor_income_to_show < 1000000000) {
-        price_cursor_income_to_show = (price_cursor_income_to_show / 1000000).toFixed(0) + "M";
-        $("#price_cursor_income").text(price_cursor_income_to_show + " $");
+        price_cursor_income_to_show = (price_cursor_income_to_show / 1000000).toFixed(1) + "M";
+        $("#price_cursor_income").text(price_cursor_income_to_show + "$");
     }
     else if (price_cursor_income_to_show > 1000000000 && price_cursor_income_to_show < 1000000000000) {
-        price_cursor_income_to_show = (price_cursor_income_to_show / 1000000000).toFixed(0) + "B";
-        $("#price_cursor_income").text(price_cursor_income_to_show + " $");
+        price_cursor_income_to_show = (price_cursor_income_to_show / 1000000000).toFixed(1) + "B";
+        $("#price_cursor_income").text(price_cursor_income_to_show + "$");
     }
     else if (price_cursor_income_to_show > 1000000000000){
-        price_cursor_income_to_show = (price_cursor_income_to_show / 1000000000000).toFixed(0) + "T";
-        $("#price_cursor_income").text(price_cursor_income_to_show + " $");
+        price_cursor_income_to_show = (price_cursor_income_to_show / 1000000000000).toFixed(1) + "T";
+        $("#price_cursor_income").text(price_cursor_income_to_show + "$");
     }
 };
 
 function formatPriceCursorSpeed(){
     let price_cursor_speed_to_show = price_cursor_speed;
     if (price_cursor_speed_to_show < 1000) {
-        $("#price_cursor_speed").text(price_cursor_speed_to_show.toFixed(0) + " $");
+        $("#price_cursor_speed").text(price_cursor_speed_to_show.toFixed(0) + "$");
     }
     else if (price_cursor_speed_to_show > 1000 && price_cursor_speed_to_show < 1000000) {
-        price_cursor_speed_to_show = (price_cursor_speed_to_show / 1000).toFixed(0) + "k";
-        $("#price_cursor_speed").text(price_cursor_speed_to_show + " $");
+        price_cursor_speed_to_show = (price_cursor_speed_to_show / 1000).toFixed(1) + "k";
+        $("#price_cursor_speed").text(price_cursor_speed_to_show + "$");
     }
     else if (price_cursor_speed_to_show > 1000000 && price_cursor_speed_to_show < 1000000000) {
-        price_cursor_speed_to_show = (price_cursor_speed_to_show / 1000000).toFixed(0) + "M";
-        $("#price_cursor_speed").text(price_cursor_speed_to_show + " $");
+        price_cursor_speed_to_show = (price_cursor_speed_to_show / 1000000).toFixed(1) + "M";
+        $("#price_cursor_speed").text(price_cursor_speed_to_show + "$");
     }
     else if (price_cursor_speed_to_show > 1000000000 && price_cursor_speed_to_show < 1000000000000) {
-        price_cursor_speed_to_show = (price_cursor_speed_to_show / 1000000000).toFixed(0) + "B";
-        $("#price_cursor_speed").text(price_cursor_speed_to_show + " $");
+        price_cursor_speed_to_show = (price_cursor_speed_to_show / 1000000000).toFixed(1) + "B";
+        $("#price_cursor_speed").text(price_cursor_speed_to_show + "$");
     }
     else if (price_cursor_speed_to_show > 1000000000000){
-        price_cursor_speed_to_show = (price_cursor_speed_to_show / 1000000000000).toFixed(0) + "T";
-        $("#price_cursor_speed").text(price_cursor_speed_to_show + " $");
-    }
-};
-
-function formatPriceUpgrade(){
-    let OMEGAPRICE_to_show = OMEGAPRICE;
-    if (OMEGAPRICE_to_show < 1000) {
-        $("#price_upgrade").text(OMEGAPRICE_to_show.toFixed(0) + " $");
-    }
-    else if (OMEGAPRICE_to_show > 1000 && OMEGAPRICE_to_show < 1000000) {
-        OMEGAPRICE_to_show = (OMEGAPRICE_to_show / 1000).toFixed(0) + "k";
-        $("#price_upgrade").text(OMEGAPRICE_to_show + " $");
-    }
-    else if (OMEGAPRICE_to_show > 1000000 && OMEGAPRICE_to_show < 1000000000) {
-        OMEGAPRICE_to_show = (OMEGAPRICE_to_show / 1000000).toFixed(0) + "M";
-        $("#price_upgrade").text(OMEGAPRICE_to_show + " $");
-    }
-    else if (OMEGAPRICE_to_show > 1000000000 && OMEGAPRICE_to_show < 1000000000000) {
-        OMEGAPRICE_to_show = (OMEGAPRICE_to_show / 1000000000).toFixed(0) + "B";
-        $("#price_upgrade").text(OMEGAPRICE_to_show + " $");
-    }
-    else if (OMEGAPRICE_to_show > 1000000000000){
-        OMEGAPRICE_to_show = (OMEGAPRICE_to_show / 1000000000000).toFixed(0) + "T";
-        $("#price_upgrade").text(OMEGAPRICE_to_show + " $");
+        price_cursor_speed_to_show = (price_cursor_speed_to_show / 1000000000000).toFixed(1) + "T";
+        $("#price_cursor_speed").text(price_cursor_speed_to_show + "$");
     }
 };

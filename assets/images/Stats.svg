@@ -1,5 +1,26 @@
-<svg width="38" height="50" viewBox="0 0 38 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="0.5" y="33.8333" width="10.1111" height="15.6667" rx="1.5" fill="#6AF1FB" stroke="black"/>
-<rect x="13.8333" y="17.1667" width="10.1111" height="32.3333" rx="1.5" fill="#6AF1FB" stroke="black"/>
-<rect x="27.1667" y="0.5" width="10.1111" height="49" rx="1.5" fill="#6AF1FB" stroke="black"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Livello_2" data-name="Livello 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 70 70.21" width="70" height="70">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: #fff;
+        stroke: #161d4c;
+        stroke-miterlimit: 10;
+        stroke-width: 4px;
+      }
+    </style>
+  </defs>
+  <g id="Settings">
+    <g>
+      <rect class="cls-2" x="24.94" y="13.3" width="21.02" height="54.91" rx="5.09" ry="5.09"/>
+      <rect class="cls-2" x="46.97" y="20.72" width="21.02" height="47.49" rx="5.23" ry="5.23"/>
+      <rect class="cls-2" x="2.01" y="27.63" width="21.02" height="40.58" rx="5.21" ry="5.21"/>
+    </g>
+    <rect class="cls-1" width="70" height="70"/>
+  </g>
 </svg>
