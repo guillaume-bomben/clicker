@@ -1,5 +1,4 @@
-import {instantiateCursor,moneyPerCycle,cursorPerLV,createCursor} from "./addCursor.js";
-import { getMoneyPerSecond, setMoneyPerSecond } from "./addCursor.js";
+import { getMoneyPerSecond, setMoneyPerSecond, getSpeedCursor, setSpeedCursor, instantiateCursor,moneyPerCycle,cursorPerLV,createCursor } from "./addCursor.js";
 
 let money = 0;
 let totalMoney = 0;
@@ -47,6 +46,7 @@ let smallButtons = [];
 const button = $(".Big_button");
 
 let currentMoneyPerSecond = getMoneyPerSecond();
+let currentSpeedCursor = getSpeedCursor();
 
 
 export async function updateScore(type) {
@@ -216,6 +216,11 @@ $(document).ready(function() {
             money -= price_cursor_speed;
             totalSpend += price_cursor_speed;
             price_cursor_speed += price_cursor_speed*0.8;
+            currentSpeedCursor = getSpeedCursor();
+            console.log(currentSpeedCursor);
+            setSpeedCursor(currentSpeedCursor*0.99);
+            let newSpeed = getSpeedCursor();
+            console.log(newSpeed);
             show_money();
             show_money_per_second();
         }

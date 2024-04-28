@@ -3,7 +3,7 @@ import {updateScore} from './script_button.js';
 let cursorCount = 0;
 export let cursorPerLV = [0,0,0,0,0];
 let moneyPerCursor = [150,500,2000,10000,50000];
-export let moneyPerSecond = 0;
+let moneyPerSecond = 0;
 export let moneyPerCycle = 0;
 let maxCursors = 10;
 let cursorDiv = $('.cursor');
@@ -22,8 +22,14 @@ export function getMoneyPerSecond(){
 }
 
 export function setMoneyPerSecond(value){
-    console.log("Money per second set to:", moneyPerSecond);
     moneyPerSecond = value;
+}
+
+export function getSpeedCursor(){
+    return speedCursor;
+}
+export function setSpeedCursor(value){
+    speedCursor = value;
 }
 
 export async function instantiateCursor() {
