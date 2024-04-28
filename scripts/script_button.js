@@ -24,8 +24,6 @@ let bar = $("<div>").addClass("bar").attr("id", "bar");
 let levelDisplay = $("<div>").addClass("level").attr("id", "level").text("Level 1");
 let wrapper = $('.wrapper');
 
-let levelUpSound = new Audio ('assets/sounds/levelUp.mp3');
-let shopSound = new Audio ('assets/sounds/shop.mp3');
 let buttonClickSound = new Audio ('assets/sounds/click.mp3');
 let backgroundSound = new Audio ('assets/sounds/background.mp3');
 backgroundSound.volume = 0.5;
