@@ -458,10 +458,14 @@ async function buttonIncomeVerification() {
     if (money < price_income) {
         buttonIncome.addClass('disabled');
         buttonIncome.css('background-image', 'url("assets/images/Upgrade_increase_income_disable.svg")');
+        $("#price_income").css('color', "grey");
+
     }
     else {
         buttonIncome.removeClass('disabled');
         buttonIncome.css('background-image', 'url("assets/images/Upgrade_increase_income.svg")');
+        $("#price_income").css('color', "white");
+
     }
 };
 
@@ -482,10 +486,14 @@ async function buttonAddCursorVerification() {
     if (money < price_add_cursor) {
         buttonAddCursor.addClass('disabled');
         buttonAddCursor.css('background-image', 'url("assets/images/Upgrade_add_cursor_disable.svg")');
+        $("#price_add_cursor").css('color', "grey");
+
     }
     else {
         buttonAddCursor.removeClass('disabled');
         buttonAddCursor.css('background-image', 'url("assets/images/Upgrade_add_cursor.svg")');
+        $("#price_add_cursor").css('color', "white");
+
     }
 };
 
@@ -494,10 +502,13 @@ async function buttonMergeCursorVerification() {
     if (money < price_merge_cursor) {
         buttonMergeCursor.addClass('disabled');
         buttonMergeCursor.css('background-image', 'url("assets/images/Upgrade_merge_cursors_disable.svg")');
+        $("#price_merge_cursor").css('color', "grey");
+
     }
     else {
         buttonMergeCursor.removeClass('disabled');
         buttonMergeCursor.css('background-image', 'url("assets/images/Upgrade_merge_cursors.svg")');
+        $("#price_merge_cursor").css('color', "white");
     }
 };
 
@@ -506,10 +517,13 @@ async function buttonCursorIncomeVerification() {
     if (money < price_cursor_income) {
         buttonCursorIncome.addClass('disabled');
         buttonCursorIncome.css('background-image', 'url("assets/images/Upgrade_cursor_income_disable.svg")');
+        $("#price_cursor_income").css('color', "grey");
     }
     else {
         buttonCursorIncome.removeClass('disabled');
         buttonCursorIncome.css('background-image', 'url("assets/images/Upgrade_cursor_income.svg")');
+        $("#price_cursor_income").css('color', "white");
+
     }
 };
 
@@ -518,10 +532,12 @@ async function buttonCursorSpeedVerification() {
     if (money < price_cursor_speed) {
         buttonCursorSpeed.addClass('disabled');
         buttonCursorSpeed.css('background-image', 'url("assets/images/Upgrade_cursor_speed_disable.svg")');
+        $("#price_cursor_speed").css('color', "grey");
     }
     else {
         buttonCursorSpeed.removeClass('disabled');
         buttonCursorSpeed.css('background-image', 'url("assets/images/Upgrade_cursor_speed.svg")');
+        $("#price_cursor_speed").css('color', "white");
     }
 };
 
