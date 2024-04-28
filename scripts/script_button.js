@@ -32,6 +32,7 @@ let backgroundSound = new Audio ('assets/sounds/background.mp3');
 backgroundSound.volume = 0.5;
 backgroundSound.loop = true;
 buttonClickSound.playbackRate = 2;
+let musicEnabledByUser = false;
 
 backgroundBarWrapper.append(backgroundBar);
 barWrapper.append(bar);
@@ -86,8 +87,24 @@ export async function updateScore(type) {
     save();
     buttonVerification();
 }
+async function checkMusicEnabled() {
+    const musicEnabled = await localStorage.getItem("musicEnabled");
+    if (musicEnabled === "true" || musicEnabledByUser) {
+      if (!backgroundSound.playing) {
+        backgroundSound.play();
+      }
+    } else {
+      backgroundSound.pause();
+    }
+  }
+  
+  $(document).mousedown(function() {
+    checkMusicEnabled();
+    save();
+  });
 
 $(document).ready(function() {
+
     save();
     buttonVerification();
     showPriceUpgrade();
@@ -111,7 +128,6 @@ $(document).ready(function() {
 
     button.click(function() {
         updateScore("click");
-        backgroundSound.play();
     });
     
     $(".increase_income").click(function() {
@@ -200,6 +216,30 @@ $(document).ready(function() {
             title: "Statistics"
         });
     });
+
+    
+    // Initialize the checkboxes based on the localStorage values
+    
+    $(".settings_button").click(function() {
+        var message = '<div><input type="checkbox" id="checkbox1" ' + (localStorage.getItem("musicEnabled") === "true" ? 'checked' : '') + '> <label for="checkbox1">Music</label></div>' +
+                      '<div><input type="checkbox" id="checkbox2" ' + (localStorage.getItem("sfxEnabled") === "true" ? 'checked' : '') + '> <label for="checkbox2">SFX</label></div>';
+        $("#dialog").html(message).dialog({
+          modal: true,
+          title: "Settings"
+
+        });
+        $("#checkbox1").change(function() {
+          if ($(this).is(":checked")) {
+            backgroundSound.play();
+          } else {
+            backgroundSound.pause();
+          }
+          // Save the state of the music checkbox immediately
+          localStorage.setItem("musicEnabled", $(this).is(":checked") ? "true" : "false");
+          // Update musicEnabledByUser based on user interaction
+          musicEnabledByUser = $(this).is(":checked");
+        });
+      });
     
     function formatMoney(money) {
         let suffix = "";
@@ -284,6 +324,8 @@ async function save() {
     localStorage.setItem("price_cursor_income", price_cursor_income);
     localStorage.setItem("price_cursor_speed", price_cursor_speed);
     localStorage.setItem("OMEGAPRICE", OMEGAPRICE);
+    localStorage.setItem("musicEnabled", $("#checkbox1").is(":checked") ? "true" : "false");
+    localStorage.setItem("sfxEnabled", $("#checkbox2").is(":checked") ? "true" : "false");
 };
 
 async function show_money(){
