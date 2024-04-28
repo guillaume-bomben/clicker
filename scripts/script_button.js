@@ -10,7 +10,6 @@ let price_add_cursor = 300;
 let price_merge_cursor = 1200;
 let price_cursor_income = 750;
 let price_cursor_speed = 600;
-let OMEGAPRICE = 1000;
 
 let level = 1;
 let counterLevel = 0;
@@ -297,20 +296,6 @@ $(document).ready(function() {
         return (money / divisor).toFixed(1) + suffix;
     }
 
-    $(".upgrade_button").click(function() {
-        if (money >= OMEGAPRICE) {
-            shopSound.play();
-            money -= OMEGAPRICE;
-            totalSpend += OMEGAPRICE;
-            OMEGAPRICE += OMEGAPRICE*100;
-            moneyPerClick += moneyPerClick*20;
-            show_money();
-            show_money_per_click();
-        }
-        save();
-        showPriceUpgrade();
-    });
-
 });
 
 function merge_cursors() {
@@ -358,7 +343,6 @@ async function save() {
     localStorage.setItem("price_merge_cursor", price_merge_cursor);
     localStorage.setItem("price_cursor_income", price_cursor_income);
     localStorage.setItem("price_cursor_speed", price_cursor_speed);
-    localStorage.setItem("OMEGAPRICE", OMEGAPRICE);
     localStorage.setItem("musicEnabled", $("#checkbox1").is(":checked") ? "true" : "false");
     localStorage.setItem("sfxEnabled", $("#checkbox2").is(":checked") ? "true" : "false");
 };
@@ -439,14 +423,12 @@ async function load() {
     moneyPerClick = parseFloat(localStorage.getItem("moneyPerClick"));
     clickCounter = parseFloat(localStorage.getItem("clickCounter"));
     price_income = parseFloat(localStorage.getItem("price_income"));
-    OMEGAPRICE = parseFloat(localStorage.getItem("OMEGAPRICE"));
     show_money();
     show_money_per_click();
 };
 
 async function buttonVerification() {
     buttonIncomeVerification();
-    buttonUpgradeVerification();
     buttonAddCursorVerification();
     buttonMergeCursorVerification();
     buttonCursorIncomeVerification();
@@ -466,18 +448,6 @@ async function buttonIncomeVerification() {
         buttonIncome.css('background-image', 'url("assets/images/Upgrade_increase_income.svg")');
         $("#price_income").css('color', "white");
 
-    }
-};
-
-async function buttonUpgradeVerification() {
-    const buttonUpgrade = $(".upgrade_button");
-    if (money < OMEGAPRICE) {
-        buttonUpgrade.addClass('disabled');
-        buttonUpgrade.css('background-image', 'url("assets/images/Upgrade_button_disable.svg")');
-    }
-    else {
-        buttonUpgrade.removeClass('disabled');
-        buttonUpgrade.css('background-image', 'url("assets/images/Upgrade_button.svg")');
     }
 };
 
@@ -662,7 +632,6 @@ function showPriceUpgrade(){
     formatPriceMergeCursor();
     formatPriceCursorIncome();
     formatPriceCursorSpeed();
-    formatPriceUpgrade();
 };
 
 function formatPriceIncome(){
@@ -777,28 +746,5 @@ function formatPriceCursorSpeed(){
     else if (price_cursor_speed_to_show > 1000000000000){
         price_cursor_speed_to_show = (price_cursor_speed_to_show / 1000000000000).toFixed(1) + "T";
         $("#price_cursor_speed").text(price_cursor_speed_to_show + "$");
-    }
-};
-
-function formatPriceUpgrade(){
-    let OMEGAPRICE_to_show = OMEGAPRICE;
-    if (OMEGAPRICE_to_show < 1000) {
-        $("#price_upgrade").text(OMEGAPRICE_to_show.toFixed(0) + " $");
-    }
-    else if (OMEGAPRICE_to_show > 1000 && OMEGAPRICE_to_show < 1000000) {
-        OMEGAPRICE_to_show = (OMEGAPRICE_to_show / 1000).toFixed(0) + "k";
-        $("#price_upgrade").text(OMEGAPRICE_to_show + " $");
-    }
-    else if (OMEGAPRICE_to_show > 1000000 && OMEGAPRICE_to_show < 1000000000) {
-        OMEGAPRICE_to_show = (OMEGAPRICE_to_show / 1000000).toFixed(0) + "M";
-        $("#price_upgrade").text(OMEGAPRICE_to_show + " $");
-    }
-    else if (OMEGAPRICE_to_show > 1000000000 && OMEGAPRICE_to_show < 1000000000000) {
-        OMEGAPRICE_to_show = (OMEGAPRICE_to_show / 1000000000).toFixed(0) + "B";
-        $("#price_upgrade").text(OMEGAPRICE_to_show + " $");
-    }
-    else if (OMEGAPRICE_to_show > 1000000000000){
-        OMEGAPRICE_to_show = (OMEGAPRICE_to_show / 1000000000000).toFixed(0) + "T";
-        $("#price_upgrade").text(OMEGAPRICE_to_show + " $");
     }
 };

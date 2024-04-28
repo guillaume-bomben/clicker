@@ -139,7 +139,7 @@ body, html {
   background-repeat: no-repeat;
   background-size: auto auto;
   display: grid;
-  grid-template-columns: 6fr;
+  grid-template-columns: 5fr;
   grid-row-gap: 10px;
   margin-right: 10px;
   margin-bottom: 10px;
@@ -208,14 +208,6 @@ body, html {
     transition: transform 0.3s;
   }
 
-  .upgrade_button{
-    background-image: url('../assets/images/Upgrade_button.svg');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
-
   .settings_button{
     background-image: url('../assets/images/Settings.svg');
     background-size: 50% 50%;
@@ -240,11 +232,11 @@ body, html {
 
 .upgrade_text {
     position: absolute;
-    top: 5vh; /* changed from 50% to 50vh */
-    left: 24.5vw;
+    top: 5.6vh; /* changed from 50% to 50vh */
+    left: 25.5vw;
     transform: translate(-50%, -50%);
     text-align: center;
-    font-size: 1.8vw;
+    font-size: 2vw;
     pointer-events: none;
     color: #fff;
     -webkit-text-stroke: 0.1vw rgb(16, 16, 95); 
