@@ -55,13 +55,13 @@ export async function updateScore(type) {
         buttonClickSound.play();
         clickCounter++;
         totalMoney += moneyPerClick;
-        if (level<2){
+        if (level<6){
             button.addClass('animate-Big-Button1');
             button.one('animationend', function() {
                 button.removeClass('animate-Big-Button1');
             });
         }
-        else if (level>=6 && level<10){
+        else if (level>=6 && level<11){
             wrapper.css('background-image', 'url(../assets/images/background.svg)')
             button.css('background-image', 'url(../assets/images/Button_yellow.svg)');
             button.addClass('animate-Big-Button2');
@@ -69,7 +69,7 @@ export async function updateScore(type) {
                 button.removeClass('animate-Big-Button2');
             });
         }
-        else if (level>=10){
+        else if (level>=11){
             button.css('background-image', 'url(../assets/images/Button_white.svg)');
             wrapper.css('background-image', 'url(../assets/images/background2.svg)')
             button.addClass('animate-Big-Button3');
@@ -121,189 +121,192 @@ async function checkMusicEnabled() {
     save();
   });
 
-$(document).ready(function() {
-    save();
-    buttonVerification();
-    showPriceUpgrade();
+//$(document).ready(function() {
 
-    button.mousedown(function() {
-        isMouseDown = true;
-        mouseDownTimer = setTimeout(function() {
-            if (isMouseDown) {
-                startDecreaseInterval();
-            }
-        }, 500); // Adjust the time period as needed (in ms)
-    });
-
-    button.mouseup(function() {
-        isMouseDown = false;
-        clearInterval(decreaseInterval);
-        startDecreaseInterval();
-        increaseCounterLevel();
-        updateProgressBar();
-    });
-
-    button.click(function() {
-        updateScore("click");
-    });
-    
-    $(".increase_income").click(function() {
-        if (money >= price_income) {
-            shopSound.play();
-            money -= price_income;
-            totalSpend += price_income;
-            price_income += price_income;
-            if (price_income > 150) {
-                moneyPerClick = moneyPerClick * 1.2;
-            }
-            else {
-                moneyPerClick += 1;
-            }
-            show_money();
-            show_money_per_click();
-            shopSound.play();
-        }
+    export function main() {
+        load();
         save();
         buttonVerification();
         showPriceUpgrade();
-    });
-    
-    $(".add_cursor").click(function() {
-        if (money >= price_add_cursor && createCursor() !== false){
-            shopSound.play();
-            money -= price_add_cursor;
-            totalSpend += price_add_cursor;
-            price_add_cursor += price_add_cursor*1.2;
-            show_money();
-            show_money_per_second();
-            shopSound.play();
-        }
-        save();
-        buttonVerification();
-        showPriceUpgrade();
-    });
 
-    $(".merge_cursors").click(function() {
-        if (money >= price_merge_cursor && merge_cursors()){
-            shopSound.play();
-            money -= price_merge_cursor;
-            totalSpend += price_merge_cursor;
-            price_merge_cursor += price_merge_cursor*0.2;
-            show_money();
-            show_money_per_second();
-            shopSound.play();
-        }
-        save();
-        buttonVerification();
-        showPriceUpgrade();
-    });
-    
-    $(".cursor_income").click(function() {
-        if (money >= price_cursor_income) {
-            shopSound.play();
-            money -= price_cursor_income;
-            totalSpend += price_cursor_income;
-            price_cursor_income += price_cursor_income*0.7;
-            currentMoneyPerSecond = getMoneyPerSecond();
-            setMoneyPerSecond(currentMoneyPerSecond*1.1);
-            show_money();
-            show_money_per_second();
-        }
-        save();
-        buttonVerification();
-        showPriceUpgrade();
-    });
+        button.mousedown(function() {
+            isMouseDown = true;
+            mouseDownTimer = setTimeout(function() {
+                if (isMouseDown) {
+                    startDecreaseInterval();
+                }
+            }, 500); // Adjust the time period as needed (in ms)
+        });
 
-    $(".cursor_speed").click(function() {
-        if (money >= price_cursor_speed) {
-            shopSound.play();
-            money -= price_cursor_speed;
-            totalSpend += price_cursor_speed;
-            price_cursor_speed += price_cursor_speed*0.8;
-            currentSpeedCursor = getSpeedCursor();
-            console.log(currentSpeedCursor);
-            setSpeedCursor(currentSpeedCursor*0.99);
-            let newSpeed = getSpeedCursor();
-            console.log(newSpeed);
-            show_money();
-            show_money_per_second();
-        }
-        save();
-        buttonVerification();
-        showPriceUpgrade();
-    });
+        button.mouseup(function() {
+            isMouseDown = false;
+            clearInterval(decreaseInterval);
+            startDecreaseInterval();
+            increaseCounterLevel();
+            updateProgressBar();
+        });
 
-    $(".statistics_button").click(function() {
-        shopSound.play();
-        let totalMoneyFormatted = formatMoney(totalMoney);
-        let totalSpendFormatted = formatMoney(totalSpend);
+        button.click(function() {
+            updateScore("click");
+        });
         
-        var message = "Total money earned: " + totalMoneyFormatted + "<br>" + "Total money spend: " + totalSpendFormatted + "<br>" + "Total clicks: " + clickCounter;
-        $("#dialog").html(message).dialog({
-            modal: true,
-            title: "Statistics"
+        $(".increase_income").click(function() {
+            if (money >= price_income) {
+                shopSound.play();
+                money -= price_income;
+                totalSpend += price_income;
+                price_income += price_income;
+                if (price_income > 150) {
+                    moneyPerClick = moneyPerClick * 1.2;
+                }
+                else {
+                    moneyPerClick += 1;
+                }
+                show_money();
+                show_money_per_click();
+                shopSound.play();
+            }
+            save();
+            buttonVerification();
+            showPriceUpgrade();
         });
-    });
-    
-    $(".settings_button").click(function() {
-        shopSound.play();
-        var message = '<div><input type="checkbox" id="checkbox1" ' + (localStorage.getItem("musicEnabled") === "true" ? 'checked' : '') + '> <label for="checkbox1">Music</label></div>' +
-                      '<div><input type="checkbox" id="checkbox2" ' + (localStorage.getItem("sfxEnabled") === "true" ? 'checked' : '') + '> <label for="checkbox2">SFX</label></div>';
-        $("#dialog").html(message).dialog({
-          modal: true,
-          title: "Settings"
+        
+        $(".add_cursor").click(function() {
+            if (money >= price_add_cursor && createCursor() !== false){
+                shopSound.play();
+                money -= price_add_cursor;
+                totalSpend += price_add_cursor;
+                price_add_cursor += price_add_cursor*1.2;
+                show_money();
+                show_money_per_second();
+                shopSound.play();
+            }
+            save();
+            buttonVerification();
+            showPriceUpgrade();
+        });
 
+        $(".merge_cursors").click(function() {
+            if (money >= price_merge_cursor && merge_cursors()){
+                shopSound.play();
+                money -= price_merge_cursor;
+                totalSpend += price_merge_cursor;
+                price_merge_cursor += price_merge_cursor*0.2;
+                show_money();
+                show_money_per_second();
+                shopSound.play();
+            }
+            save();
+            buttonVerification();
+            showPriceUpgrade();
         });
-        $("#checkbox1").change(function() {
-          if ($(this).is(":checked")) {
-            backgroundSound.play();
-          } else {
-            backgroundSound.pause();
-          }
-          // Save the state of the music checkbox immediately
-          localStorage.setItem("musicEnabled", $(this).is(":checked") ? "true" : "false");
-          // Update musicEnabledByUser based on user interaction
-          musicEnabledByUser = $(this).is(":checked");
+        
+        $(".cursor_income").click(function() {
+            if (money >= price_cursor_income) {
+                shopSound.play();
+                money -= price_cursor_income;
+                totalSpend += price_cursor_income;
+                price_cursor_income += price_cursor_income*0.7;
+                currentMoneyPerSecond = getMoneyPerSecond();
+                setMoneyPerSecond(currentMoneyPerSecond*1.1);
+                show_money();
+                show_money_per_second();
+            }
+            save();
+            buttonVerification();
+            showPriceUpgrade();
         });
-        $("#checkbox2").change(function() {
+
+        $(".cursor_speed").click(function() {
+            if (money >= price_cursor_speed) {
+                shopSound.play();
+                money -= price_cursor_speed;
+                totalSpend += price_cursor_speed;
+                price_cursor_speed += price_cursor_speed*0.8;
+                currentSpeedCursor = getSpeedCursor();
+                console.log(currentSpeedCursor);
+                setSpeedCursor(currentSpeedCursor*0.99);
+                let newSpeed = getSpeedCursor();
+                console.log(newSpeed);
+                show_money();
+                show_money_per_second();
+            }
+            save();
+            buttonVerification();
+            showPriceUpgrade();
+        });
+
+        $(".statistics_button").click(function() {
+            shopSound.play();
+            let totalMoneyFormatted = formatMoney(totalMoney);
+            let totalSpendFormatted = formatMoney(totalSpend);
+            
+            var message = "Total money earned: " + totalMoneyFormatted + "<br>" + "Total money spend: " + totalSpendFormatted + "<br>" + "Total clicks: " + clickCounter;
+            $("#dialog").html(message).dialog({
+                modal: true,
+                title: "Statistics"
+            });
+        });
+        
+        $(".settings_button").click(function() {
+            shopSound.play();
+            var message = '<div><input type="checkbox" id="checkbox1" ' + (localStorage.getItem("musicEnabled") === "true" ? 'checked' : '') + '> <label for="checkbox1">Music</label></div>' +
+                        '<div><input type="checkbox" id="checkbox2" ' + (localStorage.getItem("sfxEnabled") === "true" ? 'checked' : '') + '> <label for="checkbox2">SFX</label></div>';
+            $("#dialog").html(message).dialog({
+            modal: true,
+            title: "Settings"
+
+            });
+            $("#checkbox1").change(function() {
             if ($(this).is(":checked")) {
-              buttonClickSound.volume = 1;
-              shopSound.volume = 1;
-              levelUpSound.volume = 1;
+                backgroundSound.play();
             } else {
-              buttonClickSound.volume = 0;
-              shopSound.volume =0;
-              levelUpSound.volume =0;
+                backgroundSound.pause();
             }
             // Save the state of the music checkbox immediately
-            localStorage.setItem("sfxEnabled", $(this).is(":checked") ? "true" : "false");
+            localStorage.setItem("musicEnabled", $(this).is(":checked") ? "true" : "false");
             // Update musicEnabledByUser based on user interaction
-            sfxEnabledByUser = $(this).is(":checked");
-          });
-      });
-    
-    function formatMoney(money) {
-        let suffix = "";
-        let divisor = 1;
-    
-        if (money >= 1000000000000) {
-            suffix = "T";
-            divisor = 1000000000000;
-        } else if (money >= 1000000000) {
-            suffix = "B";
-            divisor = 1000000000;
-        } else if (money >= 1000000) {
-            suffix = "M";
-            divisor = 1000000;
-        } else if (money >= 1000) {
-            suffix = "k";
-            divisor = 1000;
+            musicEnabledByUser = $(this).is(":checked");
+            });
+            $("#checkbox2").change(function() {
+                if ($(this).is(":checked")) {
+                buttonClickSound.volume = 1;
+                shopSound.volume = 1;
+                levelUpSound.volume = 1;
+                } else {
+                buttonClickSound.volume = 0;
+                shopSound.volume =0;
+                levelUpSound.volume =0;
+                }
+                // Save the state of the music checkbox immediately
+                localStorage.setItem("sfxEnabled", $(this).is(":checked") ? "true" : "false");
+                // Update musicEnabledByUser based on user interaction
+                sfxEnabledByUser = $(this).is(":checked");
+            });
+        });
+        
+        function formatMoney(money) {
+            let suffix = "";
+            let divisor = 1;
+        
+            if (money >= 1000000000000) {
+                suffix = "T";
+                divisor = 1000000000000;
+            } else if (money >= 1000000000) {
+                suffix = "B";
+                divisor = 1000000000;
+            } else if (money >= 1000000) {
+                suffix = "M";
+                divisor = 1000000;
+            } else if (money >= 1000) {
+                suffix = "k";
+                divisor = 1000;
+            }
+        
+            return (money / divisor).toFixed(1) + suffix;
         }
-    
-        return (money / divisor).toFixed(1) + suffix;
     }
-
-});
+//});
 
 function merge_cursors() {
     if ($('.lv1').length >= 3) {
@@ -340,11 +343,18 @@ function merge_cursors() {
 }
 
 async function save() {
+    localStorage.setItem("level", level);
     localStorage.setItem("totalMoney", totalMoney);
     localStorage.setItem("totalSpend", totalSpend);
     localStorage.setItem("clickCounter", clickCounter);
     localStorage.setItem("money", money);
     localStorage.setItem("moneyPerClick", moneyPerClick);
+    localStorage.setItem("moneyPerSecond", currentMoneyPerSecond);
+    localStorage.setItem("cursorLV1", cursorPerLV[0]);
+    localStorage.setItem("cursorLV2", cursorPerLV[1]);
+    localStorage.setItem("cursorLV3", cursorPerLV[2]);
+    localStorage.setItem("cursorLV4", cursorPerLV[3]);
+    localStorage.setItem("cursorLV5", cursorPerLV[4]);
     localStorage.setItem("price_income", price_income);
     localStorage.setItem("price_add_cursor", price_add_cursor);
     localStorage.setItem("price_merge_cursor", price_merge_cursor);
@@ -424,14 +434,30 @@ async function show_money_per_second(){
 };
 
 async function load() {
+    level = parseFloat(localStorage.getItem("level"));
     money = parseFloat(localStorage.getItem("money"));
     totalMoney = parseFloat(localStorage.getItem("totalMoney"));
     totalSpend = parseFloat(localStorage.getItem("totalSpend"));
     moneyPerClick = parseFloat(localStorage.getItem("moneyPerClick"));
     clickCounter = parseFloat(localStorage.getItem("clickCounter"));
     price_income = parseFloat(localStorage.getItem("price_income"));
+    price_add_cursor = parseFloat(localStorage.getItem("price_add_cursor"));
+    price_merge_cursor = parseFloat(localStorage.getItem("price_merge_cursor"));
+    price_cursor_income = parseFloat(localStorage.getItem("price_cursor_income"));
+    price_cursor_speed = parseFloat(localStorage.getItem("price_cursor_speed"));
+    currentMoneyPerSecond = parseFloat(localStorage.getItem("moneyPerSecond"));
+    cursorPerLV[0] = parseFloat(localStorage.getItem("cursorLV1"));
+    cursorPerLV[1] = parseFloat(localStorage.getItem("cursorLV2"));
+    cursorPerLV[2] = parseFloat(localStorage.getItem("cursorLV3"));
+    cursorPerLV[3] = parseFloat(localStorage.getItem("cursorLV4"));
+    cursorPerLV[4] = parseFloat(localStorage.getItem("cursorLV5"));
+
+    setMoneyPerSecond(currentMoneyPerSecond);
+    instantiateCursor();
     show_money();
     show_money_per_click();
+    levelDisplay.text("Level " + level);
+    
 };
 
 async function buttonVerification() {
