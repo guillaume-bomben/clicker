@@ -1,8 +1,8 @@
-.increase_income:active {
+.increase_income:active {                                                      /* When the button is pressed launch scale animation*/     
     transform: scale(0.9);
 }
 
-.increase_income:active.animate {
+.increase_income:active.animate {                                              /* When the button is pressed launch pulse animation*/
     animation: pulse 0.5s ease-in-out;
 }
 .add_cursor:active {
@@ -61,7 +61,7 @@
     animation: pulse 0.5s ease-in-out;
 }
 
-@keyframes pulse {
+@keyframes pulse {                                                           /* Pulse animation that scales the button in and out */              
     0% {
         transform: scale(1);
     }
@@ -73,7 +73,7 @@
     }
 }
 
-@keyframes button1-press {
+@keyframes button1-press {                                                  /* Animation for the button1 press effect */
     0% {
         background-image: url('../assets/images/Button.svg');
     }
@@ -94,10 +94,10 @@
     }
 }
 
-.Big_button:active.animate-Big-Button1 {
+.Big_button:active.animate-Big-Button1 {                                    /* When the button1 is pressed launch the animation */            
     animation: button1-press 0.15s;
 }
-.animate-Big-Button1 {
+.animate-Big-Button1 {                                                      
     animation: button1-press 0.15s;
 }
 
@@ -157,7 +157,7 @@
     animation: button3-press 0.15s;
 }
 
-@keyframes small-button-press {
+@keyframes small-button-press {                                                     /* Animation for the small button press effect, change the opacity */
     0% {
         opacity: 1;
     }
@@ -166,6 +166,6 @@
     }
 }
 
-.small-button-press {
+.small-button-press {                                                               /* When the small button is pressed launch the animation */
     animation: small-button-press 0.15s;
 }

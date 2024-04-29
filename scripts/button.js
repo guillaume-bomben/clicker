@@ -1,20 +1,23 @@
 import { getMoneyPerSecond, setMoneyPerSecond, getSpeedCursor, setSpeedCursor, instantiateCursor,moneyPerCycle,cursorPerLV,createCursor } from "./addCursor.js";
 
-let money = 0;
-let totalMoney = 0;
-let totalSpend = 0;
-let moneyPerClick = 1;
+let money = 0;                                                                              // Current money of the player
+let totalMoney = 0;                                                                         // Total money earned by the player
+let totalSpend = 0;                                                                         // Total money spent by the player
+let moneyPerClick = 1;                                                                      // Money earned per click
 let clickCounter = 0;
 let price_income = 150;
 let price_add_cursor = 300;
 let price_merge_cursor = 1200;
 let price_cursor_income = 750;
 let price_cursor_speed = 600;
+let currentMoneyPerSecond = getMoneyPerSecond();                                            // Money earned per second imported from the addCursor.js
+let currentSpeedCursor = getSpeedCursor();                                                  // Speed of the cursor imported from the addCursor.js         
 
 let level = 1;
-let counterLevel = 0;
-let decreaseInterval;
+let counterLevel = 0;                                                                       // Counter level to increase the progress bar
+let decreaseInterval;                                                                       // Interval to decrease the progress bar
 let isMouseDown = false;
+const button = $(".Big_button");
 let progressContainer = $(".progress_bar");
 let progressBar = $("<div>").addClass("progress-bar-ui");
 let backgroundBarWrapper = $("<div>").addClass("background-bar-wrapper");
@@ -23,9 +26,11 @@ let barWrapper = $("<div>").addClass("bar-wrapper");
 let bar = $("<div>").addClass("bar").attr("id", "bar");
 let levelDisplay = $("<div>").addClass("level").attr("id", "level").text("Level 1");
 let wrapper = $('.wrapper');
-
+                                                                                            // Sounds
 let buttonClickSound = new Audio ('assets/sounds/click.mp3');
 let backgroundSound = new Audio ('assets/sounds/background.mp3');
+let levelUpSound = new Audio('assets/sounds/levelUp.mp3');
+let shopSound = new Audio('assets/sounds/shop.mp3');
 backgroundSound.volume = 0.5;
 backgroundSound.loop = true;
 buttonClickSound.playbackRate = 2;
@@ -39,15 +44,7 @@ progressBar.append(barWrapper);
 progressBar.append(levelDisplay);
 progressContainer.append(progressBar);
 let mouseDownTimer;
-let smallButtons = [];
-let levelUpSound = new Audio('assets/sounds/levelUp.mp3');
-let shopSound = new Audio('assets/sounds/shop.mp3');
-
-const button = $(".Big_button");
-
-let currentMoneyPerSecond = getMoneyPerSecond();
-let currentSpeedCursor = getSpeedCursor();
-
+let smallButtons = [];                                                                          // Array to store the bonus buttons
 
 export async function updateScore(type) {                                                           // Function to update the score based on the type of click and change the UI based on the level
     if (type == "click") {

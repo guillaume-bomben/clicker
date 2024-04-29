@@ -1,4 +1,4 @@
-@font-face {
+@font-face {                                                                      /* font for the game */
   font-family: "Merge W00 Bold";
   src: url("https://db.onlinewebfonts.com/t/4164b679e1a0c55266914de874ffd38f.eot");
   src: url("https://db.onlinewebfonts.com/t/4164b679e1a0c55266914de874ffd38f.eot?#iefix")format("embedded-opentype"),
@@ -8,14 +8,14 @@
   url("https://db.onlinewebfonts.com/t/4164b679e1a0c55266914de874ffd38f.svg#Merge W00 Bold")format("svg");
 }
 
-#money {
+#money {                                                                          /* money display, white with a blue border */     
   font-size: 3.5vw;
   color: #fff;
   -webkit-text-stroke: 0.2vw rgb(16, 16, 95);
   margin-left: 17vW;
   margin-top: 5vh;
 }
- #moneyPerClick, #moneyPerSecond {
+ #moneyPerClick, #moneyPerSecond {                                                /* money per click and money per second display, white with a blue border */
   font-size: 2vw;
   color: #fff;
   -webkit-text-stroke: 0.1vw rgb(16, 16, 95);
@@ -23,14 +23,14 @@
 
 }
 
-#level{
+#level{                                                                           /* level display, white with a blue border */
   font-size: 3vw;
   color: #fff;
   -webkit-text-stroke: 0.1vw rgb(16, 16, 95);
 
 }
 
-.wrapper {
+.wrapper {                                                                        /* wrapper for the game, divide the page in a grid */
   display: grid;
   grid-template-columns: 1fr 3fr 2fr;
   grid-template-rows: 1fr 5fr;
@@ -46,7 +46,7 @@
 
 }
 
-body, html {
+body, html {                                                                        /* body and html style */
   margin: 0px;
   padding: 0px;
   overflow-y: hidden;
@@ -54,24 +54,24 @@ body, html {
   font-family: "Merge W00 Bold";
 }
 
-.settings, .progress_bar, .income {
+.settings, .progress_bar, .income {                                                 /* settings, progress bar and income display */
   grid-row: 1;
   height: calc(1/6 * 100vh);
 }
 
-.settings {
+.settings {                                                                         /* settings div display */
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
 
-.progress_bar {
+.progress_bar {                                                                     /* progress bar div display */
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
 }
 
-.progress-bar-ui {
+.progress-bar-ui {                                                                  /* progress bar UI style */        
   width: 90%;
   height: 30%;
   border: 1px solid #000;
@@ -80,7 +80,7 @@ body, html {
   position: relative;
 }
 
-.background-bar-wrapper {
+.background-bar-wrapper {                                                           /* background bar UI wrapper style */
   position: absolute;
   top: 0;
   left: 0;
@@ -88,7 +88,7 @@ body, html {
   height: 100%;
 }
 
-.bar-wrapper {
+.bar-wrapper {                                                                      /* bar wrapper style */
   position: relative;
   width: 100%;
   height: 100%;
@@ -99,16 +99,16 @@ body, html {
   height: 100%;
   background-color: #B0F5FA;
   transition: width 0.15s ease;
-  z-index: -1; /* move the backgroundBar behind the bar */
+  z-index: -1;                                                                            /* move the backgroundBar behind the bar */
 }
 
-.bar {
+.bar {                                                                              /* bar style */
   width: 0%;
   height: 100%;
   transition: width 0.15s ease;
 }
 
-.level {
+.level {                                                                          /* level display style */         
   position: absolute;
   top: 50%;
   left: 50%;
@@ -121,7 +121,7 @@ body, html {
     margin-bottom: 10px;
 }
   
-.playing_area {
+.playing_area {                                                                   /* playing area style */
   grid-column: 1 / 3;
   grid-row: 2;
   width: calc(2 / 3 * 100vw);
@@ -131,7 +131,7 @@ body, html {
   align-items: center;
 }
   
-.upgrades {
+.upgrades {                                                                     /* upgrades/shop area style */
   grid-column: 3;
   grid-row: 2;
   width: calc(1 / 3 * 100vw);
@@ -145,7 +145,7 @@ body, html {
   margin-bottom: 10px;
 }
 
-.Big_button{
+.Big_button{                                                                    /* big button style */
   height: min(10.5vw, 15vh); 
   width: min(8.7vw, 12vh); 
   border: none;
@@ -159,7 +159,7 @@ body, html {
   transition: background-image 0.15s;
 }
 
-.cursor {
+.cursor {                                                                         /* cursor style */
   height: min(40vw, 50vh); 
   width: min(40vw, 50vh);
   display: grid;
@@ -168,7 +168,7 @@ body, html {
   background-color: transparent; 
 }
 
-.increase_income{
+.increase_income{                                                                 /* increase income button style */
   background-image: url('../assets/images/Upgrade_increase_income.svg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -176,7 +176,7 @@ body, html {
   transition: transform 0.3s;
 }
 
-.add_cursor{
+.add_cursor{                                                                      /* add cursor button style */                   
   background-image: url('../assets/images/Upgrade_add_cursor.svg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -184,7 +184,7 @@ body, html {
   transition: transform 0.3s;
 }
 
-.merge_cursors{
+.merge_cursors{                                                                   /* merge cursors button style */
   background-image: url('../assets/images/Upgrade_merge_cursors.svg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -192,7 +192,7 @@ body, html {
   transition: transform 0.3s;
 }
 
-.cursor_income{
+.cursor_income{                                                                   /* cursor income button style */
   background-image: url('../assets/images/Upgrade_cursor_income.svg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -200,7 +200,7 @@ body, html {
   transition: transform 0.3s;
 }
 
-.cursor_speed{
+.cursor_speed{                                                                    /* cursor speed button style */       
   background-image: url('../assets/images/Upgrade_cursor_speed.svg');
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -208,7 +208,7 @@ body, html {
   transition: transform 0.3s;
 }
 
-.settings_button{
+.settings_button{                                                                 /* settings button style */      
   background-image: url('../assets/images/Settings.svg');
   background-size: 50% 50%;
   background-repeat: no-repeat;
@@ -217,7 +217,7 @@ body, html {
   transition: transform 0.3s;
 }
 
-.statistics_button{
+.statistics_button{                                                               /* statistics button style */
   background-image: url('../assets/images/Stats.svg');
   background-size: 50% 50%;
   background-repeat: no-repeat;
@@ -226,13 +226,13 @@ body, html {
   transition: transform 0.3s;
 }
 
-.upgrade_element {
+.upgrade_element {                                                              /* upgrade element for the shop text style */
   position: relative;
 }
 
-.upgrade_text {
+.upgrade_text {                                                                 /* upgrade text style */
   position: absolute;
-  top: 5.6vh; /* changed from 50% to 50vh */
+  top: 5.6vh;
   left: 25.5vw;
   transform: translate(-50%, -50%);
   text-align: center;
@@ -242,7 +242,7 @@ body, html {
   -webkit-text-stroke: 0.1vw rgb(16, 16, 95); 
 }
 
-.ui-dialog {
+.ui-dialog {                                                                   /* dialog style for the settings and statistics */       
   background-color: #fff;
   border: 3px solid #0d0a43;
   padding: 10px;
@@ -250,7 +250,7 @@ body, html {
   border-radius: 20px;
 }
 
-.ui-dialog-titlebar-close {
+.ui-dialog-titlebar-close {                                                 /* dialog close button style */
   position: absolute;
   right: 10px;
   top: 10px;
@@ -262,7 +262,7 @@ body, html {
   cursor: pointer;
 }
 
-.ui-dialog-titlebar-close::before {
+.ui-dialog-titlebar-close::before {                                         /* dialog close button style */
   content: '×';
   font-weight: bold;
 }
