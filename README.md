@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://github.com/oussema-fatnassi/clicker/blob/main/assets/images/Logo.svg" alt="Don't Touch That Button logo image"/>
+</p>
+
 # Clicker
 
 Project Clicker on a web browser
