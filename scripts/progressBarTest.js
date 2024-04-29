@@ -1,1 +1,0 @@
-// Tout est dans le script_button.js, ça marche mieux là-bas :)
