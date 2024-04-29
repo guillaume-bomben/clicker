@@ -49,7 +49,7 @@ let currentMoneyPerSecond = getMoneyPerSecond();
 let currentSpeedCursor = getSpeedCursor();
 
 
-export async function updateScore(type) {
+export async function updateScore(type) {                                                           // Function to update the score based on the type of click and change the UI based on the level
     if (type == "click") {
         money += moneyPerClick;
         buttonClickSound.play();
@@ -89,7 +89,7 @@ export async function updateScore(type) {
     save();
     buttonVerification();
 }
-async function checkMusicEnabled() {
+async function checkMusicEnabled() {                                                                // Function to check if the music is enabled
     const musicEnabled = await localStorage.getItem("musicEnabled");
     if (musicEnabled === "true" || musicEnabledByUser) {
       if (!backgroundSound.playing) {
@@ -100,7 +100,7 @@ async function checkMusicEnabled() {
     }
   }
 
-  async function checkSfxEnabled() {
+  async function checkSfxEnabled() {                                                                // Function to check if the SFX is enabled
     const sfxEnabled = await localStorage.getItem("sfxnabled");
     if (sfxEnabled === "true" || sfxEnabledByUser) {
       if (!buttonClickSound && !shopSound && levelUpSound) {
@@ -123,22 +123,22 @@ async function checkMusicEnabled() {
 
 //$(document).ready(function() {
 
-    export function main() {
-        load();
+    export function main() {                                                                        // Main function to run the game
+        // load();
         save();
         buttonVerification();
         showPriceUpgrade();
 
-        button.mousedown(function() {
+        button.mousedown(function() {                                                               // Function to handle the mousedown event
             isMouseDown = true;
             mouseDownTimer = setTimeout(function() {
                 if (isMouseDown) {
                     startDecreaseInterval();
                 }
-            }, 500); // Adjust the time period as needed (in ms)
+            }, 500); 
         });
 
-        button.mouseup(function() {
+        button.mouseup(function() {                                                                 // Function to handle the mouseup event
             isMouseDown = false;
             clearInterval(decreaseInterval);
             startDecreaseInterval();
@@ -150,7 +150,7 @@ async function checkMusicEnabled() {
             updateScore("click");
         });
         
-        $(".increase_income").click(function() {
+        $(".increase_income").click(function() {                                                    // Function to handle the click event on the increase income button
             if (money >= price_income) {
                 shopSound.play();
                 money -= price_income;
@@ -171,7 +171,7 @@ async function checkMusicEnabled() {
             showPriceUpgrade();
         });
         
-        $(".add_cursor").click(function() {
+        $(".add_cursor").click(function() {                                                         // Function to handle the click event on the add cursor button
             if (money >= price_add_cursor && createCursor() !== false){
                 shopSound.play();
                 money -= price_add_cursor;
@@ -186,7 +186,7 @@ async function checkMusicEnabled() {
             showPriceUpgrade();
         });
 
-        $(".merge_cursors").click(function() {
+        $(".merge_cursors").click(function() {                                                      // Function to handle the click event on the merge cursors button
             if (money >= price_merge_cursor && merge_cursors()){
                 shopSound.play();
                 money -= price_merge_cursor;
@@ -201,7 +201,7 @@ async function checkMusicEnabled() {
             showPriceUpgrade();
         });
         
-        $(".cursor_income").click(function() {
+        $(".cursor_income").click(function() {                                                      // Function to handle the click event on the cursor income button
             if (money >= price_cursor_income) {
                 shopSound.play();
                 money -= price_cursor_income;
@@ -217,7 +217,7 @@ async function checkMusicEnabled() {
             showPriceUpgrade();
         });
 
-        $(".cursor_speed").click(function() {
+        $(".cursor_speed").click(function() {                                                       // Function to handle the click event on the cursor speed button
             if (money >= price_cursor_speed) {
                 shopSound.play();
                 money -= price_cursor_speed;
@@ -236,7 +236,7 @@ async function checkMusicEnabled() {
             showPriceUpgrade();
         });
 
-        $(".statistics_button").click(function() {
+        $(".statistics_button").click(function() {                                                  // Function to handle the click event on the statistics button
             shopSound.play();
             let totalMoneyFormatted = formatMoney(totalMoney);
             let totalSpendFormatted = formatMoney(totalSpend);
@@ -248,7 +248,7 @@ async function checkMusicEnabled() {
             });
         });
         
-        $(".settings_button").click(function() {
+        $(".settings_button").click(function() {                                                    // Function to handle the click event on the settings button
             shopSound.play();
             var message = '<div><input type="checkbox" id="checkbox1" ' + (localStorage.getItem("musicEnabled") === "true" ? 'checked' : '') + '> <label for="checkbox1">Music</label></div>' +
                         '<div><input type="checkbox" id="checkbox2" ' + (localStorage.getItem("sfxEnabled") === "true" ? 'checked' : '') + '> <label for="checkbox2">SFX</label></div>';
@@ -263,10 +263,8 @@ async function checkMusicEnabled() {
             } else {
                 backgroundSound.pause();
             }
-            // Save the state of the music checkbox immediately
-            localStorage.setItem("musicEnabled", $(this).is(":checked") ? "true" : "false");
-            // Update musicEnabledByUser based on user interaction
-            musicEnabledByUser = $(this).is(":checked");
+            localStorage.setItem("musicEnabled", $(this).is(":checked") ? "true" : "false");            // Save the state of the music checkbox after user choice
+            musicEnabledByUser = $(this).is(":checked");                                                // Update musicEnabledByUser based on user interaction
             });
             $("#checkbox2").change(function() {
                 if ($(this).is(":checked")) {
@@ -278,14 +276,12 @@ async function checkMusicEnabled() {
                 shopSound.volume =0;
                 levelUpSound.volume =0;
                 }
-                // Save the state of the music checkbox immediately
-                localStorage.setItem("sfxEnabled", $(this).is(":checked") ? "true" : "false");
-                // Update musicEnabledByUser based on user interaction
-                sfxEnabledByUser = $(this).is(":checked");
+                localStorage.setItem("sfxEnabled", $(this).is(":checked") ? "true" : "false");          // Save the state of the SFX checkbox after user choice
+                sfxEnabledByUser = $(this).is(":checked");                                              // Update sfxEnabledByUser based on user interaction
             });
         });
         
-        function formatMoney(money) {
+        function formatMoney(money) {                                                               // Function to format the money
             let suffix = "";
             let divisor = 1;
         
@@ -308,7 +304,7 @@ async function checkMusicEnabled() {
     }
 //});
 
-function merge_cursors() {
+function merge_cursors() {                                                                          // Function to merge the cursors based on the cursor level                                                              
     if ($('.lv1').length >= 3) {
         $('.lv1').slice(0,3).remove();
         cursorPerLV[0] -= 3;
@@ -342,7 +338,7 @@ function merge_cursors() {
     }
 }
 
-async function save() {
+async function save() {                                                                             // Function to save the game state in the local storage
     localStorage.setItem("level", level);
     localStorage.setItem("totalMoney", totalMoney);
     localStorage.setItem("totalSpend", totalSpend);
@@ -364,7 +360,7 @@ async function save() {
     localStorage.setItem("sfxEnabled", $("#checkbox2").is(":checked") ? "true" : "false");
 };
 
-async function show_money(){
+async function show_money(){                                                                        // Function to show the money in the UI in a formatted way to make it more readable
     let money_to_show = money;
     if (money_to_show < 1000) {
         $("#money").text(money_to_show.toFixed(1) + " $");
@@ -387,7 +383,7 @@ async function show_money(){
     }
 };
 
-async function show_money_per_click(){
+async function show_money_per_click(){                                                              // Function to show the money per click in the UI in a formatted way to make it more readable
     let moneyPerClick_to_show = moneyPerClick;
     if (moneyPerClick_to_show < 1000) {
         $("#moneyPerClick").text(moneyPerClick_to_show.toFixed(1) + " $/click");
@@ -410,7 +406,7 @@ async function show_money_per_click(){
     }
 };
 
-async function show_money_per_second(){
+async function show_money_per_second(){                                                             // Function to show the money per second in the UI in a formatted way to make it more readable
     let moneyPerSecond_to_show = getMoneyPerSecond();
     if (moneyPerSecond_to_show < 1000) {
         $("#moneyPerSecond").text(moneyPerSecond_to_show.toFixed(1) + " $/s");
@@ -433,7 +429,7 @@ async function show_money_per_second(){
     }
 };
 
-async function load() {
+async function load() {                                                                             // Function to load the game state from the local storage
     level = parseFloat(localStorage.getItem("level"));
     money = parseFloat(localStorage.getItem("money"));
     totalMoney = parseFloat(localStorage.getItem("totalMoney"));
@@ -451,16 +447,14 @@ async function load() {
     cursorPerLV[2] = parseFloat(localStorage.getItem("cursorLV3"));
     cursorPerLV[3] = parseFloat(localStorage.getItem("cursorLV4"));
     cursorPerLV[4] = parseFloat(localStorage.getItem("cursorLV5"));
-
     setMoneyPerSecond(currentMoneyPerSecond);
     instantiateCursor();
     show_money();
     show_money_per_click();
     levelDisplay.text("Level " + level);
-    
 };
 
-async function buttonVerification() {
+async function buttonVerification() {                                                               // Function to verify the state of the buttons
     buttonIncomeVerification();
     buttonAddCursorVerification();
     buttonMergeCursorVerification();
@@ -468,7 +462,7 @@ async function buttonVerification() {
     buttonCursorSpeedVerification();
 };
 
-async function buttonIncomeVerification() {
+async function buttonIncomeVerification() {                                                         // Function to verify the state of the increase income button, disable it if the player doesn't have enough money
     const buttonIncome = $(".increase_income");
     if (money < price_income) {
         buttonIncome.addClass('disabled');
@@ -484,7 +478,7 @@ async function buttonIncomeVerification() {
     }
 };
 
-async function buttonAddCursorVerification() {
+async function buttonAddCursorVerification() {                                                      // Function to verify the state of the add cursor button, disable it if the player doesn't have enough money
     const buttonAddCursor = $(".add_cursor");
     if (money < price_add_cursor) {
         buttonAddCursor.addClass('disabled');
@@ -500,7 +494,7 @@ async function buttonAddCursorVerification() {
     }
 };
 
-async function buttonMergeCursorVerification() {
+async function buttonMergeCursorVerification() {                                                    // Function to verify the state of the merge cursors button, disable it if the player doesn't have enough money
     const buttonMergeCursor = $(".merge_cursors");
     if (money < price_merge_cursor) {
         buttonMergeCursor.addClass('disabled');
@@ -515,7 +509,7 @@ async function buttonMergeCursorVerification() {
     }
 };
 
-async function buttonCursorIncomeVerification() {
+async function buttonCursorIncomeVerification() {                                                   // Function to verify the state of the cursor income button, disable it if the player doesn't have enough money
     const buttonCursorIncome = $(".cursor_income");
     if (money < price_cursor_income) {
         buttonCursorIncome.addClass('disabled');
@@ -530,7 +524,7 @@ async function buttonCursorIncomeVerification() {
     }
 };
 
-async function buttonCursorSpeedVerification() {
+async function buttonCursorSpeedVerification() {                                                    // Function to verify the state of the cursor speed button, disable it if the player doesn't have enough money
     const buttonCursorSpeed = $(".cursor_speed");
     if (money < price_cursor_speed) {
         buttonCursorSpeed.addClass('disabled');
@@ -544,7 +538,7 @@ async function buttonCursorSpeedVerification() {
     }
 };
 
-function updateProgressBar() {
+function updateProgressBar() {                                                                      // Function to update the progress bar based on the level of the player
     const percentage = counterLevel + '%';
     bar.css('width', percentage);
     const hue = counterLevel * 1.2; 
@@ -556,7 +550,7 @@ function updateProgressBar() {
     }
 };
 
-function increaseCounterLevel() {
+function increaseCounterLevel() {                                                                   // Function to increase the counter level 
     if (counterLevel < 100) {
         counterLevel += 2;
         updateProgressBar();
@@ -572,7 +566,7 @@ function updateLevel() {
     }
 };
 
-function startDecreaseInterval() {
+function startDecreaseInterval() {                                                                  // Function to start the decrease interval if the player doesn't click on the button
     clearInterval(decreaseInterval);
     const totalDuration = 8000;
     const decreaseIntervalDuration = 100; 
@@ -592,7 +586,7 @@ function startDecreaseInterval() {
     }, decreaseIntervalDuration);
 };
 
-function decreaseLevelUp() {
+function decreaseLevelUp() {                                                                        // Function to decrease the level up
     updateLevel();
     button.attr('disabled', true);
     const remainingTime = 8000; // 4 seconds
@@ -614,7 +608,7 @@ function decreaseLevelUp() {
     })();
 };
 
-function spawnBonusButtons() {
+function spawnBonusButtons() {                                                                      // Function to spawn the bonus buttons after the player level up
     const playingArea = $('.playing_area');
     const playingAreaWidth = playingArea.width();
     const playingAreaHeight = playingArea.height();
@@ -622,12 +616,12 @@ function spawnBonusButtons() {
         const randomX = Math.floor(Math.random() * (playingAreaWidth - 37 - 200) + 100);
         const randomY = Math.floor(Math.random() * (playingAreaHeight - 45 - 200) + 100);
 
-        if (randomX + 37 > playingAreaWidth - 100) {
+        if (randomX + 37 > playingAreaWidth - 100) {                                                // Check if the button is out of the playing area
             randomX = playingAreaWidth - 137;
         }
         if (randomY + 45 > playingAreaHeight - 100) {
             randomY = playingAreaHeight - 145;
-        }
+        }                                                                                           // Create the button
         let smallButton = $("<img>").addClass("small_button").attr("src", "assets/images/Small_button.svg").css({
             top: randomY + 'px',
             left: randomX + 'px',
@@ -637,8 +631,9 @@ function spawnBonusButtons() {
         });
         playingArea.append(smallButton);
 
-        smallButton.click(function () {
+        smallButton.click(function () {                                                             // Function to handle the click event on the bonus button
             money += moneyPerClick * 10;
+            totalMoney += moneyPerClick * 10;
             show_money();
             $(this).addClass("small-button-press");
             setTimeout(function () {
@@ -650,7 +645,7 @@ function spawnBonusButtons() {
                 smallButtons.splice(index, 1);
             }
         });
-        setTimeout(function () {
+        setTimeout(function () {                                                                    // Function to remove the button after 4 seconds
             smallButton.remove();
             const index = smallButtons.indexOf(smallButton);
             if (index !== -1) {
@@ -660,7 +655,7 @@ function spawnBonusButtons() {
     }
 };
 
-function showPriceUpgrade(){
+function showPriceUpgrade(){                                                                        // Function to show the price of the upgrades in a formatted way to make it more readable
     formatPriceIncome();
     formatPriceAddCursor();
     formatPriceMergeCursor();
@@ -668,7 +663,7 @@ function showPriceUpgrade(){
     formatPriceCursorSpeed();
 };
 
-function formatPriceIncome(){
+function formatPriceIncome(){                                                                       // Function to format the price of the increase income upgrade
     let price_income_to_show = price_income;
     if (price_income_to_show < 1000) {
         $("#price_income").text(price_income_to_show.toFixed(0) + "$");
@@ -691,7 +686,7 @@ function formatPriceIncome(){
     }
 };
 
-function formatPriceAddCursor(){
+function formatPriceAddCursor(){                                                                    // Function to format the price of the add cursor upgrade
     let price_add_cursor_to_show = price_add_cursor;
     if (price_add_cursor_to_show < 1000) {
         $("#price_add_cursor").text(price_add_cursor_to_show.toFixed(0) + "$");
@@ -714,7 +709,7 @@ function formatPriceAddCursor(){
     }
 };
 
-function formatPriceMergeCursor(){
+function formatPriceMergeCursor(){                                                                  // Function to format the price of the merge cursor upgrade
     let price_merge_cursor_to_show = price_merge_cursor;
     if (price_merge_cursor_to_show < 1000) {
         $("#price_merge_cursor").text(price_merge_cursor_to_show.toFixed(0) + "$");
@@ -737,7 +732,7 @@ function formatPriceMergeCursor(){
     }
 };
 
-function formatPriceCursorIncome(){
+function formatPriceCursorIncome(){                                                                 // Function to format the price of the cursor income upgrade
     let price_cursor_income_to_show = price_cursor_income;
     if (price_cursor_income_to_show < 1000) {
         $("#price_cursor_income").text(price_cursor_income_to_show.toFixed(0) + "$");
@@ -760,7 +755,7 @@ function formatPriceCursorIncome(){
     }
 };
 
-function formatPriceCursorSpeed(){
+function formatPriceCursorSpeed(){                                                                  // Function to format the price of the cursor speed upgrade
     let price_cursor_speed_to_show = price_cursor_speed;
     if (price_cursor_speed_to_show < 1000) {
         $("#price_cursor_speed").text(price_cursor_speed_to_show.toFixed(0) + "$");

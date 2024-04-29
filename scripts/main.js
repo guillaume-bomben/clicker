@@ -1,4 +1,4 @@
-import {main} from './script_button.js'; 
+import {main} from './button.js'; 
 
 $(document).ready(function(){
     main();

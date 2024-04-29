@@ -1,4 +1,4 @@
-import {updateScore} from './script_button.js';
+import {updateScore} from './button.js';
 
 let cursorCount = 0;
 export let cursorPerLV = [0,0,0,0,0];
