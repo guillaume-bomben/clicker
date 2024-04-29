@@ -17,8 +17,6 @@ Requirements for the game: Installation of any web browser
 
 - This unlocks three more upgrades: Merge cursors, Upgrade cursor income and Upgrade cursor speed. The first one allows you to merge three cursors of the same level in order to create an even more powerful one. The second one is as simple as its name; it increases the value of each auto-click for all the cursors. The third one is a bit more complex; it does not speed up the cursors around the button but rather decreases the time between each auto-click.
 
-- The last upgrade available is: Upgrade button. This last upgrade permits you to upgrade the whole clicker button into a more valuable one. It does not only changes the style of the button, it also increases the value of the said button. However, this upgrade will be really expensive at first and then will make all the others prices scale with it. It is more of a late-game upgrade.
-
 - The progression will be stored in the localStorage of your browser.
 
 ### Controls
