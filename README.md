@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/oussema-fatnassi/clicker/blob/main/assets/images/Logo.svg" alt="Don't Touch That Button logo image"/>
+  <img src="https://github.com/oussema-fatnassi/clicker/blob/main/assets/images/Logo.svg" alt="Don't Touch That Button logo image" width= "86.73" height="135"/>
 </p>
 
 # Clicker
