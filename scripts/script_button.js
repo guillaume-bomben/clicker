@@ -49,19 +49,19 @@ let currentMoneyPerSecond = getMoneyPerSecond();
 let currentSpeedCursor = getSpeedCursor();
 
 
-export async function updateScore(type) {
+export async function updateScore(type) {                                                                                               // Function to update the score based on the type of click and change the UI based on the level
     if (type == "click") {
         money += moneyPerClick;
         buttonClickSound.play();
         clickCounter++;
         totalMoney += moneyPerClick;
-        if (level<2){
+        if (level<6){
             button.addClass('animate-Big-Button1');
             button.one('animationend', function() {
                 button.removeClass('animate-Big-Button1');
             });
         }
-        else if (level>=6 && level<10){
+        else if (level>=6 && level<11){
             wrapper.css('background-image', 'url(../assets/images/background.svg)')
             button.css('background-image', 'url(../assets/images/Button_yellow.svg)');
             button.addClass('animate-Big-Button2');
@@ -69,7 +69,7 @@ export async function updateScore(type) {
                 button.removeClass('animate-Big-Button2');
             });
         }
-        else if (level>=10){
+        else if (level>=11){
             button.css('background-image', 'url(../assets/images/Button_white.svg)');
             wrapper.css('background-image', 'url(../assets/images/background2.svg)')
             button.addClass('animate-Big-Button3');
@@ -89,7 +89,7 @@ export async function updateScore(type) {
     save();
     buttonVerification();
 }
-async function checkMusicEnabled() {
+async function checkMusicEnabled() {                                                                                                    // Function to check if the music is enabled or not
     const musicEnabled = await localStorage.getItem("musicEnabled");
     if (musicEnabled === "true" || musicEnabledByUser) {
       if (!backgroundSound.playing) {
@@ -100,7 +100,7 @@ async function checkMusicEnabled() {
     }
   }
 
-  async function checkSfxEnabled() {
+async function checkSfxEnabled() {                                                                                                      // Function to check if the SFX is enabled or not
     const sfxEnabled = await localStorage.getItem("sfxnabled");
     if (sfxEnabled === "true" || sfxEnabledByUser) {
       if (!buttonClickSound && !shopSound && levelUpSound) {
@@ -132,7 +132,7 @@ $(document).ready(function() {
             if (isMouseDown) {
                 startDecreaseInterval();
             }
-        }, 500); // Adjust the time period as needed (in ms)
+        }, 500); 
     });
 
     button.mouseup(function() {
@@ -147,7 +147,7 @@ $(document).ready(function() {
         updateScore("click");
     });
     
-    $(".increase_income").click(function() {
+    $(".increase_income").click(function() {                                                                                        // Income Upgrade Button: increase the income value
         if (money >= price_income) {
             shopSound.play();
             money -= price_income;
@@ -168,7 +168,7 @@ $(document).ready(function() {
         showPriceUpgrade();
     });
     
-    $(".add_cursor").click(function() {
+    $(".add_cursor").click(function() {                                                                                             // Add Cursor Upgrade Button: add a cursor 
         if (money >= price_add_cursor && createCursor() !== false){
             shopSound.play();
             money -= price_add_cursor;
@@ -183,7 +183,7 @@ $(document).ready(function() {
         showPriceUpgrade();
     });
 
-    $(".merge_cursors").click(function() {
+    $(".merge_cursors").click(function() {                                                                                          // Cursors Merge Upgrade Button: merge 3 identical cursors
         if (money >= price_merge_cursor && merge_cursors()){
             shopSound.play();
             money -= price_merge_cursor;
@@ -198,7 +198,7 @@ $(document).ready(function() {
         showPriceUpgrade();
     });
     
-    $(".cursor_income").click(function() {
+    $(".cursor_income").click(function() {                                                                                          // Cursor Income Upgrade Button: change the income value of the cursors
         if (money >= price_cursor_income) {
             shopSound.play();
             money -= price_cursor_income;
@@ -214,7 +214,7 @@ $(document).ready(function() {
         showPriceUpgrade();
     });
 
-    $(".cursor_speed").click(function() {
+    $(".cursor_speed").click(function() {                                                                                           // Speed Upgrade Button: change the speed animation of the cursor
         if (money >= price_cursor_speed) {
             shopSound.play();
             money -= price_cursor_speed;
@@ -233,7 +233,7 @@ $(document).ready(function() {
         showPriceUpgrade();
     });
 
-    $(".statistics_button").click(function() {
+    $(".statistics_button").click(function() {                                                                                      // Statistics button: shows the statistics of the game
         shopSound.play();
         let totalMoneyFormatted = formatMoney(totalMoney);
         let totalSpendFormatted = formatMoney(totalSpend);
@@ -245,7 +245,7 @@ $(document).ready(function() {
         });
     });
     
-    $(".settings_button").click(function() {
+    $(".settings_button").click(function() {                                                                                        // Setting button: enable and disable the music and SFX based on user choice
         shopSound.play();
         var message = '<div><input type="checkbox" id="checkbox1" ' + (localStorage.getItem("musicEnabled") === "true" ? 'checked' : '') + '> <label for="checkbox1">Music</label></div>' +
                       '<div><input type="checkbox" id="checkbox2" ' + (localStorage.getItem("sfxEnabled") === "true" ? 'checked' : '') + '> <label for="checkbox2">SFX</label></div>';
@@ -260,9 +260,7 @@ $(document).ready(function() {
           } else {
             backgroundSound.pause();
           }
-          // Save the state of the music checkbox immediately
-          localStorage.setItem("musicEnabled", $(this).is(":checked") ? "true" : "false");
-          // Update musicEnabledByUser based on user interaction
+          localStorage.setItem("musicEnabled", $(this).is(":checked") ? "true" : "false");                                          // Save user choice in localStorage 
           musicEnabledByUser = $(this).is(":checked");
         });
         $("#checkbox2").change(function() {
@@ -275,14 +273,12 @@ $(document).ready(function() {
               shopSound.volume =0;
               levelUpSound.volume =0;
             }
-            // Save the state of the music checkbox immediately
             localStorage.setItem("sfxEnabled", $(this).is(":checked") ? "true" : "false");
-            // Update musicEnabledByUser based on user interaction
             sfxEnabledByUser = $(this).is(":checked");
           });
       });
     
-    function formatMoney(money) {
+    function formatMoney(money) {                                                                                                   // Function to format the money for statistic
         let suffix = "";
         let divisor = 1;
     
@@ -305,7 +301,7 @@ $(document).ready(function() {
 
 });
 
-function merge_cursors() {
+function merge_cursors() {                                                                                                          // Function to merge the three identical cursors to one more powerful
     if ($('.lv1').length >= 3) {
         $('.lv1').slice(0,3).remove();
         cursorPerLV[0] -= 3;
@@ -339,7 +335,7 @@ function merge_cursors() {
     }
 }
 
-async function save() {
+async function save() {                                                                                                             // Function to save the variables in the localStorage
     localStorage.setItem("totalMoney", totalMoney);
     localStorage.setItem("totalSpend", totalSpend);
     localStorage.setItem("clickCounter", clickCounter);
@@ -354,7 +350,7 @@ async function save() {
     localStorage.setItem("sfxEnabled", $("#checkbox2").is(":checked") ? "true" : "false");
 };
 
-async function show_money(){
+async function show_money(){                                                                                                       // Function to format money to be more readable
     let money_to_show = money;
     if (money_to_show < 1000) {
         $("#money").text(money_to_show.toFixed(1) + " $");
@@ -377,7 +373,7 @@ async function show_money(){
     }
 };
 
-async function show_money_per_click(){
+async function show_money_per_click(){                                                                                              // Function to format the money per click to be more readable
     let moneyPerClick_to_show = moneyPerClick;
     if (moneyPerClick_to_show < 1000) {
         $("#moneyPerClick").text(moneyPerClick_to_show.toFixed(1) + " $/click");
@@ -400,7 +396,7 @@ async function show_money_per_click(){
     }
 };
 
-async function show_money_per_second(){
+async function show_money_per_second(){                                                                                             // Function to format the money per seconds to be more readable
     let moneyPerSecond_to_show = getMoneyPerSecond();
     if (moneyPerSecond_to_show < 1000) {
         $("#moneyPerSecond").text(moneyPerSecond_to_show.toFixed(1) + " $/s");
@@ -423,7 +419,7 @@ async function show_money_per_second(){
     }
 };
 
-async function load() {
+async function load() {                                                                                                             // Function to load the localStorage to the game
     money = parseFloat(localStorage.getItem("money"));
     totalMoney = parseFloat(localStorage.getItem("totalMoney"));
     totalSpend = parseFloat(localStorage.getItem("totalSpend"));
@@ -434,7 +430,7 @@ async function load() {
     show_money_per_click();
 };
 
-async function buttonVerification() {
+async function buttonVerification() {                                                                                               // Function that checks the UI states based on money
     buttonIncomeVerification();
     buttonAddCursorVerification();
     buttonMergeCursorVerification();
@@ -442,7 +438,7 @@ async function buttonVerification() {
     buttonCursorSpeedVerification();
 };
 
-async function buttonIncomeVerification() {
+async function buttonIncomeVerification() {                                                                                         // Function that changes UI of Income upgrade
     const buttonIncome = $(".increase_income");
     if (money < price_income) {
         buttonIncome.addClass('disabled');
@@ -458,7 +454,7 @@ async function buttonIncomeVerification() {
     }
 };
 
-async function buttonAddCursorVerification() {
+async function buttonAddCursorVerification() {                                                                                      // Function that changes UI of Add Cursor upgrade
     const buttonAddCursor = $(".add_cursor");
     if (money < price_add_cursor) {
         buttonAddCursor.addClass('disabled');
@@ -474,7 +470,7 @@ async function buttonAddCursorVerification() {
     }
 };
 
-async function buttonMergeCursorVerification() {
+async function buttonMergeCursorVerification() {                                                                                    // Function that changes UI of Cursor Merge upgrade
     const buttonMergeCursor = $(".merge_cursors");
     if (money < price_merge_cursor) {
         buttonMergeCursor.addClass('disabled');
@@ -489,7 +485,7 @@ async function buttonMergeCursorVerification() {
     }
 };
 
-async function buttonCursorIncomeVerification() {
+async function buttonCursorIncomeVerification() {                                                                                   // Function that changes UI of Cursor Income upgrade
     const buttonCursorIncome = $(".cursor_income");
     if (money < price_cursor_income) {
         buttonCursorIncome.addClass('disabled');
@@ -504,7 +500,7 @@ async function buttonCursorIncomeVerification() {
     }
 };
 
-async function buttonCursorSpeedVerification() {
+async function buttonCursorSpeedVerification() {                                                                                    // Function that changes UI of Cursor Speed upgrade
     const buttonCursorSpeed = $(".cursor_speed");
     if (money < price_cursor_speed) {
         buttonCursorSpeed.addClass('disabled');
@@ -518,7 +514,7 @@ async function buttonCursorSpeedVerification() {
     }
 };
 
-function updateProgressBar() {
+function updateProgressBar() {                                                                                                      // Function that changes the color of the progress bar based on percentage
     const percentage = counterLevel + '%';
     bar.css('width', percentage);
     const hue = counterLevel * 1.2; 
@@ -530,14 +526,14 @@ function updateProgressBar() {
     }
 };
 
-function increaseCounterLevel() {
+function increaseCounterLevel() {                                                                                                   // Function that increases the progress bar with every click
     if (counterLevel < 100) {
         counterLevel += 2;
         updateProgressBar();
     }
 };
 
-function updateLevel() {
+function updateLevel() {                                                                                                            // Function to level up if progress bar reaches 100
     if (counterLevel >= 100) {
         levelUpSound.play();
         level++;
@@ -546,7 +542,7 @@ function updateLevel() {
     }
 };
 
-function startDecreaseInterval() {
+function startDecreaseInterval() {                                                                                                  // Function that decreases the progress bar if the user stops clicking
     clearInterval(decreaseInterval);
     const totalDuration = 8000;
     const decreaseIntervalDuration = 100; 
@@ -566,10 +562,10 @@ function startDecreaseInterval() {
     }, decreaseIntervalDuration);
 };
 
-function decreaseLevelUp() {
+function decreaseLevelUp() {                                                                                                        // After the level up decrease the progress bar gradually 
     updateLevel();
     button.attr('disabled', true);
-    const remainingTime = 8000; // 4 seconds
+    const remainingTime = 8000;
     const decreaseStepLevelUp = (counterLevel / (remainingTime / 100));
     (function() {
         function decreaseLevelUpRecursive() {
@@ -588,21 +584,21 @@ function decreaseLevelUp() {
     })();
 };
 
-function spawnBonusButtons() {
+function spawnBonusButtons() {                                                                                                      // Function to spawn the small buttons when we level up
     const playingArea = $('.playing_area');
     const playingAreaWidth = playingArea.width();
     const playingAreaHeight = playingArea.height();
-    for (let i = 0; i < 4; i++){
+    for (let i = 0; i < 4; i++){                                                                                                    // Spawn of only 4 small buttons
         const randomX = Math.floor(Math.random() * (playingAreaWidth - 37 - 200) + 100);
         const randomY = Math.floor(Math.random() * (playingAreaHeight - 45 - 200) + 100);
 
-        if (randomX + 37 > playingAreaWidth - 100) {
+        if (randomX + 37 > playingAreaWidth - 100) {                                                                                // To spawn the small buttons inside the playing area
             randomX = playingAreaWidth - 137;
         }
         if (randomY + 45 > playingAreaHeight - 100) {
             randomY = playingAreaHeight - 145;
         }
-        let smallButton = $("<img>").addClass("small_button").attr("src", "assets/images/Small_button.svg").css({
+        let smallButton = $("<img>").addClass("small_button").attr("src", "assets/images/Small_button.svg").css({                   // Instantiate the small button
             top: randomY + 'px',
             left: randomX + 'px',
             position: "absolute",
@@ -611,7 +607,7 @@ function spawnBonusButtons() {
         });
         playingArea.append(smallButton);
 
-        smallButton.click(function () {
+        smallButton.click(function () {                                                                                             // Function to add money if we click on the button
             money += moneyPerClick * 10;
             show_money();
             $(this).addClass("small-button-press");
@@ -624,7 +620,7 @@ function spawnBonusButtons() {
                 smallButtons.splice(index, 1);
             }
         });
-        setTimeout(function () {
+        setTimeout(function () {                                                                                                    // Remove the small buttons after 4 seconds
             smallButton.remove();
             const index = smallButtons.indexOf(smallButton);
             if (index !== -1) {
@@ -634,7 +630,7 @@ function spawnBonusButtons() {
     }
 };
 
-function showPriceUpgrade(){
+function showPriceUpgrade(){                                                                                                        // Function to show all the shop price formatted
     formatPriceIncome();
     formatPriceAddCursor();
     formatPriceMergeCursor();
@@ -642,7 +638,7 @@ function showPriceUpgrade(){
     formatPriceCursorSpeed();
 };
 
-function formatPriceIncome(){
+function formatPriceIncome(){                                                                                                       // Function to format the income price to be more readable 
     let price_income_to_show = price_income;
     if (price_income_to_show < 1000) {
         $("#price_income").text(price_income_to_show.toFixed(0) + "$");
@@ -665,7 +661,7 @@ function formatPriceIncome(){
     }
 };
 
-function formatPriceAddCursor(){
+function formatPriceAddCursor(){                                                                                                    // Function to format the add cursor price to be more readable 
     let price_add_cursor_to_show = price_add_cursor;
     if (price_add_cursor_to_show < 1000) {
         $("#price_add_cursor").text(price_add_cursor_to_show.toFixed(0) + "$");
@@ -688,7 +684,7 @@ function formatPriceAddCursor(){
     }
 };
 
-function formatPriceMergeCursor(){
+function formatPriceMergeCursor(){                                                                                                  // Function to format the cursors merge price to be more readable 
     let price_merge_cursor_to_show = price_merge_cursor;
     if (price_merge_cursor_to_show < 1000) {
         $("#price_merge_cursor").text(price_merge_cursor_to_show.toFixed(0) + "$");
@@ -711,7 +707,7 @@ function formatPriceMergeCursor(){
     }
 };
 
-function formatPriceCursorIncome(){
+function formatPriceCursorIncome(){                                                                                                 // Function to format the cursor income price to be more readable 
     let price_cursor_income_to_show = price_cursor_income;
     if (price_cursor_income_to_show < 1000) {
         $("#price_cursor_income").text(price_cursor_income_to_show.toFixed(0) + "$");
@@ -733,8 +729,7 @@ function formatPriceCursorIncome(){
         $("#price_cursor_income").text(price_cursor_income_to_show + "$");
     }
 };
-
-function formatPriceCursorSpeed(){
+function formatPriceCursorSpeed(){                                                                                                  // Function to format the cursor speed price to be more readable                                                                      
     let price_cursor_speed_to_show = price_cursor_speed;
     if (price_cursor_speed_to_show < 1000) {
         $("#price_cursor_speed").text(price_cursor_speed_to_show.toFixed(0) + "$");

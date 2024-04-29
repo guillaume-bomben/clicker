@@ -17,22 +17,22 @@ let radius = Math.min(cursorDivWidth, cursorDivHeight) / 2;
 
 let speedCursor = 300;
 
-export function getMoneyPerSecond(){
+export function getMoneyPerSecond(){                                                    // Function to get the money per second
     return moneyPerSecond;
 }
 
-export function setMoneyPerSecond(value){
+export function setMoneyPerSecond(value){                                               // Function to set the money per second
     moneyPerSecond = value;
 }
 
-export function getSpeedCursor(){
+export function getSpeedCursor(){                                                       // Function to get the speed of the cursor
     return speedCursor;
 }
-export function setSpeedCursor(value){
+export function setSpeedCursor(value){                                                  // Function to set the speed of the cursor
     speedCursor = value;
 }
 
-export async function instantiateCursor() {
+export async function instantiateCursor() {                                             // Function to create the cursor
     $('.cursor_object').remove();
     let angleBetweenCursors = 360 / cursorCount;
     moneyPerCycle = 0;
@@ -62,7 +62,7 @@ export async function instantiateCursor() {
     moneyPerSecond = moneyPerCycle / (speedCursor * 0.01)
     animateCursors();
 }
-async function moveCursorToCenterAndBack(cursor) {
+async function moveCursorToCenterAndBack(cursor) {                                      // Function to animate the cursor to the center and back             
     let centerLeft = centerX;
     let centerTop = centerY;
 
@@ -75,7 +75,7 @@ async function moveCursorToCenterAndBack(cursor) {
 }
 
 
-async function animateCursors() {
+async function animateCursors() {                                                       // Function to animate the cursors in a circular motion            
     let cursors = $('.cursor_object');
     let angle = 0;
     let speed = 0.01;
@@ -120,7 +120,7 @@ async function animateCursors() {
         }, speedCursor * 10);
     }
 
-export function createCursor() {
+export function createCursor() {                                                            // Function to create the cursor based on the cursor level and count          
     cursorCount = cursorPerLV[0] + cursorPerLV[1] + cursorPerLV[2] + cursorPerLV[3] + cursorPerLV[4];  
         if (cursorCount === maxCursors) {
             return false;
